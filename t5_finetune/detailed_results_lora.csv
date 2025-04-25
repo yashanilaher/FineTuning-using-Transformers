@@ -1,0 +1,2693 @@
+rouge1,rouge2,rougeL,bleu,codebleu,syntax_correct,generation_time,reference,generated,model
+0.39473684210526316,0.27027027027027023,0.39473684210526316,0.41156803063602615,0.41156803063602615,0,3.3125503063201904,"def inherit_type(self, type_cls: Type[TInherit]) \
+            -> Union[TInherit, 'Publisher']:
+        """""" enables the usage of method and attribute overloading for this
+        publisher.
+        """"""
+        self._inherited_type = type_cls
+        return self","def _enable_method_and_attribute_overloading(self): """"""enables the usage of method and attribute overloading for this publisher. """""" if self._method_and_attribute_overloading is None: self._method_and_attribute_overloading = self._method_and_attribute_overloading = self._method_and_attribute_overloading = self._method_and_attribute_overloading = self",LoRA
+0.34782608695652173,0.14925373134328357,0.3188405797101449,0.1755617732515794,0.1755617732515794,0,3.196622371673584,"def auto_mounter(original):
+    """"""Decorator for automatically mounting, if needed.""""""
+    def mounter(*args):
+        """"""If not mounted, mount.""""""
+        self = args[0]
+        if not self.is_mounted():
+            self.mount()
+        return original(*args)
+    return mounter","def _decorator(self): """"""Decorator for automatically mounting, if needed."""""" if self._decorator is None: self._decorator = self._decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator",LoRA
+0.3692307692307692,0.328125,0.3692307692307692,0.3087058827438894,0.3087058827438894,0,3.256216049194336,"def applyTransform(self):
+        """"""
+        Convenience utility to apply the specified transform to the specified pose.
+          This properly transforms all pose components, including velocity and angular velocity
+        """"""
+
+        fn = self.function_table.applyTransform
+        pOutputPose = TrackedDevicePose_t()
+        pTrackedDevicePose = TrackedDevicePose_t()
+        pTransform = HmdMatrix34_t()
+        fn(byref(pOutputPose), byref(pTrackedDevicePose), byref(pTransform))
+        return pOutputPose, pTrackedDevicePose, pTransform","def apply_transform(self, pose): """""" Convenience utility to apply the specified transform to the specified pose. This properly transforms all pose components, including velocity and angular velocity """""" if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if",LoRA
+0.14876033057851237,0.07202216066481995,0.12672176308539942,3.834263665929807e-05,3.834263665929807e-05,0,2.1593499183654785,"def next_window(self, widget, data=None):
+        """"""
+        Function opens the run Window who executes the
+        assistant project creation
+        """"""
+        # check whether deps-only is selected
+        deps_only = ('deps_only' in self.args and self.args['deps_only']['checkbox'].get_active())
+
+        # preserve argument value if it is needed to be preserved
+        for arg_dict in [x for x in self.args.values() if 'preserved' in x['arg'].kwargs]:
+            preserve_key = arg_dict['arg'].kwargs['preserved']
+            # preserve entry text (string value)
+            if 'entry' in arg_dict:
+                if self.arg_is_selected(arg_dict):
+                    config_manager.set_config_value(preserve_key, arg_dict['entry'].get_text())
+            # preserve if checkbox is ticked (boolean value)
+            else:
+                config_manager.set_config_value(preserve_key, self.arg_is_selected(arg_dict))
+
+        # save configuration into file
+        config_manager.save_configuration_file()
+        # get project directory and name
+        project_dir = self.dir_name.get_text()
+        full_name = self.get_full_dir_name()
+
+        # check whether project directory and name is properly set
+        if not deps_only and self.current_main_assistant.name == 'crt':
+            if project_dir == """":
+                return self.gui_helper.execute_dialog(""Specify directory for project"")
+            else:
+                # check whether directory is existing
+                if not os.path.isdir(project_dir):
+                    response = self.gui_helper.create_question_dialog(
+                        ""Directory {0} does not exists"".format(project_dir),
+                        ""Do you want to create them?""
+                    )
+                    if response == Gtk.ResponseType.NO:
+                        # User do not want to create a directory
+                        return
+                    else:
+                        # Create directory
+                        try:
+                            os.makedirs(project_dir)
+                        except OSError as os_err:
+                            return self.gui_helper.execute_dialog(""{0}"".format(os_err))
+                elif os.path.isdir(full_name):
+                    return self.check_for_directory(full_name)
+
+        if not self._build_flags():
+            return
+
+        if not deps_only and self.current_main_assistant.name == 'crt':
+            self.kwargs['name'] = full_name
+        self.kwargs['__ui__'] = 'gui_gtk+'
+
+        self.data['kwargs'] = self.kwargs
+        self.data['top_assistant'] = self.top_assistant
+        self.data['current_main_assistant'] = self.current_main_assistant
+        self.parent.run_window.open_window(widget, self.data)
+        self.path_window.hide()","def _open_project(self): """"""Function opens the run Window who executes the assistant project creation """""" if self._run_windows: self._run_windows = self._run_windows(self._run_windows) self._run_windows = self._run_windows",LoRA
+0.6305084745762712,0.6075085324232082,0.6237288135593221,0.3234157169403394,0.3234157169403394,0,3.751156806945801,"def remove_member_roles(self, guild_id: int, member_id: int, roles: List[int]):
+        """"""Add roles to a member
+
+        This method takes a list of **role ids** that you want to strip from the user,
+        subtracting from whatever roles they may already have. This method will fetch
+        the user's current roles, and add to that list the roles passed in. This method
+        will only remove roles from the user that they have at the time of execution,
+        so you don't need to check that the user has the roles you're trying to remove
+        from them (as long as those roles are valid roles for this guild).
+
+        This method differs from ``set_member_roles`` in that this method REMOVES roles
+        from the user's current role list. ``set_member_roles`` is used by this method.
+
+        Args:
+            guild_id: snowflake id of the guild
+            member_id: snowflake id of the member
+            roles: list of snowflake ids of roles to remove
+        """"""
+        current_roles = [role for role in self.get_guild_member_by_id(guild_id, member_id)['roles']]
+        new_list = [role for role in current_roles if role not in roles]
+        self.set_member_roles(guild_id, member_id, new_list)","def add_roles(self, ids): """"""Add roles to a member This method takes a list of **role ids** that you want to strip from the user, subtracting from whatever roles they may already have. This method will fetch the user's current roles, and add to that list the roles passed in. This method will only remove roles from the user that they have at the time of execution, so you don't need to check that the user has the roles you're trying to remove from them (as long as those roles",LoRA
+0.18313253012048195,0.10653753026634383,0.1783132530120482,1.669054495738985e-05,1.669054495738985e-05,0,2.5870871543884277,"def _ingest_dict(self, input_dict, schema_dict, path_to_root):
+
+        '''
+            a helper method for ingesting keys, value pairs in a dictionary
+
+        :return: valid_dict
+        '''
+
+        valid_dict = {}
+
+    # construct path to root for rules
+        rules_path_to_root = re.sub('\[\d+\]', '[0]', path_to_root)
+
+    # iterate over keys in schema dict
+        for key, value in schema_dict.items():
+            key_path = path_to_root
+            if not key_path == '.':
+                key_path += '.'
+            key_path += key
+            rules_key_path = re.sub('\[\d+\]', '[0]', key_path)
+            value_match = False
+            if key in input_dict.keys():
+                value_index = self._datatype_classes.index(value.__class__)
+                value_type = self._datatype_names[value_index]
+                try:
+                    v_index = self._datatype_classes.index(input_dict[key].__class__)
+                    v_type = self._datatype_names[v_index]
+                    if v_type == value_type:
+                        value_match = True
+                except:
+                    value_match = False
+            if value_match:
+                if value_type == 'null':
+                    valid_dict[key] = input_dict[key]
+                elif value_type == 'boolean':
+                    valid_dict[key] = self._ingest_boolean(input_dict[key], key_path)
+                elif value_type == 'number':
+                    valid_dict[key] = self._ingest_number(input_dict[key], key_path)
+                elif value_type == 'string':
+                    valid_dict[key] = self._ingest_string(input_dict[key], key_path)
+                elif value_type == 'map':
+                    valid_dict[key] = self._ingest_dict(input_dict[key], schema_dict[key], key_path)
+                elif value_type == 'list':
+                    valid_dict[key] = self._ingest_list(input_dict[key], schema_dict[key], key_path)
+            else:
+                value_type = self.keyMap[rules_key_path]['value_datatype']
+                if 'default_value' in self.keyMap[rules_key_path]:
+                    valid_dict[key] = self.keyMap[rules_key_path]['default_value']
+                elif value_type == 'null':
+                    valid_dict[key] = None
+                elif value_type == 'boolean':
+                    valid_dict[key] = False
+                elif value_type == 'number':
+                    valid_dict[key] = 0.0
+                    if 'integer_data' in self.keyMap[rules_key_path].keys():
+                        if self.keyMap[rules_key_path]['integer_data']:
+                            valid_dict[key] = 0
+                elif value_type == 'string':
+                    valid_dict[key] = ''
+                elif value_type == 'list':
+                    valid_dict[key] = []
+                elif value_type == 'map':
+                    valid_dict[key] = self._ingest_dict({}, schema_dict[key], key_path)
+
+    # add extra fields if set to True
+        if self.keyMap[rules_path_to_root]['extra_fields']:
+            for key, value in input_dict.items():
+                if key not in valid_dict.keys():
+                    valid_dict[key] = value
+
+        return valid_dict","def _get_valid_dict(self): """""" a helper method for ingesting keys, value pairs in a dictionary :return: valid_dict """""" if not self._get_valid_dict(self._get_valid_dict): self._get_valid_dict(self._get_valid_dict) self._get_valid_dict(self._get_valid_dict)",LoRA
+0.23636363636363636,0.16666666666666666,0.2181818181818182,0.04749782396788985,0.04749782396788985,0,2.057959794998169,"def K2onSilicon_main(args=None):
+    """"""Function called when `K2onSilicon` is executed on the command line.""""""
+    import argparse
+    parser = argparse.ArgumentParser(
+        description=""Run K2onSilicon to find which targets in a ""
+                    ""list call on active silicon for a given K2 campaign."")
+    parser.add_argument('csv_file', type=str,
+                        help=""Name of input csv file with targets, column are ""
+                             ""Ra_degrees, Dec_degrees, Kepmag"")
+    parser.add_argument('campaign', type=int, help='K2 Campaign number')
+    args = parser.parse_args(args)
+    K2onSilicon(args.csv_file, args.campaign)","def execute(self): """"""Function called when K2onSilicon is executed on the command line. """""" if self._silicon is None: return self._silicon(self._silicon) return self._silicon(self._silicon)",LoRA
+0.303030303030303,0.1875,0.303030303030303,0.24709981352958568,0.24709981352958568,0,2.087953805923462,"def qmark(cls, query):
+        """"""
+        Convert a ""qmark"" query into ""format"" style.
+        """"""
+
+        def sub_sequence(m):
+            s = m.group(0)
+            if s == ""??"":
+                return ""?""
+            if s == ""%"":
+                return ""%%""
+            else:
+                return ""%s""
+
+        return cls.RE_QMARK.sub(sub_sequence, query)","def format(self, qmark): """"""Convert a ""qmark"" query into ""format"" style. """""" qmark = self.format(qmark) self.format(qmark) self.format(qmark) self.format(qmark) self.format(qmark) self.format(qmark)",LoRA
+0.6224489795918366,0.5979381443298969,0.6122448979591836,0.23891089619474898,0.23891089619474898,0,3.8123013973236084,"def FromEncoded(cls, encoded):
+        """"""Create a DataStreamSelector from an encoded 16-bit value.
+
+        The binary value must be equivalent to what is produced by
+        a call to self.encode() and will turn that value back into
+        a a DataStreamSelector.
+
+        Note that the following operation is a no-op:
+
+        DataStreamSelector.FromEncode(value).encode()
+
+        Args:
+            encoded (int): The encoded binary representation of a
+                DataStreamSelector.
+
+        Returns:
+            DataStreamSelector: The decoded selector.
+        """"""
+
+        match_spec = encoded & ((1 << 11) | (1 << 15))
+        match_type = (encoded & (0b111 << 12)) >> 12
+        match_id = encoded & ((1 << 11) - 1)
+
+        if match_spec not in cls.SpecifierEncodingMap:
+            raise ArgumentError(""Unknown encoded match specifier"", match_spec=match_spec, known_specifiers=cls.SpecifierEncodingMap.keys())
+
+        spec_name = cls.SpecifierEncodingMap[match_spec]
+
+        # Handle wildcard matches
+        if match_id == cls.MatchAllCode:
+            match_id = None
+
+        return DataStreamSelector(match_type, match_id, spec_name)","def create_dataStreamSelector(self, encoded): """"""Create a DataStreamSelector from an encoded 16-bit value. The binary value must be equivalent to what is produced by a call to self.encode() and will turn that value back into a a DataStreamSelector. Note that the following operation is a no-op: DataStreamSelector.FromEncode(value).encode() Args: encoded (int): The encoded binary representation of a DataStreamSelector",LoRA
+0.4628099173553719,0.3865546218487395,0.4462809917355372,0.39630564637275406,0.39630564637275406,0,3.5488786697387695,"def powerstring_by_border(u):
+    """"""Power string by Knuth-Morris-Pratt
+
+    :param x: string
+    :returns: largest k such that there is a string y with x = y^k
+    :complexity: O(len(x))
+    """"""
+    f = maximum_border_length(u)
+    n = len(u)
+    if n % (n - f[-1]) == 0:       # does the alignment shift divide n ?
+        return n // (n - f[-1])    # we found a power decomposition
+    return 1","def power_string(x, x): """""" Power string by Knuth-Morris-Pratt :param x: string :returns: largest k such that there is a string y with x = yk :complexity: O(len(x)) """""" if x is None: if x is None: if x is None: if x is None: if x is None: if x is None: if x",LoRA
+0.288,0.16260162601626016,0.272,0.09297439136183723,0.09297439136183723,0,3.2724790573120117,"def get_fun(fun):
+    '''
+    Return a dict of the last function called for all minions
+    '''
+    log.debug('sdstack_etcd returner <get_fun> called fun: %s', fun)
+    ret = {}
+    client, path = _get_conn(__opts__)
+    items = client.get('/'.join((path, 'minions')))
+    for item in items.children:
+        comps = str(item.key).split('/')
+        efun = salt.utils.json.loads(client.get('/'.join((path, 'jobs', str(item.value), comps[-1], 'fun'))).value)
+        if efun == fun:
+            ret[comps[-1]] = str(efun)
+    return ret","def minions(self, minions): """"""Return a dict of the last function called for all minions"""""" minions = minions.get(minions) minions = minions.get(minions) minions = minions.get(minions) minions = minions.get(minions) minions = minions.get(minions) minions = minions.get(minions) minions = minions.get(minions) minions = minions.get(minions) minions = minions.get",LoRA
+0.40514469453376206,0.3559870550161812,0.3922829581993568,0.029420817124751166,0.029420817124751166,0,3.856586456298828,"def write_csv(
+        self, filename, variables=None, alpha=0.05, start=0, batches=100,
+            chain=None, quantiles=(2.5, 25, 50, 75, 97.5)):
+        """"""
+        Save summary statistics to a csv table.
+
+        :Parameters:
+
+        filename : string
+          Filename to save output.
+
+        variables : iterable
+          List or array of variables for which statistics are to be
+          generated. If it is not specified, all the tallied variables
+          are summarized.
+
+        alpha : float
+          The alpha level for generating posterior intervals. Defaults to
+          0.05.
+
+        start : int
+          The starting index from which to summarize (each) chain. Defaults
+          to zero.
+
+        batches : int
+          Batch size for calculating standard deviation for non-independent
+          samples. Defaults to 100.
+
+        chain : int
+          The index for which chain to summarize. Defaults to None (all
+          chains).
+        """"""
+
+        # Append 'csv' suffix if there is no suffix on the filename
+        if filename.find('.') == -1:
+            filename += '.csv'
+
+        outfile = open(filename, 'w')
+
+        # Write header to file
+        header = 'Parameter, Mean, SD, MC Error, Lower 95% HPD, Upper 95% HPD, '
+        header += ', '.join(['q%s' % i for i in quantiles])
+        outfile.write(header + '\n')
+
+        stats = self.stats(
+            variables=variables,
+            alpha=alpha,
+            start=start,
+            batches=batches,
+            chain=chain,
+            quantiles=quantiles)
+
+        if variables is None:
+            variables = sorted(stats.keys())
+
+        buffer = str()
+        for param in variables:
+
+            values = stats[param]
+
+            try:
+                # Multivariate node
+                shape = values['mean'].shape
+                indices = list(itertools.product(*[range(i) for i in shape]))
+
+                for i in indices:
+                    buffer += self._csv_str(param, values, quantiles, i)
+
+            except AttributeError:
+                # Scalar node
+                buffer += self._csv_str(param, values, quantiles)
+
+        outfile.write(buffer)
+
+        outfile.close()","def save_statistics(filename, variables, alpha=None, start=None, batches=None): """"""Save summary statistics to a csv table. :Parameters: filename : string Filename to save output. variables : iterable List or array of variables for which statistics are to be generated. If it is not specified, all the tallied variables are summarized. alpha : float The alpha level for generating posterior intervals. Defaults to 0.05. start : int",LoRA
+0.6107784431137725,0.4727272727272727,0.5988023952095809,0.2823313208347965,0.2823313208347965,0,3.7354698181152344,"def mark_path(path):
+    """"""
+    Wrap given path as relative path relative to top directory.
+
+    Wrapper object will be handled specially in \
+    :paramref:`create_cmd_task.parts`.
+
+    :param path: Relative path relative to top directory.
+
+    :return: Wrapper object.
+    """"""
+    # If given path is not string,
+    # or given path is absolute path.
+    if not isinstance(path, str) or os.path.isabs(path):
+        # Get error message
+        msg = 'Error (2D9ZA): Given path is not relative path: {0}.'.format(
+            path
+        )
+
+        # Raise error
+        raise ValueError(msg)
+
+    # If given path is string,
+    # and given path is not absolute path.
+
+    # Wrap given path
+    return _ItemWrapper(type='path', item=path)","def wrap_cmd_task(self, path): """""" Wrap given path as relative path relative to top directory. Wrapper object will be handled specially in  :paramref:create_cmd_task.parts. :param path: Relative path relative to top directory. :return: Wrapper object. """""" if path is None: if path is None: if path is None: if path is None: if path is None: if path is None: if path is None",LoRA
+0.4302325581395348,0.3411764705882353,0.4069767441860465,0.15178926243385565,0.15178926243385565,0,3.3741507530212402,"def rows_to_png(out, rows, size):
+    """"""Write to the binary file `out` a single channel 8-bit PNG.
+    `rows` should yield each row in turn;
+    `size` should be the tuple of (width, height) in pixels.
+    """"""
+
+    # Write out PNG signature.
+    out.write(bytearray([137, 80, 78, 71, 13, 10, 26, 10]))
+    # Write out PNG header chunk.
+    header = struct.pack("">2LBBBBB"", size[0], size[1], 8, 0, 0, 0, 0)
+    write_chunk(out, b""IHDR"", header)
+
+    bs = bytearray()
+    for row in rows:
+        bs.append(0)
+        bs.extend(row)
+    write_chunk(out, b""IDAT"", zlib.compress(bs))
+
+    write_chunk(out, b""IEND"", bytearray())","def write(self, row, size=None): """"""Write to the binary file out a single channel 8-bit PNG. rows should yield each row in turn; size should be the tuple of (width, height) in pixels. """""" if row is None: if row is None: if row is None: if row is None: if row is None: if row is None: if row is None: if row is None: if row is None:",LoRA
+0.5432098765432098,0.20253164556962025,0.5432098765432098,0.2821414828306281,0.2821414828306281,0,2.201582193374634,"def _validate(self):
+        """"""
+        Validate the input data.
+        """"""
+        if self.data_format is FormatType.PYTHON:
+            self.data = self.raw_data
+        elif self.data_format is FormatType.JSON:
+            self._validate_json()
+        elif self.data_format is FormatType.YAML:
+            self._validate_yaml()","def validate_data(self): """"""Validate the input data."""""" if self.input_data is None: self.input_data = self.input_data if self.input_data is None: self.input_data = self.input_data if self.input_data: self.input_data = self.input_data",LoRA
+0.49673202614379086,0.3311258278145695,0.4444444444444444,0.09997561600065488,0.09997561600065488,0,2.1521823406219482,"def get_resource_manager(self, resource_type, data=None):
+        """"""get a resource manager or a given resource type.
+
+        assumes the query is for the same underlying cloud provider.
+        """"""
+        if '.' in resource_type:
+            provider_name, resource_type = resource_type.split('.', 1)
+        else:
+            provider_name = self.ctx.policy.provider_name
+
+        provider_resources = clouds[provider_name].resources
+        klass = provider_resources.get(resource_type)
+        if klass is None:
+            raise ValueError(resource_type)
+
+        # if we're already querying via config carry it forward
+        if not data and self.source_type == 'config' and getattr(
+                klass.get_model(), 'config_type', None):
+            return klass(self.ctx, {'source': self.source_type})
+        return klass(self.ctx, data or {})","def get_resource_manager(self): """"""get a resource manager or a given resource type. assumes the query is for the same underlying cloud provider. """""" if self.resource_manager is None: self.resource_manager = self.resource_manager(self.resource_manager) self.resource_manager = self.resource_manager",LoRA
+0.24390243902439024,0.125,0.24390243902439024,0.20253330605204975,0.20253330605204975,0,3.1132917404174805,"def update(self, rows):
+        """"""
+        Updates records in the db
+        """"""
+        if len(rows) == 0:
+            return
+
+        sql, sql_args = self.get_update_sql(rows)
+
+        # get the cursor to execute the query
+        cursor = self.get_cursor()
+
+        # execute the query
+        cursor.execute(sql, sql_args)","def update_db(self, db): """"""Updates records in the db"""""" db = self.db.update(db) db.update(db.update) db.update(db.update) db.update(db.update) db.update(db.update) db.update(db.update) db.update(db.update(db.update)",LoRA
+0.5252525252525253,0.24742268041237117,0.4444444444444445,0.09845043906817785,0.09845043906817785,0,1.8054170608520508,"def _int_growth(z, **cosmo):
+    """""" Returns integral of the linear growth factor from z=200 to z=z """"""
+
+    zmax = 200
+
+    if hasattr(z, ""__len__""):
+        for zval in z:
+            assert(zval < zmax)
+    else:
+        assert(z < zmax)
+
+    y, yerr = scipy.integrate.quad(
+        lambda z: (1 + z)/(cosmo['omega_M_0']*(1 + z)**3 +
+                           cosmo['omega_lambda_0'])**(1.5),
+        z, zmax)
+
+    return(y)","def _return_integral(z=200, z=z): """"""Returns integral of the linear growth factor from z=200 to z=z"""""" if z is None: return z if z is None: return z if z is None: return z",LoRA
+0.22033898305084745,0.10344827586206896,0.1864406779661017,0.03325749872832242,0.03325749872832242,0,1.8197591304779053,"def statsd_middleware_factory(app, handler):
+    """"""Send the application stats to statsd.""""""
+    @coroutine
+    def middleware(request):
+        """"""Send stats to statsd.""""""
+        timer = Timer()
+        timer.start()
+
+        statsd = yield from app.ps.metrics.client()
+        pipe = statsd.pipe()
+        pipe.incr('request.method.%s' % request.method)
+
+        try:
+            response = yield from handler(request)
+            pipe.incr('response.status.%s' % response.status)
+            return response
+
+        except HTTPException as exc:
+            pipe.incr('response.status.%s' % exc.status_code)
+            raise
+
+        except Exception:
+            pipe.incr('response.exception')
+            raise
+
+        finally:
+            timer.stop()
+            pipe.timing('response.time', timer.ms)
+            pipe.disconnect()
+
+    return middleware","def send_stats(self, statsd): """"""Send the application stats to statsd."""""" if self.statsd is None: self.statsd = self.statsd if self.statsd is None: self.statsd = self.statsd",LoRA
+0.5096153846153846,0.44660194174757284,0.4903846153846155,0.2240683313091921,0.2240683313091921,0,3.430389404296875,"def inpaint(self, win_size=3, rescale_factor=1.0):
+        """""" Fills in the zero pixels in the image.
+
+        Parameters
+        ----------
+        win_size : int
+            size of window to use for inpainting
+        rescale_factor : float
+            amount to rescale the image for inpainting, smaller numbers increase speed
+
+        Returns
+        -------
+        :obj:`ColorImage`
+            color image with zero pixels filled in
+        """"""
+        # get original shape
+        orig_shape = (self.height, self.width)
+        
+        # resize the image
+        resized_data = self.resize(rescale_factor, interp='nearest').data
+
+        # inpaint smaller image
+        mask = 1 * (np.sum(resized_data, axis=2) == 0)
+        inpainted_data = cv2.inpaint(resized_data, mask.astype(np.uint8),
+                                     win_size, cv2.INPAINT_TELEA)
+        inpainted_im = ColorImage(inpainted_data, frame=self.frame)
+
+        # fill in zero pixels with inpainted and resized image
+        filled_data = inpainted_im.resize(
+            orig_shape, interp='bilinear').data
+        new_data = self.data
+        new_data[self.data == 0] = filled_data[self.data == 0]
+        return ColorImage(new_data, frame=self.frame)","def fill_zero(self, win_size, rescale_factor): """""" Fills in the zero pixels in the image. Parameters ---------- win_size : int size of window to use for inpainting rescale_factor : float amount to rescale the image for inpainting, smaller numbers increase speed Returns ------- :obj:ColorImage color image with zero pixels filled in """""" if win_size: win_size = win_size = win",LoRA
+0.0662557781201849,0.058641975308641965,0.06317411402157164,1.7656149546638724e-13,1.7656149546638724e-13,0,3.581307888031006,"def MCLA(hdf5_file_name, cluster_runs, verbose = False, N_clusters_max = None):
+    """"""Meta-CLustering Algorithm for a consensus function.
+    
+    Parameters
+    ----------
+    hdf5_file_name : file handle or string
+    
+    cluster_runs : array of shape (n_partitions, n_samples)
+    
+    verbose : bool, optional (default = False)
+    
+    N_clusters_max : int, optional (default = None)
+    
+    Returns
+    -------
+    A vector specifying the cluster label to which each sample has been assigned
+    by the MCLA approximation algorithm for consensus clustering.
+
+    Reference
+    ---------
+    A. Strehl and J. Ghosh, ""Cluster Ensembles - A Knowledge Reuse Framework
+    for Combining Multiple Partitions"".
+    In: Journal of Machine Learning Research, 3, pp. 583-617. 2002
+    """"""
+
+    print('\n*****')
+    print('INFO: Cluster_Ensembles: MCLA: consensus clustering using MCLA.')
+
+    if N_clusters_max == None:
+        N_clusters_max = int(np.nanmax(cluster_runs)) + 1
+
+    N_runs = cluster_runs.shape[0]
+    N_samples = cluster_runs.shape[1]
+
+    print(""INFO: Cluster_Ensembles: MCLA: preparing graph for meta-clustering."")
+
+    hypergraph_adjacency = load_hypergraph_adjacency(hdf5_file_name)
+    w = hypergraph_adjacency.sum(axis = 1)
+
+    N_rows = hypergraph_adjacency.shape[0]
+
+    print(""INFO: Cluster_Ensembles: MCLA: done filling hypergraph adjacency matrix. ""
+          ""Starting computation of Jaccard similarity matrix."")
+
+    # Next, obtain a matrix of pairwise Jaccard similarity scores between the rows of the hypergraph adjacency matrix.
+    with tables.open_file(hdf5_file_name, 'r+') as fileh:
+        FILTERS = get_compression_filter(4 * (N_rows ** 2))
+    
+        similarities_MCLA = fileh.create_carray(fileh.root.consensus_group, 
+                                   'similarities_MCLA', tables.Float32Atom(), 
+                                   (N_rows, N_rows), ""Matrix of pairwise Jaccard ""
+                                   ""similarity scores"", filters = FILTERS)
+
+        scale_factor = 100.0
+
+        print(""INFO: Cluster_Ensembles: MCLA: ""
+              ""starting computation of Jaccard similarity matrix."")
+
+        squared_MCLA = hypergraph_adjacency.dot(hypergraph_adjacency.transpose())
+
+        squared_sums = hypergraph_adjacency.sum(axis = 1)
+        squared_sums = np.squeeze(np.asarray(squared_sums))
+
+        chunks_size = get_chunk_size(N_rows, 7)
+        for i in range(0, N_rows, chunks_size):
+            n_dim = min(chunks_size, N_rows - i)
+
+            temp = squared_MCLA[i:min(i+chunks_size, N_rows), :].todense()
+            temp = np.squeeze(np.asarray(temp))
+
+            x = squared_sums[i:min(i+chunks_size, N_rows)]
+            x = x.reshape(-1, 1)
+            x = np.dot(x, np.ones((1, squared_sums.size)))
+
+            y = np.dot(np.ones((n_dim, 1)), squared_sums.reshape(1, -1))
+        
+            temp = np.divide(temp, x + y - temp)
+            temp *= scale_factor
+
+            Jaccard_matrix = np.rint(temp)
+            similarities_MCLA[i:min(i+chunks_size, N_rows)] = Jaccard_matrix
+
+            del Jaccard_matrix, temp, x, y
+            gc.collect()
+ 
+    # Done computing the matrix of pairwise Jaccard similarity scores.
+    print(""INFO: Cluster_Ensembles: MCLA: done computing the matrix of ""
+          ""pairwise Jaccard similarity scores."")
+
+    cluster_labels = cmetis(hdf5_file_name, N_clusters_max, w)
+    cluster_labels = one_to_max(cluster_labels)
+    # After 'cmetis' returns, we are done with clustering hyper-edges
+
+    # We are now ready to start the procedure meant to collapse meta-clusters.
+    N_consensus = np.amax(cluster_labels) + 1
+
+    fileh = tables.open_file(hdf5_file_name, 'r+')
+
+    FILTERS = get_compression_filter(4 * N_consensus * N_samples)
+    
+    clb_cum = fileh.create_carray(fileh.root.consensus_group, 'clb_cum', 
+                                  tables.Float32Atom(), (N_consensus, N_samples), 
+                                  'Matrix of mean memberships, forming meta-clusters', 
+                                  filters = FILTERS)  
+ 
+    chunks_size = get_chunk_size(N_samples, 7)
+    for i in range(0, N_consensus, chunks_size):
+        x = min(chunks_size, N_consensus - i)
+        matched_clusters = np.where(cluster_labels == np.reshape(np.arange(i, min(i + chunks_size, N_consensus)), newshape = (x, 1)))
+        M = np.zeros((x, N_samples))
+        for j in range(x):
+            coord = np.where(matched_clusters[0] == j)[0]
+            M[j] = np.asarray(hypergraph_adjacency[matched_clusters[1][coord], :].mean(axis = 0))
+        clb_cum[i:min(i+chunks_size, N_consensus)] = M
+    
+    # Done with collapsing the hyper-edges into a single meta-hyper-edge, 
+    # for each of the (N_consensus - 1) meta-clusters.
+
+    del hypergraph_adjacency
+    gc.collect()
+
+    # Each object will now be assigned to its most associated meta-cluster.
+    chunks_size = get_chunk_size(N_consensus, 4)
+    N_chunks, remainder = divmod(N_samples, chunks_size)
+    if N_chunks == 0:
+        null_columns = np.where(clb_cum[:].sum(axis = 0) == 0)[0]
+    else:
+        szumsz = np.zeros(0)
+        for i in range(N_chunks):
+            M = clb_cum[:, i*chunks_size:(i+1)*chunks_size]
+            szumsz = np.append(szumsz, M.sum(axis = 0))
+        if remainder != 0:
+            M = clb_cum[:, N_chunks*chunks_size:N_samples]
+            szumsz = np.append(szumsz, M.sum(axis = 0))
+        null_columns = np.where(szumsz == 0)[0]
+
+    if null_columns.size != 0:
+        print(""INFO: Cluster_Ensembles: MCLA: {} objects with all zero associations ""
+              ""in 'clb_cum' matrix of meta-clusters."".format(null_columns.size))
+        clb_cum[:, null_columns] = np.random.rand(N_consensus, null_columns.size)
+
+    random_state = np.random.RandomState()
+
+    tmp = fileh.create_carray(fileh.root.consensus_group, 'tmp', tables.Float32Atom(),
+                              (N_consensus, N_samples), ""Temporary matrix to help with ""
+                              ""collapsing to meta-hyper-edges"", filters = FILTERS)
+
+    chunks_size = get_chunk_size(N_samples, 2)
+    N_chunks, remainder = divmod(N_consensus, chunks_size)
+    if N_chunks == 0:
+        tmp[:] = random_state.rand(N_consensus, N_samples)
+    else:
+        for i in range(N_chunks):
+            tmp[i*chunks_size:(i+1)*chunks_size] = random_state.rand(chunks_size, N_samples)
+        if remainder !=0:
+            tmp[N_chunks*chunks_size:N_consensus] = random_state.rand(remainder, N_samples)
+
+    expr = tables.Expr(""clb_cum + (tmp / 10000)"")
+    expr.set_output(clb_cum)
+    expr.eval()
+
+    expr = tables.Expr(""abs(tmp)"")
+    expr.set_output(tmp)
+    expr.eval()
+
+    chunks_size = get_chunk_size(N_consensus, 2)
+    N_chunks, remainder = divmod(N_samples, chunks_size)
+    if N_chunks == 0:
+        sum_diag = tmp[:].sum(axis = 0)
+    else:
+        sum_diag = np.empty(0)
+        for i in range(N_chunks):
+            M = tmp[:, i*chunks_size:(i+1)*chunks_size]
+            sum_diag = np.append(sum_diag, M.sum(axis = 0))
+        if remainder != 0:
+            M = tmp[:, N_chunks*chunks_size:N_samples]
+            sum_diag = np.append(sum_diag, M.sum(axis = 0))
+
+    fileh.remove_node(fileh.root.consensus_group, ""tmp"") 
+    # The corresponding disk space will be freed after a call to 'fileh.close()'.
+
+    inv_sum_diag = np.reciprocal(sum_diag.astype(float))
+
+    if N_chunks == 0:
+        clb_cum *= inv_sum_diag
+        max_entries = np.amax(clb_cum, axis = 0)
+    else:
+        max_entries = np.zeros(N_samples)
+        for i in range(N_chunks):
+            clb_cum[:, i*chunks_size:(i+1)*chunks_size] *= inv_sum_diag[i*chunks_size:(i+1)*chunks_size]
+            max_entries[i*chunks_size:(i+1)*chunks_size] = np.amax(clb_cum[:, i*chunks_size:(i+1)*chunks_size], axis = 0)
+        if remainder != 0:
+            clb_cum[:, N_chunks*chunks_size:N_samples] *= inv_sum_diag[N_chunks*chunks_size:N_samples]
+            max_entries[N_chunks*chunks_size:N_samples] = np.amax(clb_cum[:, N_chunks*chunks_size:N_samples], axis = 0)
+
+    cluster_labels = np.zeros(N_samples, dtype = int)
+    winner_probabilities = np.zeros(N_samples)
+    
+    chunks_size = get_chunk_size(N_samples, 2)
+    for i in reversed(range(0, N_consensus, chunks_size)):
+        ind = np.where(np.tile(max_entries, (min(chunks_size, N_consensus - i), 1)) == clb_cum[i:min(i+chunks_size, N_consensus)])
+        cluster_labels[ind[1]] = i + ind[0]
+        winner_probabilities[ind[1]] = clb_cum[(ind[0] + i, ind[1])]       
+
+    # Done with competing for objects.
+
+    cluster_labels = one_to_max(cluster_labels)
+
+    print(""INFO: Cluster_Ensembles: MCLA: delivering ""
+          ""{} clusters."".format(np.unique(cluster_labels).size))
+    print(""INFO: Cluster_Ensembles: MCLA: average posterior ""
+          ""probability is {}"".format(np.mean(winner_probabilities)))
+    if cluster_labels.size <= 7:
+        print(""INFO: Cluster_Ensembles: MCLA: the winning posterior probabilities are:"")
+        print(winner_probabilities)
+        print(""'INFO: Cluster_Ensembles: MCLA: the full posterior probabilities are:"")
+        print(clb_cum)
+
+    fileh.remove_node(fileh.root.consensus_group, ""clb_cum"")
+    fileh.close()
+
+    return cluster_labels","def cluster_runs(self, hdf5_file_name, cluster_runs, verbose, N_clusters_max): """""" Meta-CLustering Algorithm for a consensus function. Parameters ---------- hdf5_file_name : file handle or string cluster_runs : array of shape (n_partitions, n_samples) verbose : bool, optional (default = False) N_clusters",LoRA
+0.7052023121387283,0.6666666666666667,0.7052023121387283,0.29613636008313743,0.29613636008313743,0,3.584606409072876,"def nice_join(seq, sep="", "", conjuction=""or""):
+    ''' Join together sequences of strings into English-friendly phrases using
+    the conjunction ``or`` when appropriate.
+
+    Args:
+        seq (seq[str]) : a sequence of strings to nicely join
+        sep (str, optional) : a sequence delimiter to use (default: "", "")
+        conjunction (str or None, optional) : a conjuction to use for the last
+            two items, or None to reproduce basic join behaviour (default: ""or"")
+
+    Returns:
+        a joined string
+
+    Examples:
+        >>> nice_join([""a"", ""b"", ""c""])
+        'a, b or c'
+
+    '''
+    seq = [str(x) for x in seq]
+
+    if len(seq) <= 1 or conjuction is None:
+        return sep.join(seq)
+    else:
+        return ""%s %s %s"" % (sep.join(seq[:-1]), conjuction, seq[-1])","def join(self, seq, sep, conjunction): """""" Join together sequences of strings into English-friendly phrases using the conjunction or when appropriate. Args: seq (seq[str]) : a sequence of strings to nicely join sep (str, optional) : a sequence delimiter to use (default: "", "") conjunction (str or None, optional) : a conjuction to use for the last two items, or None to reproduce basic join behaviour (default: """,LoRA
+0.3787375415282392,0.35451505016722407,0.3787375415282392,0.033494497075073834,0.033494497075073834,0,3.5751960277557373,"def get_option(
+            self,
+            section_name,
+            key_name,
+            args_option=None,
+            args_default=None,
+    ):
+        """"""evaluates the requested option and returns the correct value
+
+        Notes:
+            Priority order
+            1. args given at runtile
+            2. <config_file>_local.cfg -- untracked config with #SECRETS
+            3. <config_file>.cfg -- tracked 'master' config without #SECRETS
+            4. environment varabile
+            5. args_default -- function default w/o global config
+
+        Args:
+            section_name (str): section level name in config
+            key_name (str): key name for option in config
+            args_option (any): arg option given by a function
+            args_default (any): arg default given by a function
+
+        Returns:
+            str: appropriate response as per priority order
+
+        """"""
+        if args_option != args_default and\
+           args_option is not None:
+            self.logger.debug('-- using function args')
+            return args_option
+
+        section_info = section_name + '.' + key_name
+
+        option = None
+        try:
+            option = check_value(self.local_config, section_name, key_name)
+            self.logger.debug('-- using local config')
+            if option:
+                return option
+        except (KeyError, configparser.NoOptionError, configparser.NoSectionError):
+            self.logger.debug('`%s` not found in local config', section_info)
+
+        try:
+            option = check_value(self.global_config, section_name, key_name)
+            self.logger.debug('-- using global config')
+            if option:
+                return option
+        except (KeyError, configparser.NoOptionError, configparser.NoSectionError):
+            self.logger.warning('`%s` not found in global config', section_info)
+
+        env_option = get_value_from_environment(section_name, key_name, logger=self.logger)
+        if env_option:
+            self.logger.debug('-- using environment value')
+            return env_option
+
+        self.logger.debug('-- using default argument')
+        return args_default","def evaluate(self, section_name, key_name): """""" evaluates the requested option and returns correct value Notes: Priority order 1. args given at runtile 2. config_file>_local.cfg -- untracked config with #SECRETS 3. config_file>.cfg -- tracked 'master' config without #SECRETS 4. environment varabile 5. args_default -- function default w/o global config Args: section_name (str): section",LoRA
+0.3489096573208723,0.3260188087774295,0.3364485981308411,0.02900419943019431,0.02900419943019431,0,3.5793263912200928,"def write_observation_zone(self, **kw):
+        """"""
+        Write an observation zone declaration to the file::
+
+            writer.write_observation_zone(
+                type=ObservationZoneType.CYLINDER,
+                radius=30000,
+            )
+
+            # <ObservationZone type=""Cylinder"" radius=""30000""/>
+
+        The required parameters depend on the type parameter. Different
+        observation zone types require different parameters.
+
+        :param type: observation zone type (one of the constants in
+            :class:`~aerofiles.xcsoar.constants.ObservationZoneType`)
+
+        :param length: length of the line
+            (only used with type
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.LINE`)
+        :param radius: (outer) radius of the observation zone
+            (used with types
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.CYLINDER`,
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.SECTOR`,
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.SYMMETRIC_QUADRANT` and
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.CUSTOM_KEYHOLE`)
+        :param inner_radius: inner radius of the observation zone
+            (only used with type
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.CUSTOM_KEYHOLE`)
+        :param angle: angle of the observation zone
+            (only used with type
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.CUSTOM_KEYHOLE`)
+        :param start_radial: start radial of the observation zone
+            (only used with type
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.SECTOR`)
+        :param end_radial: end radial of the observation zone
+            (only used with type
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.SECTOR`)
+        """"""
+
+        assert 'type' in kw
+
+        if kw['type'] == ObservationZoneType.LINE:
+            assert 'length' in kw
+
+        elif kw['type'] == ObservationZoneType.CYLINDER:
+            assert 'radius' in kw
+
+        elif kw['type'] == ObservationZoneType.SECTOR:
+            assert 'radius' in kw
+            assert 'start_radial' in kw
+            assert 'end_radial' in kw
+
+        elif kw['type'] == ObservationZoneType.SYMMETRIC_QUADRANT:
+            assert 'radius' in kw
+
+        elif kw['type'] == ObservationZoneType.CUSTOM_KEYHOLE:
+            assert 'radius' in kw
+            assert 'inner_radius' in kw
+            assert 'angle' in kw
+
+        self.write_tag('ObservationZone', **kw)","def write_observation_zone(self, type, radius=30000): """"""Write an observation zone declaration to the file:: writer.write_observation_zone( type=ObservationZoneType.CYLINDER, radius=30000, ) # ObservationZone type=""Cylinder"" radius=""30000""/> The required parameters depend on the type parameter. Different observation zone types require different parameters. :param type: observation zone type (one of the constants in :class:aerofiles.x",LoRA
+0.7674418604651163,0.6428571428571428,0.7209302325581396,0.4094957543130124,0.4094957543130124,0,3.402801990509033,"def char(self, c: str) -> None:
+        """"""Parse the specified character.
+
+        Args:
+            c: One-character string.
+
+        Raises:
+            EndOfInput: If past the end of `self.input`.
+            UnexpectedInput: If the next character is different from `c`.
+        """"""
+        if self.peek() == c:
+            self.offset += 1
+        else:
+            raise UnexpectedInput(self, f""char '{c}'"")","def parse_character(c, EndOfInput, UnexpectedInput): """"""Parse the specified character. Args: c: One-character string. Raises: EndOfInput: If past the end of self.input. UnexpectedInput: If the next character is different from c. """""" if c is None: return None",LoRA
+0.3569230769230769,0.3281733746130031,0.3384615384615384,0.01783030219268529,0.01783030219268529,0,3.58449387550354,"def deprecated(*args, **kwargs):
+    """"""
+    This is a decorator which can be used to mark functions
+    as deprecated. It will result in a warning being emitted
+    when the function is used.
+
+    **Classic usage:**
+
+    To use this, decorate your deprecated function with **@deprecated** decorator:
+
+    .. code-block:: python
+
+       from deprecated import deprecated
+
+
+       @deprecated
+       def some_old_function(x, y):
+           return x + y
+
+    You can also decorate a class or a method:
+
+    .. code-block:: python
+
+       from deprecated import deprecated
+
+
+       class SomeClass(object):
+           @deprecated
+           def some_old_method(self, x, y):
+               return x + y
+
+
+       @deprecated
+       class SomeOldClass(object):
+           pass
+
+    You can give a ""reason"" message to help the developer to choose another function/class,
+    and a ""version"" number to specify the starting version number of the deprecation.
+
+    .. code-block:: python
+
+       from deprecated import deprecated
+
+
+       @deprecated(reason=""use another function"", version='1.2.0')
+       def some_old_function(x, y):
+           return x + y
+
+    """"""
+    if args and isinstance(args[0], string_types):
+        kwargs['reason'] = args[0]
+        args = args[1:]
+
+    if args and not callable(args[0]):
+        raise TypeError(repr(type(args[0])))
+
+    if args:
+        action = kwargs.get('action', 'always')
+        category = kwargs.get('category', DeprecationWarning)
+        adapter_cls = kwargs.pop('adapter_cls', ClassicAdapter)
+        adapter = adapter_cls(**kwargs)
+
+        wrapped = args[0]
+        if inspect.isclass(wrapped):
+            wrapped = adapter(wrapped)
+            return wrapped
+
+        elif inspect.isroutine(wrapped):
+
+            @wrapt.decorator(adapter=adapter)
+            def wrapper_function(wrapped_, instance_, args_, kwargs_):
+                msg = adapter.get_deprecated_msg(wrapped_, instance_)
+                with warnings.catch_warnings():
+                    warnings.simplefilter(action, category)
+                    warnings.warn(msg, category=category, stacklevel=2)
+                return wrapped_(*args_, **kwargs_)
+
+            return wrapper_function(wrapped)
+
+        else:
+            raise TypeError(repr(type(wrapped)))
+
+    return functools.partial(deprecated, **kwargs)","def mark_deprecated(self, code-block): """""" This is a decorator which can be used to mark functions as deprecated. It will result in a warning being emitted when the function is used. **Classic usage:** To use this, decorate your deprecated function with **@deprecated** decorator: .. code-block:: python from deprecated import deprecated @deprecated def some_old_function(x, y): return",LoRA
+0.6346153846153846,0.6116504854368933,0.625,0.2787771968322197,0.2787771968322197,0,3.578751564025879,"def configure_from_environment(self, whitelist_keys=False, whitelist=None):
+        """"""Configure from the entire set of available environment variables.
+
+        This is really a shorthand for grabbing ``os.environ`` and passing to
+        :meth:`_configure_from_mapping`.
+
+        As always, only uppercase keys are loaded.
+
+        Keyword Args:
+            whitelist_keys (bool):
+                Should we whitelist the keys by only pulling those that are
+                already present in the config? Useful for avoiding adding
+                things like ``LESSPIPE`` to your app config. If no whitelist is
+                provided, we use the current config keys as our whitelist.
+            whitelist (list[str]):
+                An explicit list of keys that should be allowed. If provided
+                and ``whitelist_keys`` is true, we will use that as our
+                whitelist instead of pre-existing app config keys.
+
+        Returns:
+            fleaker.base.BaseApplication:
+                Returns itself.
+        """"""
+        self._configure_from_mapping(os.environ, whitelist_keys=whitelist_keys,
+                                     whitelist=whitelist)
+
+        return self","def configure_from_mapping(self, whitelist_keys): """"""Configure from the entire set of available environment variables. This is really a shorthand for grabbing os.environ and passing to :meth:_configure_from_mapping. As always, only uppercase keys are loaded. Keyword Args: whitelist_keys (bool): Should we whitelist the keys by only pulling those that are already present in the config? Useful for avoiding adding things like LESS",LoRA
+0.24719101123595508,0.16384180790960454,0.2359550561797753,0.001784458501144779,0.001784458501144779,0,3.4829468727111816,"def parseDate(self, dateString):
+        """"""
+        Parse short-form date strings::
+
+            '05/28/2006' or '04.21'
+
+        @type  dateString: string
+        @param dateString: text to convert to a C{datetime}
+
+        @rtype:  struct_time
+        @return: calculated C{struct_time} value of dateString
+        """"""
+        yr, mth, dy, hr, mn, sec, wd, yd, isdst = time.localtime()
+
+        # values pulled from regex's will be stored here and later
+        # assigned to mth, dy, yr based on information from the locale
+        # -1 is used as the marker value because we want zero values
+        # to be passed thru so they can be flagged as errors later
+        v1 = -1
+        v2 = -1
+        v3 = -1
+
+        s = dateString
+        m = self.ptc.CRE_DATE2.search(s)
+        if m is not None:
+            index = m.start()
+            v1    = int(s[:index])
+            s     = s[index + 1:]
+
+        m = self.ptc.CRE_DATE2.search(s)
+        if m is not None:
+            index = m.start()
+            v2    = int(s[:index])
+            v3    = int(s[index + 1:])
+        else:
+            v2 = int(s.strip())
+
+        v = [ v1, v2, v3 ]
+        d = { 'm': mth, 'd': dy, 'y': yr }
+
+        for i in range(0, 3):
+            n = v[i]
+            c = self.ptc.dp_order[i]
+            if n >= 0:
+                d[c] = n
+
+        # if the year is not specified and the date has already
+        # passed, increment the year
+        if v3 == -1 and ((mth > d['m']) or (mth == d['m'] and dy > d['d'])):
+            yr = d['y'] + 1
+        else:
+            yr  = d['y']
+
+        mth = d['m']
+        dy  = d['d']
+
+        # birthday epoch constraint
+        if yr < self.ptc.BirthdayEpoch:
+            yr += 2000
+        elif yr < 100:
+            yr += 1900
+
+        if _debug:
+            print 'parseDate: ', yr, mth, dy, self.ptc.daysInMonth(mth, yr)
+
+        if (mth > 0 and mth <= 12) and \
+           (dy > 0 and dy <= self.ptc.daysInMonth(mth, yr)):
+            sourceTime = (yr, mth, dy, hr, mn, sec, wd, yd, isdst)
+        else:
+            self.dateFlag = 0
+            self.timeFlag = 0
+            sourceTime    = time.localtime() # return current time if date
+                                             # string is invalid
+
+        return sourceTime","def parse_date(self, dateString, dateString): """"""Parse short-form date strings:: '05/28/2006' or '04.21' @type dateString: string @param dateString: text to convert to a Cdatetime @rtype: struct_time @return: calculated Cstruct_time value of dateString """""" if dateString is None: if dateString is None: if dateString is None: if dateString",LoRA
+0.5179856115107914,0.4087591240875912,0.5035971223021581,0.20973309144918587,0.20973309144918587,0,3.3332531452178955,"def _get_base_command(self):
+        """"""Returns the base command plus command-line options.
+
+        Handles everything up to and including the classpath.  The
+        positional training parameters are added by the
+        _input_handler_decorator method.
+        """"""
+        cd_command = ''.join(['cd ', str(self.WorkingDir), ';'])
+        jvm_command = ""java""
+        jvm_args = self._commandline_join(
+            [self.Parameters[k] for k in self._jvm_parameters])
+        cp_args = '-cp ""%s"" %s' % (self._get_jar_fp(), self.TrainingClass)
+
+        command_parts = [cd_command, jvm_command, jvm_args, cp_args]
+        return self._commandline_join(command_parts).strip()","def _input_handler_decorator(self): """""" Returns the base command plus command-line options. Handles everything up to and including the classpath. The positional training parameters are added by the _input_handler_decorator method. """""" if self._input_handler_decorator is None: self._input_handler_decorator = self._input_handler_decorator = self._input_handler_decorator = self._in",LoRA
+0.2222222222222222,0.16494845360824742,0.2222222222222222,0.14211713852824073,0.14211713852824073,0,3.120891571044922,"def heappush(heap, item):
+    """"""Push item onto heap, maintaining the heap invariant.""""""
+    heap.append(item)
+    _siftdown(heap, 0, len(heap)-1)","def push(self, item): """"""Push item onto heap, maintaining the heap invariant. """""" if item is None: if item is None: if item is None: if item is None: if item is None: if item is None: if item is None: if item is None: if item is None: if item is None: if item is None: if item is None: if item is None: if item is None: if item is None: if item is None: if item",LoRA
+0.6723404255319149,0.6609442060085836,0.6723404255319149,0.32812534967756957,0.32812534967756957,0,3.579120635986328,"def remove_callback(self, name, before=None, after=None):
+        """"""Remove a beforeback, and afterback pair from this Spectator
+
+        If ``before`` and ``after`` are None then all callbacks for
+        the given method will be removed. Otherwise, only the exact
+        callback pair will be removed.
+
+        Parameters
+        ----------
+        name: str
+            The name of the method the callback pair is associated with.
+        before: None or callable
+            The beforeback that was originally registered to the given method.
+        after: None or callable
+            The afterback that was originally registered to the given method.
+        """"""
+        if isinstance(name, (list, tuple)):
+            for name in name:
+                self.remove_callback(name, before, after)
+        elif before is None and after is None:
+            del self._callback_registry[name]
+        else:
+            if name in self._callback_registry:
+                callback_list = self._callback_registry[name]
+            else:
+                callback_list = []
+                self._callback_registry[name] = callback_list
+            callback_list.remove((before, after))
+            if len(callback_list) == 0:
+                # cleanup if all callbacks are gone
+                del self._callback_registry[name]","def remove_callback(self, name): """"""Remove a beforeback, and afterback pair from this Spectator If before and after are None then all callbacks for the given method will be removed. Otherwise, only the exact callback pair will be removed. Parameters ---------- name: str The name of the method the callback pair is associated with. before: None or callable The beforeback that was originally registered to the given method. after: None or callable The afterback that was originally registered to the",LoRA
+0.12210526315789474,0.09302325581395349,0.10526315789473685,2.404073070729713e-05,2.404073070729713e-05,0,3.5370726585388184,"def rpn_losses(anchor_labels, anchor_boxes, label_logits, box_logits):
+    """"""
+    Args:
+        anchor_labels: fHxfWxNA
+        anchor_boxes: fHxfWxNAx4, encoded
+        label_logits:  fHxfWxNA
+        box_logits: fHxfWxNAx4
+
+    Returns:
+        label_loss, box_loss
+    """"""
+    with tf.device('/cpu:0'):
+        valid_mask = tf.stop_gradient(tf.not_equal(anchor_labels, -1))
+        pos_mask = tf.stop_gradient(tf.equal(anchor_labels, 1))
+        nr_valid = tf.stop_gradient(tf.count_nonzero(valid_mask, dtype=tf.int32), name='num_valid_anchor')
+        nr_pos = tf.identity(tf.count_nonzero(pos_mask, dtype=tf.int32), name='num_pos_anchor')
+        # nr_pos is guaranteed >0 in C4. But in FPN. even nr_valid could be 0.
+
+        valid_anchor_labels = tf.boolean_mask(anchor_labels, valid_mask)
+    valid_label_logits = tf.boolean_mask(label_logits, valid_mask)
+
+    with tf.name_scope('label_metrics'):
+        valid_label_prob = tf.nn.sigmoid(valid_label_logits)
+        summaries = []
+        with tf.device('/cpu:0'):
+            for th in [0.5, 0.2, 0.1]:
+                valid_prediction = tf.cast(valid_label_prob > th, tf.int32)
+                nr_pos_prediction = tf.reduce_sum(valid_prediction, name='num_pos_prediction')
+                pos_prediction_corr = tf.count_nonzero(
+                    tf.logical_and(
+                        valid_label_prob > th,
+                        tf.equal(valid_prediction, valid_anchor_labels)),
+                    dtype=tf.int32)
+                placeholder = 0.5   # A small value will make summaries appear lower.
+                recall = tf.cast(tf.truediv(pos_prediction_corr, nr_pos), tf.float32)
+                recall = tf.where(tf.equal(nr_pos, 0), placeholder, recall, name='recall_th{}'.format(th))
+                precision = tf.cast(tf.truediv(pos_prediction_corr, nr_pos_prediction), tf.float32)
+                precision = tf.where(tf.equal(nr_pos_prediction, 0),
+                                     placeholder, precision, name='precision_th{}'.format(th))
+                summaries.extend([precision, recall])
+        add_moving_summary(*summaries)
+
+    # Per-level loss summaries in FPN may appear lower due to the use of a small placeholder.
+    # But the total RPN loss will be fine.  TODO make the summary op smarter
+    placeholder = 0.
+    label_loss = tf.nn.sigmoid_cross_entropy_with_logits(
+        labels=tf.cast(valid_anchor_labels, tf.float32), logits=valid_label_logits)
+    label_loss = tf.reduce_sum(label_loss) * (1. / cfg.RPN.BATCH_PER_IM)
+    label_loss = tf.where(tf.equal(nr_valid, 0), placeholder, label_loss, name='label_loss')
+
+    pos_anchor_boxes = tf.boolean_mask(anchor_boxes, pos_mask)
+    pos_box_logits = tf.boolean_mask(box_logits, pos_mask)
+    delta = 1.0 / 9
+    box_loss = tf.losses.huber_loss(
+        pos_anchor_boxes, pos_box_logits, delta=delta,
+        reduction=tf.losses.Reduction.SUM) / delta
+    box_loss = box_loss * (1. / cfg.RPN.BATCH_PER_IM)
+    box_loss = tf.where(tf.equal(nr_pos, 0), placeholder, box_loss, name='box_loss')
+
+    add_moving_summary(label_loss, box_loss, nr_valid, nr_pos)
+    return [label_loss, box_loss]","def anchor_labels(self, anchor_boxes, encoded label_logits: fHxfWxNA box_logits: fHxfWxNAx4 Returns: label_loss, box_loss): """"""Args: anchor_labels: fHxfWxNA anchor_boxes: fHxfWxNAx4, encoded label_logits: fHxfWxNA box_logits: fHxfWxNAx4 Return",LoRA
+0.3361344537815126,0.15384615384615385,0.3361344537815126,0.11558856025641348,0.11558856025641348,0,3.1233673095703125,"def _should_defer(input_layer, args, kwargs):
+  """"""Checks to see if any of the args are templates.""""""
+  for arg in itertools.chain([input_layer], args, six.itervalues(kwargs)):
+    if isinstance(arg, (_DeferredLayer, UnboundVariable)):
+      return True
+    elif (isinstance(arg, collections.Sequence) and
+          not isinstance(arg, six.string_types)):
+      if _should_defer(None, arg, {}):
+        return True
+    elif isinstance(arg, collections.Mapping):
+      if _should_defer(None, (), arg):
+        return True
+  return False","def check_args(self, args): """"""Checks to see if any of the args are templates. """""" args = args.get(args.get(args.get(args.get(args.get(args.get(args.get(args.get(args.get(args.get(args.get(args.get(args.get(args.get(args.get(args.get(args.get(args",LoRA
+0.43750000000000006,0.2978723404255319,0.4166666666666667,0.03507259793659686,0.03507259793659686,0,1.6853399276733398,"def corelinkformat(resource):
+        """"""
+        Return a formatted string representation of the corelinkformat in the tree.
+
+        :return: the string
+        """"""
+        msg = ""<"" + resource.path + "">;""
+        assert(isinstance(resource, Resource))
+        keys = sorted(list(resource.attributes.keys()))
+        for k in keys:
+            method = getattr(resource, defines.corelinkformat[k], None)
+            if method is not None and method != """":
+                v = method
+                msg = msg[:-1] + "";"" + str(v) + "",""
+            else:
+                v = resource.attributes[k]
+                if v is not None:
+                    msg = msg[:-1] + "";"" + k + ""="" + v + "",""
+        return msg","def corelinkformat(self, corelinkformat): """""" Return a formatted string representation of the corelinkformat in the tree. :return: the string """""" if corelinkformat is None: return corelinkformat",LoRA
+0.5084745762711865,0.38596491228070173,0.47457627118644063,0.30127776921312116,0.30127776921312116,0,3.2983815670013428,"def contourf(x, y, z, ax, **kwargs):
+    """"""
+    Filled contour plot of 2d DataArray
+
+    Wraps :func:`matplotlib:matplotlib.pyplot.contourf`
+    """"""
+    primitive = ax.contourf(x, y, z, **kwargs)
+    return primitive","def contour_plot(matplotlib, pyplot): """""" Filled contour plot of 2d DataArray Wraps :func:matplotlib:matplotlib.pyplot.contourf """""" if pyplotlib.pyplot.contourf is None: pyplotlib.pyplot.contourf = pyplotlib.pyplotlib.pyplotlib.pyplotlib.pyplo",LoRA
+0.5797101449275363,0.38805970149253727,0.5797101449275363,0.5121805949017879,0.5121805949017879,0,2.0066778659820557,"def blink(self, blink):
+        """"""Turn on or off cursor blinking.  Set blink to True to enable blinking.""""""
+        if blink:
+            self.displaycontrol |= LCD_BLINKON
+        else:
+            self.displaycontrol &= ~LCD_BLINKON
+        self.write8(LCD_DISPLAYCONTROL | self.displaycontrol)","def turn_on_cursor_blinding(self): """""" Turn on or off cursor blinking. Set blink to True to enable blinking."""""" if self.cursor_blinding is None: self.cursor_blinding = self.cursor_blinding return self.cursor_blinding",LoRA
+0.4905660377358491,0.3529411764705882,0.4905660377358491,0.3163654059911084,0.3163654059911084,0,1.6563422679901123,"def _clear_config(self):
+        # type: () -> None
+        """"""Clearout config object in memory.""""""
+        for section in self._config.sections():
+            self._config.remove_section(section)","def clear_config(self, config): """"""Clearout config object in memory."""""" config = self.config.get(config) self.config.get(config) self.config.get(config) self.config.get(config) self.config.get(config)",LoRA
+0.7272727272727272,0.627906976744186,0.7272727272727272,0.6440087203472754,0.6440087203472754,0,3.33874773979187,"def unregistercls(self, schemacls=None, data_types=None):
+    """"""Unregister schema class or associated data_types.
+
+    :param type schemacls: sub class of Schema.
+    :param list data_types: data_types to unregister.
+    """"""
+    return _REGISTRY.unregistercls(schemacls=schemacls, data_types=data_types)","def unregister_data_types(self, schemacls, data_types): """"""Unregister schema class or associated data_types. :param type schemacls: sub class of Schema. :param list data_types: data_types to unregister. """""" schemacls = self._unregister_data_types(data_types) self._unregister_data_types(data_types) self._unregister_data_types(data_types",LoRA
+0.7046632124352332,0.6806282722513088,0.6943005181347149,0.33926904057750373,0.33926904057750373,0,3.5817699432373047,"def md_to_pdf(input_name, output_name):
+    """"""
+    Converts an input MarkDown file to a PDF of the given output name.
+
+    Parameters
+    ==========
+    input_name : String
+    Relative file location of the input file to where this function is being called.
+
+    output_name : String
+    Relative file location of the output file to where this function is being called. Note that .pdf can be omitted.
+
+    Examples
+    ========
+    Suppose we have a directory as follows:
+    data/
+        doc.md
+    
+    To convert the document:
+    >>> from aide_document import convert
+    >>> convert.md_to_pdf('data/doc.md', 'data/doc.pdf')
+
+    .pdf can also be omitted from the second argument.
+    """"""
+
+    if output_name[-4:] == '.pdf':
+        os.system(""pandoc "" + input_name + "" -o "" + output_name)
+    else:
+        os.system(""pandoc "" + input_name + "" -o "" + output_name + "".pdf"" )","def convert(self, input_name, output_name): """""" Converts an input MarkDown file to a PDF of the given output name. Parameters ========= input_name : String Relative file location of the input file to where this function is being called. output_name : String Relative file location of the output file to where this function is being called. Note that .pdf can be omitted. Examples ========== Suppose we have a directory as follows:",LoRA
+0.6971428571428572,0.6589595375722543,0.6742857142857144,0.41471218029882234,0.41471218029882234,0,3.580639600753784,"def create_socketpair(size=None):
+    """"""
+    Create a :func:`socket.socketpair` to use for use as a child process's UNIX
+    stdio channels. As socket pairs are bidirectional, they are economical on
+    file descriptor usage as the same descriptor can be used for ``stdin`` and
+    ``stdout``. As they are sockets their buffers are tunable, allowing large
+    buffers to be configured in order to improve throughput for file transfers
+    and reduce :class:`mitogen.core.Broker` IO loop iterations.
+    """"""
+    parentfp, childfp = socket.socketpair()
+    parentfp.setsockopt(socket.SOL_SOCKET,
+                        socket.SO_SNDBUF,
+                        size or mitogen.core.CHUNK_SIZE)
+    childfp.setsockopt(socket.SOL_SOCKET,
+                       socket.SO_RCVBUF,
+                       size or mitogen.core.CHUNK_SIZE)
+    return parentfp, childfp","def socket_pair(self, sockets): """"""Create a :func:socket.socketpair to use for use as a child process's UNIX stdio channels. As socket pairs are bidirectional, they are economical on file descriptor usage as the same descriptor can be used for stdin and stdout. As they are sockets their buffers are tunable, allowing large buffers to be configured in order to improve through",LoRA
+0.5714285714285715,0.4262295081967213,0.5714285714285715,0.5546984033648515,0.5546984033648515,0,2.357571840286255,"def Message(self, text):
+        """"""Inform about what we are doing right now, e.g.
+        'Checking for SOMETHING ... '
+        """"""
+        self.Display(text)
+        self.sconf.cached = 1
+        self.did_show_result = 0","def check_for_somthing(self): """"""Inform about what we are doing right now, e.g. 'Checking for SOMETHING ... '"""" self._check_for_somthing(self._check_for_somthing) self._check_for_somthing(self._check_for_somthing)",LoRA
+0.5783132530120482,0.5185185185185185,0.5783132530120482,0.5264412900719683,0.5264412900719683,0,2.3777999877929688,"def _speak_as_no_punctuation_inherit(self, element):
+        """"""
+        No speak the punctuation for element and descendants.
+
+        :param element: The element.
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """"""
+
+        self._reverse_speak_as(element, 'literal-punctuation')
+        self._reverse_speak_as(element, 'no-punctuation')
+
+        self._isolate_text_node(element)
+
+        self._visit(element, self._speak_as_no_punctuation)","def _speak(self, element): """"""No speak the punctuation for element and descendants. :param element: The element. :type element: hatemile.util.html.htmldomelement.HTMLDOMElement """""" if element is None: return None",LoRA
+0.6415094339622641,0.5192307692307693,0.6226415094339622,0.4433594050673743,0.4433594050673743,0,3.426391363143921,"def encrypt(receiver_pubhex: str, msg: bytes) -> bytes:
+    """"""
+    Encrypt with eth public key
+
+    Parameters
+    ----------
+    receiver_pubhex: str
+        Receiver's ethereum public key hex string
+    msg: bytes
+        Data to encrypt
+
+    Returns
+    -------
+    bytes
+        Encrypted data
+    """"""
+    disposable_key = generate_key()
+    receiver_pubkey = hex2pub(receiver_pubhex)
+    aes_key = derive(disposable_key, receiver_pubkey)
+    cipher_text = aes_encrypt(aes_key, msg)
+    return disposable_key.public_key.format(False) + cipher_text","def encrypt(self, receiver_pubhex=None, msg=None): """"""Encrypt with eth public key Parameters ---------- receiver_pubhex: str Receiver's ethereum public key hex string msg: bytes Data to encrypt Returns ------- bytes Encrypted data """""" if receiver_pubhex is None: return receiver_pubhex",LoRA
+0.3595505617977528,0.27586206896551724,0.3370786516853933,0.10187358855064141,0.10187358855064141,0,1.9333181381225586,"def get_version():
+    """"""Get the version of `package` (by extracting it from the source code).""""""
+    module_path = get_absolute_path('pip_save', '__init__.py')
+    with open(module_path) as handle:
+        for line in handle:
+            match = re.match(r'^__version__\s*=\s*[""\']([^""\']+)[""\']$', line)
+            if match:
+                return match.group(1)
+    raise Exception(""Failed to extract version from %s!"" % module_path)","def get_package(self): """"""Get the version of package (by extracting it from the source code). """""" if self.package.get(package.get(package.get)): self.package.get(package.get(package.get))",LoRA
+0.7678571428571428,0.7272727272727274,0.7678571428571428,0.4910425323354497,0.4910425323354497,0,3.5856504440307617,"def OE(element, value, transform=lambda x: x):
+    """"""
+    Create an Optional Element.
+
+    Returns an Element as ElementMaker would, unless value is None. Optionally the value can be
+    transformed through a function.
+
+    >>> OE('elem', None)
+    None
+
+    >>> lxml.etree.tostring(OE('elem', 'value'))
+    <elem>value</elem>
+
+    >>> lxml.etree.tostring(OE('elem', True, int))
+    <elem>1</elem>
+    """"""
+    return E(element, transform(value)) if value is not None else None","def create_optional_element(self): """"""Create an Optional Element. Returns an Element as ElementMaker would, unless value is None. Optionally the value can be transformed through a function. >>> OE('elem', None) None >>> lxml.etree.tostring(OE('elem', 'value')) elem>value/elem> >>> lxml.etree.tostring(OE('elem",LoRA
+0.5614035087719298,0.46153846153846156,0.5497076023391813,0.2764412248934506,0.2764412248934506,0,3.476597309112549,"def _wrapped_overflow_add(a, b):
+        """"""
+        Determines if an overflow happens during the addition of `a` and `b`.
+
+        :param a: The first operand (StridedInterval)
+        :param b: The other operand (StridedInterval)
+        :return: True if overflows, False otherwise
+        """"""
+
+        if a.is_integer and a.lower_bound == 0:
+            # Special case: if `a` or `b` is a zero
+            card_self = 0
+        else:
+            card_self = StridedInterval._wrapped_cardinality(a.lower_bound, a.upper_bound, a.bits)
+
+        if b.is_integer and b.lower_bound == 0:
+            # Special case: if `a` or `b` is a zero
+            card_b = 0
+        else:
+            card_b = StridedInterval._wrapped_cardinality(b.lower_bound, b.upper_bound, b.bits)
+
+        return (card_self + card_b) > (StridedInterval.max_int(a.bits) + 1)","def overflow(self, a, b): """""" Determines if an overflow happens during the addition of a and b. :param a: The first operand (StridedInterval) :param b: The other operand (StridedInterval) :return: True if overflows, False otherwise """""" if a is None: if b is None: if a is None: if b is None: if b is",LoRA
+0.4906832298136646,0.46875000000000006,0.4782608695652174,0.13205275014082998,0.13205275014082998,0,3.5837395191192627,"def get_port_def(port_num, proto='tcp'):
+    '''
+    Given a port number and protocol, returns the port definition expected by
+    docker-py. For TCP ports this is simply an integer, for UDP ports this is
+    (port_num, 'udp').
+
+    port_num can also be a string in the format 'port_num/udp'. If so, the
+    ""proto"" argument will be ignored. The reason we need to be able to pass in
+    the protocol separately is because this function is sometimes invoked on
+    data derived from a port range (e.g. '2222-2223/udp'). In these cases the
+    protocol has already been stripped off and the port range resolved into the
+    start and end of the range, and get_port_def() is invoked once for each
+    port number in that range. So, rather than munge udp ports back into
+    strings before passing them to this function, the function will see if it
+    has a string and use the protocol from it if present.
+
+    This function does not catch the TypeError or ValueError which would be
+    raised if the port number is non-numeric. This function either needs to be
+    run on known good input, or should be run within a try/except that catches
+    these two exceptions.
+    '''
+    try:
+        port_num, _, port_num_proto = port_num.partition('/')
+    except AttributeError:
+        pass
+    else:
+        if port_num_proto:
+            proto = port_num_proto
+    try:
+        if proto.lower() == 'udp':
+            return int(port_num), 'udp'
+    except AttributeError:
+        pass
+    return int(port_num)","def port_num(self, port_num, protocol): """""" Given a port number and protocol, returns the port definition expected by docker-py. For TCP ports this is simply an integer, for UDP ports this is (port_num, 'udp'). port_num can also be a string in the format 'port_num/udp'. If so, the ""proto"" argument will be ignored. The reason we need to be able to pass in the protocol separately is because this function is sometimes invoked on data",LoRA
+0.6371681415929203,0.5405405405405405,0.6371681415929203,0.3085180268000562,0.3085180268000562,0,3.347003936767578,"def get_kernel_spec(self, kernel_name):
+        """"""Returns a :class:`KernelSpec` instance for the given kernel_name.
+
+        Raises :exc:`NoSuchKernel` if the given kernel name is not found.
+        """"""
+        try:
+            return super(EnvironmentKernelSpecManager,
+                         self).get_kernel_spec(kernel_name)
+        except (NoSuchKernel, FileNotFoundError):
+            venv_kernel_name = kernel_name.lower()
+            specs = self.get_all_kernel_specs_for_envs()
+            if venv_kernel_name in specs:
+                return specs[venv_kernel_name]
+            else:
+                raise NoSuchKernel(kernel_name)","def _get_kernel_spec(self, kernel_name): """""" Returns a :class:KernelSpec instance for the given kernel_name. Raises :exc:NoSuchKernel if the given kernel name is not found. """""" if kernel_name is not None: if kernel_name is None: return kernel_name",LoRA
+0.35135135135135137,0.25,0.3243243243243243,0.36118576823744014,0.36118576823744014,0,2.131450891494751,"def harvest_openaire_projects(source=None, setspec=None):
+    """"""Harvest grants from OpenAIRE and store as authority records.""""""
+    loader = LocalOAIRELoader(source=source) if source \
+        else RemoteOAIRELoader(setspec=setspec)
+    for grant_json in loader.iter_grants():
+        register_grant.delay(grant_json)","def harvest_authority_records(self): """""" Harvest grants from OpenAIRE and store as authority records."""""" if self.authority_records is None: self.authority_records = self.authority_records(self.authority_records) self.authority_records = self.authority_records",LoRA
+0.28965517241379307,0.11188811188811189,0.28965517241379307,0.030969247172275106,0.030969247172275106,0,2.3699123859405518,"def formatted(self):
+    ''' print a nicely formatted output of this report '''
+
+    return """"""
+Weather Station: %s (%s, %s)
+Elevation: %s m
+Time: %s UTC
+Air Temperature: %s C (%s F)
+Wind Speed: %s m/s (%s mph)
+Wind Direction: %s
+Present Weather Obs: %s
+Precipitation: %s
+Cloud Coverage: %s oktas
+Cloud Summation: %s
+Solar Irradiance: %s 
+    """""" % (self.weather_station, self.latitude, self.longitude,
+           self.elevation, self.datetime, self.air_temperature,
+           self.air_temperature.get_fahrenheit(), self.wind_speed,
+           self.wind_speed.get_miles(), self.wind_direction,
+           str(self.present_weather), str(self.precipitation),
+           str(self.sky_cover), str(self.sky_cover_summation),
+           str(self.solar_irradiance))","def print_report(self): """"""Print a nicely formatted output of this report """""" if self.report.get(self.report.get(self.report.get(self.report.get(self.report.get)))): self.report.get(self.report.get(self.report.get(self.report.get)))",LoRA
+0.08446215139442231,0.07661612130885874,0.08446215139442231,3.565038492358166e-09,3.565038492358166e-09,0,3.6204898357391357,"def plot_multitrack(multitrack, filename=None, mode='separate',
+                    track_label='name', preset='default', cmaps=None,
+                    xtick='auto', ytick='octave', xticklabel=True,
+                    yticklabel='auto', tick_loc=None, tick_direction='in',
+                    label='both', grid='both', grid_linestyle=':',
+                    grid_linewidth=.5):
+    """"""
+    Plot the pianorolls or save a plot of them.
+
+    Parameters
+    ----------
+    filename : str
+        The filename to which the plot is saved. If None, save nothing.
+    mode : {'separate', 'stacked', 'hybrid'}
+        A string that indicate the plotting mode to use. Defaults to
+        'separate'.
+
+        - In 'separate' mode, all the tracks are plotted separately.
+        - In 'stacked' mode, a color is assigned based on `cmaps` to the
+            pianoroll of each track and the pianorolls are stacked and
+            plotted as a colored image with RGB channels.
+        - In 'hybrid' mode, the drum tracks are merged into a 'Drums' track,
+            while the other tracks are merged into an 'Others' track, and the
+            two merged tracks are then plotted separately.
+
+    track_label : {'name', 'program', 'family', 'off'}
+        A sting that indicates what to use as labels to the track. When
+        `mode` is 'hybrid', all options other than 'off' will label the two
+        track with 'Drums' and 'Others'.
+    preset : {'default', 'plain', 'frame'}
+        A string that indicates the preset theme to use.
+
+        - In 'default' preset, the ticks, grid and labels are on.
+        - In 'frame' preset, the ticks and grid are both off.
+        - In 'plain' preset, the x- and y-axis are both off.
+
+    cmaps :  tuple or list
+        The `matplotlib.colors.Colormap` instances or colormap codes to use.
+
+        - When `mode` is 'separate', each element will be passed to each
+            call of :func:`matplotlib.pyplot.imshow`. Defaults to ('Blues',
+            'Oranges', 'Greens', 'Reds', 'Purples', 'Greys').
+        - When `mode` is stacked, a color is assigned based on `cmaps` to
+            the pianoroll of each track. Defaults to ('hsv').
+        - When `mode` is 'hybrid', the first (second) element is used in the
+            'Drums' ('Others') track. Defaults to ('Blues', 'Greens').
+
+    xtick : {'auto', 'beat', 'step', 'off'}
+        A string that indicates what to use as ticks along the x-axis. If
+        'auto' is given, automatically set to 'beat' if `beat_resolution` is
+        also given and set to 'step', otherwise. Defaults to 'auto'.
+    ytick : {'octave', 'pitch', 'off'}
+        A string that indicates what to use as ticks along the y-axis.
+        Defaults to 'octave'.
+    xticklabel : bool
+        Whether to add tick labels along the x-axis. Only effective when
+        `xtick` is not 'off'.
+    yticklabel : {'auto', 'name', 'number', 'off'}
+        If 'name', use octave name and pitch name (key name when `is_drum`
+        is True) as tick labels along the y-axis. If 'number', use pitch
+        number. If 'auto', set to 'name' when `ytick` is 'octave' and
+        'number' when `ytick` is 'pitch'. Defaults to 'auto'. Only effective
+        when `ytick` is not 'off'.
+    tick_loc : tuple or list
+        The locations to put the ticks. Availables elements are 'bottom',
+        'top', 'left' and 'right'. Defaults to ('bottom', 'left').
+    tick_direction : {'in', 'out', 'inout'}
+        A string that indicates where to put the ticks. Defaults to 'in'.
+        Only effective when one of `xtick` and `ytick` is on.
+    label : {'x', 'y', 'both', 'off'}
+        A string that indicates whether to add labels to the x-axis and
+        y-axis. Defaults to 'both'.
+    grid : {'x', 'y', 'both', 'off'}
+        A string that indicates whether to add grids to the x-axis, y-axis,
+        both or neither. Defaults to 'both'.
+    grid_linestyle : str
+        Will be passed to :meth:`matplotlib.axes.Axes.grid` as 'linestyle'
+        argument.
+    grid_linewidth : float
+        Will be passed to :meth:`matplotlib.axes.Axes.grid` as 'linewidth'
+        argument.
+
+    Returns
+    -------
+    fig : `matplotlib.figure.Figure` object
+        A :class:`matplotlib.figure.Figure` object.
+    axs : list
+        List of :class:`matplotlib.axes.Axes` object.
+
+    """"""
+    if not HAS_MATPLOTLIB:
+        raise ImportError(""matplotlib package is required for plotting ""
+                          ""supports."")
+
+    def get_track_label(track_label, track=None):
+        """"""Convenient function to get track labels""""""
+        if track_label == 'name':
+            return track.name
+        elif track_label == 'program':
+            return pretty_midi.program_to_instrument_name(track.program)
+        elif track_label == 'family':
+            return pretty_midi.program_to_instrument_class(track.program)
+        elif track is None:
+            return track_label
+
+    def add_tracklabel(ax, track_label, track=None):
+        """"""Convenient function for adding track labels""""""
+        if not ax.get_ylabel():
+            return
+        ax.set_ylabel(get_track_label(track_label, track) + '\n\n'
+                      + ax.get_ylabel())
+
+    multitrack.check_validity()
+    if not multitrack.tracks:
+        raise ValueError(""There is no track to plot."")
+    if mode not in ('separate', 'stacked', 'hybrid'):
+        raise ValueError(""`mode` must be one of {'separate', 'stacked', ""
+                         ""'hybrid'}."")
+    if track_label not in ('name', 'program', 'family', 'off'):
+        raise ValueError(""`track_label` must be one of {'name', 'program', ""
+                         ""'family'}."")
+
+    if cmaps is None:
+        if mode == 'separate':
+            cmaps = ('Blues', 'Oranges', 'Greens', 'Reds', 'Purples', 'Greys')
+        elif mode == 'stacked':
+            cmaps = ('hsv')
+        else:
+            cmaps = ('Blues', 'Greens')
+
+    num_track = len(multitrack.tracks)
+    downbeats = multitrack.get_downbeat_steps()
+
+    if mode == 'separate':
+        if num_track > 1:
+            fig, axs = plt.subplots(num_track, sharex=True)
+        else:
+            fig, ax = plt.subplots()
+            axs = [ax]
+
+        for idx, track in enumerate(multitrack.tracks):
+            now_xticklabel = xticklabel if idx < num_track else False
+            plot_pianoroll(axs[idx], track.pianoroll, False,
+                           multitrack.beat_resolution, downbeats, preset=preset,
+                           cmap=cmaps[idx%len(cmaps)], xtick=xtick, ytick=ytick,
+                           xticklabel=now_xticklabel, yticklabel=yticklabel,
+                           tick_loc=tick_loc, tick_direction=tick_direction,
+                           label=label, grid=grid,
+                           grid_linestyle=grid_linestyle,
+                           grid_linewidth=grid_linewidth)
+            if track_label != 'none':
+                add_tracklabel(axs[idx], track_label, track)
+
+        if num_track > 1:
+            fig.subplots_adjust(hspace=0)
+
+        if filename is not None:
+            plt.savefig(filename)
+
+        return (fig, axs)
+
+    elif mode == 'stacked':
+        is_all_drum = True
+        for track in multitrack.tracks:
+            if not track.is_drum:
+                is_all_drum = False
+
+        fig, ax = plt.subplots()
+        stacked = multitrack.get_stacked_pianorolls()
+
+        colormap = matplotlib.cm.get_cmap(cmaps[0])
+        cmatrix = colormap(np.arange(0, 1, 1 / num_track))[:, :3]
+        recolored = np.matmul(stacked.reshape(-1, num_track), cmatrix)
+        stacked = recolored.reshape(stacked.shape[:2] + (3, ))
+
+        plot_pianoroll(ax, stacked, is_all_drum, multitrack.beat_resolution,
+                       downbeats, preset=preset, xtick=xtick, ytick=ytick,
+                       xticklabel=xticklabel, yticklabel=yticklabel,
+                       tick_loc=tick_loc, tick_direction=tick_direction,
+                       label=label, grid=grid, grid_linestyle=grid_linestyle,
+                       grid_linewidth=grid_linewidth)
+
+        if track_label != 'none':
+            patches = [Patch(color=cmatrix[idx],
+                             label=get_track_label(track_label, track))
+                       for idx, track in enumerate(multitrack.tracks)]
+            plt.legend(handles=patches)
+
+        if filename is not None:
+            plt.savefig(filename)
+
+        return (fig, [ax])
+
+    elif mode == 'hybrid':
+        drums = [i for i, track in enumerate(multitrack.tracks)
+                 if track.is_drum]
+        others = [i for i in range(len(multitrack.tracks)) if i not in drums]
+        merged_drums = multitrack.get_merged_pianoroll(drums)
+        merged_others = multitrack.get_merged_pianoroll(others)
+
+        fig, (ax1, ax2) = plt.subplots(2, sharex=True, sharey=True)
+        plot_pianoroll(ax1, merged_drums, True, multitrack.beat_resolution,
+                       downbeats, preset=preset, cmap=cmaps[0], xtick=xtick,
+                       ytick=ytick, xticklabel=xticklabel,
+                       yticklabel=yticklabel, tick_loc=tick_loc,
+                       tick_direction=tick_direction, label=label, grid=grid,
+                       grid_linestyle=grid_linestyle,
+                       grid_linewidth=grid_linewidth)
+        plot_pianoroll(ax2, merged_others, False, multitrack.beat_resolution,
+                       downbeats, preset=preset, cmap=cmaps[1], ytick=ytick,
+                       xticklabel=xticklabel, yticklabel=yticklabel,
+                       tick_loc=tick_loc, tick_direction=tick_direction,
+                       label=label, grid=grid, grid_linestyle=grid_linestyle,
+                       grid_linewidth=grid_linewidth)
+        fig.subplots_adjust(hspace=0)
+
+        if track_label != 'none':
+            add_tracklabel(ax1, 'Drums')
+            add_tracklabel(ax2, 'Others')
+
+        if filename is not None:
+            plt.savefig(filename)
+
+        return (fig, [ax1, ax2])","def plot(self, filename, mode=None): """""" Plot the pianorolls or save a plot of them. Parameters ---------- filename : str The filename to which the plot is saved. If None, save nothing. mode : 'separate', 'stacked', 'hybrid' A string that indicate the plotting mode to use. Defaults to 'separate'. - In 'separate' mode, all the tracks are plotted",LoRA
+0.3684210526315789,0.18918918918918917,0.3684210526315789,0.03935238240066648,0.03935238240066648,0,1.4078748226165771,"def get_friends(self):
+        """"""Get user's friends.""""""
+        for k, v in iter(self.user_data.language_data.items()):
+            data = []
+            for friend in v['points_ranking_data']:
+                temp = {'username': friend['username'],
+                        'id': friend['id'],
+                        'points': friend['points_data']['total'],
+                        'languages': [i['language_string'] for i in
+                                      friend['points_data']['languages']]}
+                data.append(temp)
+
+            return data","def get_friends(self): """"""Get user's friends."""""" if self._friends is None: self._friends = self._friends.get_friends(self._friends)",LoRA
+0.3297297297297297,0.2989130434782609,0.3135135135135135,0.03821837007109107,0.03821837007109107,0,3.5522236824035645,"def aa_db_search(self, files, base, unpack, search_method,
+                     maximum_range, threads, evalue, min_orf_length,
+                     restrict_read_length, diamond_database):
+        '''
+        Amino acid database search pipeline - pipeline where reads are searched
+        as amino acids, and hits are identified using hmmsearch or diamond
+        searches
+
+        Parameters
+        ----------
+        files : obj
+            graftm_output_paths object.
+        base : str
+            The name of the input file, stripped of all suffixes, and paths.
+            Used for creating file names with 'files' object.
+        unpack : obj
+            UnpackRawReads object, returns string command that will output
+            sequences to stdout when called on command line
+            (use: unpack.command_line())
+        search_method : str
+            The method for searching, either 'hmmsearch' or 'diamond'
+        maximum_range : int
+            Maximum range that a gene can extend within a contig. Any hits
+            that extend beyond this length cannot be linked. max_range is defined
+            as 1.5 X the average length of all full length genes used in the
+            search database. This is defined in the CONTENTS.json file within a
+            gpkg.
+        threads : int
+            Number of threads for hmmer to use
+        evalue : str
+            evalue cutoff for hmmer to use
+        min_orf_length : int
+            minimum orf length for orfm to use
+        restrict_read_length : int
+            orf length to retrict orfm to.
+        diamond_database : str
+            Path to diamond database to use when searching. Set to 'None' if not
+            using diamond pipeline
+        Returns
+        -------
+        String path to amino acid fasta file of reads that hit
+        '''
+        # Define outputs
+        if search_method == 'hmmsearch':
+            output_search_file = files.hmmsearch_output_path(base)
+        elif search_method == 'diamond':
+            output_search_file = files.diamond_search_output_basename(base)
+        hit_reads_fasta = files.fa_output_path(base)
+        hit_reads_orfs_fasta = files.orf_fasta_output_path(base)
+
+        return self.search_and_extract_orfs_matching_protein_database(\
+                                                    unpack,
+                                                    search_method,
+                                                    maximum_range,
+                                                    threads,
+                                                    evalue,
+                                                    min_orf_length,
+                                                    restrict_read_length,
+                                                    diamond_database,
+                                                    output_search_file,
+                                                    hit_reads_fasta,
+                                                    hit_reads_orfs_fasta)","def amino_acid_search_pipeline(files, base, unpack): """""" Amino acid database search pipeline - pipeline where reads are searched as amino acids, and hits are identified using hmmsearch or diamond searches Parameters ---------- files : obj graftm_output_paths object. base : str The name of the input file, stripped of all suffixes, and paths. Used for creating file names with 'files' object. unpack : obj",LoRA
+0.6956521739130435,0.5671641791044776,0.6666666666666666,0.5689616233100364,0.5689616233100364,0,2.361534357070923,"def load_dict_from_yaml(path):
+    """"""
+    Loads a dictionary from a yaml file
+    :param path: the absolute path of the target yaml file
+    :return:
+    """"""
+    f = file(path, 'r')
+    dictionary = yaml.load(f)
+    f.close()
+    return dictionary","def _load_dictionary(self, path): """""" Loads a dictionary from a yaml file :param path: the absolute path of the target yaml file :return: """""" if path is None: if path is None: return path",LoRA
+0.6064516129032258,0.5490196078431373,0.567741935483871,0.061984063921658054,0.061984063921658054,0,3.551924705505371,"def commit_cancelled(name):
+    '''
+    .. versionadded:: 2019.2.0
+
+    Cancel a commit scheduled to be executed via the ``commit_in`` and
+    ``commit_at`` arguments from the
+    :py:func:`net.load_template <salt.modules.napalm_network.load_template>` or
+    :py:func:`net.load_config <salt.modules.napalm_network.load_config>`
+    execution functions. The commit ID is displayed when the commit is scheduled
+    via the functions named above.
+
+    State SLS Example:
+
+    .. code-block:: yaml
+
+        '20180726083540640360':
+          netconfig.commit_cancelled
+    '''
+    cancelled = {
+        'name': name,
+        'result': None,
+        'changes': {},
+        'comment': ''
+    }
+    if __opts__['test']:
+        cancelled['comment'] = 'It would cancel commit #{}'.format(name)
+        return cancelled
+    ret = __salt__['net.cancel_commit'](name)
+    cancelled.update(ret)
+    return cancelled","def cancel_commit(commit_in, commit_at): """""" .. versionadded:: 2019.2.0 Cancel a commit scheduled to be executed via the commit_in and commit_at arguments from the :py:func:net.load_template salt.modules.napalm_network.load_template> or :py:func:net.load_config salt.modules.napalm_network.",LoRA
+0.7863247863247863,0.7304347826086957,0.7692307692307693,0.41826118189669276,0.41826118189669276,0,3.5544445514678955,"def get_objective_objective_bank_session(self):
+        """"""Gets the session for retrieving objective to objective bank mappings.
+
+        return: (osid.learning.ObjectiveObjectiveBankSession) - an
+                ``ObjectiveObjectiveBankSession``
+        raise:  OperationFailed - unable to complete request
+        raise:  Unimplemented - ``supports_objective_objective_bank()``
+                is ``false``
+        *compliance: optional -- This method must be implemented if
+        ``supports_objective_objective_bank()`` is ``true``.*
+
+        """"""
+        if not self.supports_objective_objective_bank():
+            raise errors.Unimplemented()
+        # pylint: disable=no-member
+        return sessions.ObjectiveObjectiveBankSession(runtime=self._runtime)","def get_objective_objective_bank(self, session): """""" Gets the session for retrieving objective to objective bank mappings. return: (osid.learning.ObjectiveObjectiveBankSession) - an ObjectiveObjectiveBankSession raise: OperationFailed - unable to complete request raise: Unimplemented - supports_objective_objective_bank() is false *compliance: optional -- This method must be implemented if support",LoRA
+0.303030303030303,0.18750000000000003,0.303030303030303,0.13179306334241145,0.13179306334241145,0,3.0733442306518555,"def split_timesteps(data, consistent_abmn=False):
+    """"""Split data into multiple timesteps.""""""
+    if has_multiple_timesteps(data):
+        grouped = data.groupby(""timestep"")
+        return [group[1] for group in grouped]
+    else:
+        return data","def split_timesteps(self): """"""Split data into multiple timesteps. """""" self.split_timesteps = self.split_timesteps.split_timesteps.split_timesteps.split_timesteps.split_timesteps.split_timesteps.split_timesteps.split_timesteps.split_timesteps.split_timesteps.split_timesteps.",LoRA
+0.23387096774193547,0.1382113821138211,0.20967741935483872,0.0009402448290955486,0.0009402448290955486,0,2.53104567527771,"def find_your_legislator(request):
+    '''
+    Context:
+        - request
+        - lat
+        - long
+        - located
+        - legislators
+
+    Templates:
+        - billy/web/public/find_your_legislator_table.html
+    '''
+
+    # check if lat/lon are set
+    # if leg_search is set, they most likely don't have ECMAScript enabled.
+    # XXX: fallback behavior here for alpha.
+
+    get = request.GET
+    context = {}
+    template = 'find_your_legislator'
+
+    context['request'] = """"
+    if ""q"" in get:
+        context['request'] = get['q']
+
+    if ""lat"" in get and ""lon"" in get:
+        # We've got a passed lat/lon. Let's build off it.
+        lat = get['lat']
+        lon = get['lon']
+
+        context['lat'] = lat
+        context['lon'] = lon
+        context['located'] = True
+
+        qurl = ""%slegislators/geo/?long=%s&lat=%s&apikey=%s"" % (
+            billy_settings.API_BASE_URL,
+            lon,
+            lat,
+            getattr(billy_settings, 'API_KEY', '')
+        )
+        leg_resp = json.load(urllib2.urlopen(qurl, timeout=0.5))
+        # allow limiting lookup to region for region map views
+        if 'abbr' in get:
+            leg_resp = [leg for leg in leg_resp
+                        if leg[billy_settings.LEVEL_FIELD] == get['abbr']]
+            context['abbr'] = get['abbr']
+
+        # Also, allow filtering by chamber
+        if 'chamber' in get:
+            leg_resp = [leg for leg in leg_resp
+                        if leg['chamber'] == get['chamber']]
+            context['chamber'] = get['chamber']
+
+        if ""boundary"" in get:
+            return HttpResponse(json.dumps([]))
+
+        context['legislators'] = map(Legislator, leg_resp)
+        template = 'find_your_legislator_table'
+
+    return render(request, templatename(template), context)","def find_legislator_table(self, request): """"""Context: - request - lat - long - located - legislators Templates: - billy/web/public/find_your_legislator_table.html """""" if request is None: if request is None: if request is None: return request",LoRA
+0.49056603773584906,0.3137254901960784,0.49056603773584906,0.3644046125105582,0.3644046125105582,0,1.8330199718475342,"def get_flagged_names():
+    """"""Return a list of all filenames marked as flagged.""""""
+
+    l = []
+    for w in _widget_cache.values():
+        if w.flagged:
+            l.append(w.get_node().get_value())
+    return l","def flagged(self): """"""Return a list of all filenames marked as flagged."""""" if self.flagged: self.flagged: self.flagged = self.flagged",LoRA
+0.6728971962616822,0.5523809523809524,0.5794392523364486,0.46102997973773086,0.46102997973773086,0,3.553805351257324,"def rightsibling(node):
+    """"""
+    Return Right Sibling of `node`.
+
+    >>> from anytree import Node
+    >>> dan = Node(""Dan"")
+    >>> jet = Node(""Jet"", parent=dan)
+    >>> jan = Node(""Jan"", parent=dan)
+    >>> joe = Node(""Joe"", parent=dan)
+    >>> rightsibling(dan)
+    >>> rightsibling(jet)
+    Node('/Dan/Jan')
+    >>> rightsibling(jan)
+    Node('/Dan/Joe')
+    >>> rightsibling(joe)
+    """"""
+    if node.parent:
+        pchildren = node.parent.children
+        idx = pchildren.index(node)
+        try:
+            return pchildren[idx + 1]
+        except IndexError:
+            return None
+    else:
+        return None","def right_sibling(self, dan=None, jet=None, jan=None): """"""Return Right Sibling of node. >>> from anytree import Node >>> dan = Node(""Dan"") >>> jet = Node(""Jet"", parent=dan) >>> jan = Node(""Jan"", parent=dan) >>> joe = Node(""Joe"", parent=dan) >>> rightsibling(dan) >>> rightsibling",LoRA
+0.5454545454545455,0.40624999999999994,0.5454545454545455,0.3716693923976743,0.3716693923976743,0,1.861314058303833,"def _unassigned_ports():
+    """""" Returns a set of all unassigned ports (according to IANA and Wikipedia) """"""
+    free_ports = ranges_to_set(_parse_ranges(_iana_unassigned_port_ranges()))
+    known_ports = ranges_to_set(_wikipedia_known_port_ranges())
+    return free_ports.difference(known_ports)","def unassigned_ports(self): """"""Returns a set of all unassigned ports (according to IANA and Wikipedia)"""""" if self._ports is None: self._ports = self._ports",LoRA
+0.3389830508474576,0.17543859649122806,0.3389830508474576,0.265890087740592,0.265890087740592,0,1.4723119735717773,"def plot_groups_unplaced(self, fout_dir=""."", **kws_usr):
+        """"""Plot each GO group.""""""
+        # kws: go2color max_gos upper_trigger max_upper
+        plotobj = PltGroupedGos(self)
+        return plotobj.plot_groups_unplaced(fout_dir, **kws_usr)","def plot_group(self): """"""Plot each GO group."""""" if self._groups is None: self._groups = self._groups if self._groups is None: self._groups = self._groups",LoRA
+0.6363636363636365,0.5076923076923077,0.6363636363636365,0.44562162220172863,0.44562162220172863,0,3.379894495010376,"def checkPassword(self, password):
+        """"""
+        Check the given plaintext password against the response in this
+        credentials object.
+
+        @type password: C{str}
+        @param password: The known correct password associated with
+            C{self.username}.
+
+        @return: A C{bool}, C{True} if this credentials object agrees with the
+            given password, C{False} otherwise.
+        """"""
+        if isinstance(password, unicode):
+            password = password.encode('utf-8')
+        correctResponse = _calcResponse(self.challenge, self.nonce, password)
+        return correctResponse == self.response","def check_plaintext_password(password, password): """"""Check the given plaintext password against the response in this credentials object. @type password: Cstr @param password: The known correct password associated with Cself.username. @return: A Cbool, CTrue if this credentials object agrees with the given password, CFalse otherwise. """""" if password is None: if password is None: if password is None: if password is None: if",LoRA
+0.6388888888888888,0.42857142857142855,0.6388888888888888,0.3399822447537399,0.3399822447537399,0,2.794743061065674,"def fetch(self):
+        """"""
+        Fetch a NumberInstance
+
+        :returns: Fetched NumberInstance
+        :rtype: twilio.rest.pricing.v1.voice.number.NumberInstance
+        """"""
+        params = values.of({})
+
+        payload = self._version.fetch(
+            'GET',
+            self._uri,
+            params=params,
+        )
+
+        return NumberInstance(self._version, payload, number=self._solution['number'], )","def fetch_number_instance(self): """""" Fetch a NumberInstance :returns: Fetched NumberInstance :rtype: twilio.rest.pricing.v1.voice.number.NumberInstance """""" if self._number_instance is None: self._number_instance = self._number_instance(self._number_instance)",LoRA
+0.3404255319148936,0.32142857142857145,0.3333333333333333,0.017355200678186758,0.017355200678186758,0,3.553118944168091,"def iterable(self, iterable_name, *, collection, attribute, word, func=None,
+                 operation=None):
+        """""" Performs a filter with the OData 'iterable_name' keyword
+        on the collection
+
+        For example:
+        q.iterable('any', collection='email_addresses', attribute='address',
+        operation='eq', word='george@best.com')
+
+        will transform to a filter such as:
+        emailAddresses/any(a:a/address eq 'george@best.com')
+
+        :param str iterable_name: the OData name of the iterable
+        :param str collection: the collection to apply the any keyword on
+        :param str attribute: the attribute of the collection to check
+        :param str word: the word to check
+        :param str func: the logical function to apply to the attribute inside
+         the collection
+        :param str operation: the logical operation to apply to the attribute
+         inside the collection
+        :rtype: Query
+        """"""
+
+        if func is None and operation is None:
+            raise ValueError('Provide a function or an operation to apply')
+        elif func is not None and operation is not None:
+            raise ValueError(
+                'Provide either a function or an operation but not both')
+
+        current_att = self._attribute
+        self._attribute = iterable_name
+
+        word = self._parse_filter_word(word)
+        collection = self._get_mapping(collection)
+        attribute = self._get_mapping(attribute)
+
+        if func is not None:
+            sentence = self._prepare_function(func, attribute, word)
+        else:
+            sentence = self._prepare_sentence(attribute, operation, word)
+
+        filter_str, attrs = sentence
+
+        filter_data = '{}/{}(a:a/{})'.format(collection, iterable_name, filter_str), attrs
+        self._add_filter(*filter_data)
+
+        self._attribute = current_att
+
+        return self","def iterable_name(self, iterable_name): """""" Performs a filter with the OData 'iterable_name' keyword on the collection For example: q.iterable('any', collection='email_addresses', attribute='address', operation='eq', word='george@best.com') will transform to a filter such as: emailAddresses/any(a:a/address eq 'george",LoRA
+0.1754385964912281,0.15384615384615385,0.1754385964912281,0.003989415728254368,0.003989415728254368,0,3.0854332447052,"def copy_any(src, dst, only_missing=False):  # pragma: no cover
+    """"""Copy a file or a directory tree, deleting the destination before processing""""""
+    if not only_missing:
+        remove_if_exist(dst)
+    if os.path.exists(src):
+        if os.path.isdir(src):
+            if not only_missing:
+                shutil.copytree(src, dst, symlinks=False, ignore=None)
+            else:
+                for dirpath, filepath in recwalk(src):
+                    srcfile = os.path.join(dirpath, filepath)
+                    relpath = os.path.relpath(srcfile, src)
+                    dstfile = os.path.join(dst, relpath)
+                    if not os.path.exists(dstfile):
+                        create_dir_if_not_exist(os.path.dirname(dstfile))
+                        shutil.copyfile(srcfile, dstfile)
+                        shutil.copystat(srcfile, dstfile)
+            return True
+        elif os.path.isfile(src) and (not only_missing or not os.path.exists(dst)):
+            shutil.copyfile(src, dst)
+            shutil.copystat(src, dst)
+            return True
+    return False","def copy_file(self): """"""Copy a file or a directory tree, deleting the destination before processing """""" if self.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirty.dirt",LoRA
+0.4052863436123348,0.3288888888888889,0.3876651982378854,0.06090334530054594,0.06090334530054594,0,3.4226558208465576,"def build_matlab(static=False):
+    """"""build the messenger mex for MATLAB
+
+    static : bool
+        Determines if the zmq library has been statically linked.
+        If so, it will append the command line option -DZMQ_STATIC
+        when compiling the mex so it matches libzmq.
+    """"""
+    cfg = get_config()
+    # To deal with spaces, remove quotes now, and add
+    # to the full commands themselves.
+    if 'matlab_bin' in cfg and cfg['matlab_bin'] != '.':
+        matlab_bin = cfg['matlab_bin'].strip('""')
+    else:  # attempt to autodetect MATLAB filepath
+        matlab_bin = which_matlab()
+        if matlab_bin is None:
+            raise ValueError(""specify 'matlab_bin' in cfg file"")
+    # Get the extension
+    extcmd = esc(os.path.join(matlab_bin, ""mexext""))
+    extension = subprocess.check_output(extcmd, shell=use_shell)
+    extension = extension.decode('utf-8').rstrip('\r\n')
+
+    # Build the mex file
+    mex = esc(os.path.join(matlab_bin, ""mex""))
+    paths = ""-L%(zmq_lib)s -I%(zmq_inc)s"" % cfg
+    make_cmd = '%s -O %s -lzmq ./src/messenger.c' % (mex, paths)
+    if static:
+        make_cmd += ' -DZMQ_STATIC'
+    do_build(make_cmd, 'messenger.%s' % extension)","def build_message_mex(self, zmq): """"""build the messenger mex for MATLAB static : bool Determines if the zmq library has been statically linked. If so, it will append the command line option -DZMQ_STATIC when compiling the mex so it matches libzmq. """""" if zmq is not None: if zmq is not None: if zmq is None: if zm",LoRA
+0.4299065420560748,0.24761904761904763,0.4112149532710281,0.08103426308526133,0.08103426308526133,0,1.962392807006836,"def timetopythonvalue(time_val):
+    ""Convert a time or time range from ArcGIS REST server format to Python""
+    if isinstance(time_val, sequence):
+        return map(timetopythonvalue, time_val)
+    elif isinstance(time_val, numeric):
+        return datetime.datetime(*(time.gmtime(time_val))[:6])
+    elif isinstance(time_val, numeric):
+        values = []
+        try:
+            values = map(long, time_val.split("",""))
+        except:
+            pass
+        if values:
+            return map(timetopythonvalue, values)
+    raise ValueError(repr(time_val))","def convert_time(self): """"""Convert a time or time range from ArcGIS REST server format to Python"""""" if self._time_format is None: self._time_format = self._time_format if self._time_format is None: self._time_format = self._time_format",LoRA
+0.8391608391608391,0.723404255319149,0.8111888111888111,0.4892179336963822,0.4892179336963822,0,3.4380879402160645,"def emit(self, name=None, data=None):
+        """"""
+        Emit an event annotated with the UTC time when this function was called.
+
+        `name` is a unique identification string for an event that has
+            already been registered.
+        `data` is a dictionary mapping field names to the value to include in the event.
+            Note that all values provided must be serializable.
+
+        """"""
+        event = {
+            'name': name or UNKNOWN_EVENT_TYPE,
+            'timestamp': datetime.now(UTC),
+            'data': data or {},
+            'context': self.resolve_context()
+        }
+
+        self.routing_backend.send(event)","def _emit_event(self, name, data): """"""Emit an event annotated with the UTC time when this function was called. name is a unique identification string for an event that has already been registered. data is a dictionary mapping field names to the value to include in the event. Note that all values provided must be serializable. """""" if not self._events: return self._events",LoRA
+0.5737704918032788,0.5,0.540983606557377,0.25697123343074196,0.25697123343074196,0,2.368163824081421,"def resolution_order(lang, override=None):
+    """"""
+    Return order of languages which should be checked for parameter language.
+    First is always the parameter language, later are fallback languages.
+    Override parameter has priority over FALLBACK_LANGUAGES.
+    """"""
+    if not settings.ENABLE_FALLBACKS:
+        return (lang,)
+    if override is None:
+        override = {}
+    fallback_for_lang = override.get(lang, settings.FALLBACK_LANGUAGES.get(lang, ()))
+    fallback_def = override.get('default', settings.FALLBACK_LANGUAGES['default'])
+    order = (lang,) + fallback_for_lang + fallback_def
+    return tuple(unique(order))","def _check_parameter_language(self): """"""Return order of languages which should be checked for parameter language. First is always the parameter language, later are fallback languages. Override parameter has priority over FALLBACK_LANGUAGES. """""" if self._check_parameter_language is None: return self._check_parameter_language",LoRA
+0.5538461538461539,0.484375,0.5538461538461539,0.36097065408907214,0.36097065408907214,0,3.34018874168396,"def count(self, model_class, conditions=None):
+        '''
+        Counts the number of records in the model's table.
+
+        - `model_class`: the model to count.
+        - `conditions`: optional SQL conditions (contents of the WHERE clause).
+        '''
+        query = 'SELECT count() FROM $table'
+        if conditions:
+            query += ' WHERE ' + conditions
+        query = self._substitute(query, model_class)
+        r = self._send(query)
+        return int(r.text) if r.text else 0","def count_records(self, model_class, condition=None): """"""Counts the number of records in the model's table. - model_class: the model to count. - conditions: optional SQL conditions (contents of the WHERE clause). """""" if condition is None: if condition is None: if condition is None: if condition is None: if condition is None: if condition is None: if condition is None: if condition is None: if condition is None",LoRA
+0.693877551020408,0.5106382978723404,0.693877551020408,0.511244489383929,0.511244489383929,0,2.1575160026550293,"def update(self, **kwargs):
+        """"""Update fields
+
+        :param KeywordArguments kwargs: Fields and values to update.
+        """"""
+        for kw in kwargs:
+            setattr(self, kw, kwargs[kw])","def update_fields(self, kwargs): """"""Update fields :param KeywordArguments kwargs: Fields and values to update. """""" kwargs = self._update_fields(self._update_fields) kwargs = self._update_fields",LoRA
+0.5454545454545454,0.3333333333333333,0.5,0.25723962032456954,0.25723962032456954,0,1.4115300178527832,"def map_legacy_frequencies(form, field):
+    ''' Map legacy frequencies to new ones'''
+    if field.data in LEGACY_FREQUENCIES:
+        field.data = LEGACY_FREQUENCIES[field.data]","def map(self): """"""Map legacy frequencies to new ones"""""" if self._frequency == 0: self._frequency == 0: self._frequency = self._frequency",LoRA
+0.7378640776699029,0.5544554455445545,0.6990291262135924,0.4224289465277012,0.4224289465277012,0,2.6452324390411377,"def dependents_of(self, address):
+    """"""Returns the addresses of the targets that depend on the target at `address`.
+
+    This method asserts that the address given is actually in the BuildGraph.
+
+    :API: public
+    """"""
+    assert address in self._target_by_address, (
+      'Cannot retrieve dependents of {address} because it is not in the BuildGraph.'
+      .format(address=address)
+    )
+    return self._target_dependees_by_address[address]","def get_target_address(self): """""" Returns the addresses of the targets that depend on the target at address. This method asserts that the address given is actually in the BuildGraph. :API: public """""" if self.address is None: return self.address(self.address)",LoRA
+0.25000000000000006,0.22393822393822396,0.23076923076923075,0.0021170222693204935,0.0021170222693204935,0,3.5304183959960938,"def assign_edge_colors_and_widths(self):
+        """"""
+        Resolve conflict of 'node_color' and 'node_style['fill'] args which are
+        redundant. Default is node_style.fill unless user entered node_color.
+        To enter multiple colors user must use node_color not style fill. 
+        Either way, we build a list of colors to pass to Drawing.node_colors 
+        which is then written to the marker as a fill CSS attribute.
+        """"""
+        # node_color overrides fill. Tricky to catch cuz it can be many types.
+
+        # SET edge_widths and POP edge_style.stroke-width
+        if self.style.edge_widths is None:
+            if not self.style.edge_style[""stroke-width""]:
+                self.style.edge_style.pop(""stroke-width"")
+                self.style.edge_style.pop(""stroke"")
+                self.edge_widths = [None] * self.nedges
+            else:
+                if isinstance(self.style.edge_style[""stroke-width""], (list, tuple)):
+                    raise ToytreeError(
+                        ""Use edge_widths not edge_style for multiple edge widths"")
+                # check the color
+                width = self.style.edge_style[""stroke-width""]
+                self.style.edge_style.pop(""stroke-width"")
+                self.edge_widths = [width] * self.nedges
+        else:
+            self.style.edge_style.pop(""stroke-width"")            
+            if isinstance(self.style.edge_widths, (str, int)):
+                self.edge_widths = [int(self.style.edge_widths)] * self.nedges
+
+            elif isinstance(self.style.edge_widths, (list, tuple)):
+                if len(self.style.edge_widths) != self.nedges:
+                    raise ToytreeError(""edge_widths arg is the wrong length"")
+                for cidx in range(self.nedges):
+                    self.edge_widths[cidx] = self.style.edge_widths[cidx]
+
+        # SET edge_colors and POP edge_style.stroke
+        if self.style.edge_colors is None:
+            if self.style.edge_style[""stroke""] is None:
+                self.style.edge_style.pop(""stroke"")
+                self.edge_colors = [None] * self.nedges
+            else:
+                if isinstance(self.style.edge_style[""stroke""], (list, tuple)):
+                    raise ToytreeError(
+                        ""Use edge_colors not edge_style for multiple edge colors"")
+                # check the color
+                color = self.style.edge_style[""stroke""]
+                if isinstance(color, (np.ndarray, np.void, list, tuple)):
+                    color = toyplot.color.to_css(color)
+                self.style.edge_style.pop(""stroke"")                    
+                self.edge_colors = [color] * self.nedges
+
+        # otherwise parse node_color
+        else:
+            self.style.edge_style.pop(""stroke"")                                
+            if isinstance(self.style.edge_colors, (str, int)):
+                # check the color
+                color = self.style.edge_colors
+                if isinstance(color, (np.ndarray, np.void, list, tuple)):
+                    color = toyplot.color.to_css(color)
+                self.edge_colors = [color] * self.nedges
+
+            elif isinstance(self.style.edge_colors, (list, tuple)):
+                if len(self.style.edge_colors) != self.nedges:
+                    raise ToytreeError(""edge_colors arg is the wrong length"")
+                for cidx in range(self.nedges):
+                    self.edge_colors[cidx] = self.style.edge_colors[cidx]
+
+        # do not allow empty edge_colors or widths
+        self.edge_colors = [i if i else ""#262626"" for i in self.edge_colors]
+        self.edge_widths = [i if i else 2 for i in self.edge_widths]","def resolve_conflict(self, node_color, node_style['fill']): """"""Resolve conflict of 'node_color' and 'node_style['fill'] args which are redundant. Default is node_style.fill unless user entered node_color. To enter multiple colors user must use node_color not style fill. Either way, we build a list of colors to pass to Drawing.node_colors which is then written to the marker as a",LoRA
+0.5714285714285713,0.26229508196721313,0.5396825396825397,0.2717015269064184,0.2717015269064184,0,1.5214619636535645,"def add_filter(self, filter_):
+        """""" Add an image filter for post-processing """"""
+        assert has_pil, _(""Cannot add filters without python PIL"")
+        self.cache.basename += filter_.basename
+        self._filters.append(filter_)","def add_image_filter(self): """"""Add an image filter for post-processing"""""" if self.image_filter is None: self.image_filter = self.image_filter(self.image_filter) self.image_filter = self.image_filter",LoRA
+0.47058823529411764,0.21212121212121215,0.4411764705882353,0.30576300899751235,0.30576300899751235,0,1.8284695148468018,"def _to_dict(self):
+        """"""Return a json dictionary representing this model.""""""
+        _dict = {}
+        if hasattr(self, 'environments') and self.environments is not None:
+            _dict['environments'] = [x._to_dict() for x in self.environments]
+        return _dict","def get_json_dictionary(self): """"""Return a json dictionary representing this model."""""" if self.json_dictionary is None: self.json_dictionary = self.json_dictionary if self.json_dictionary is None: return self.json_dictionary",LoRA
+0.6031746031746031,0.5245901639344263,0.5079365079365079,0.458749278508453,0.458749278508453,0,1.3955066204071045,"def delete_issue_link_type(self, issue_link_type_id):
+        """"""Delete the specified issue link type.""""""
+        url = 'rest/api/2/issueLinkType/{issueLinkTypeId}'.format(issueLinkTypeId=issue_link_type_id)
+        return self.delete(url)","def delete_issue_link_type(self): """"""Delete the specified issue link type."""""" if self.issue_link_type is None: self.issue_link_type = self.issue_link_type = self.issue_link_type",LoRA
+0.6571428571428571,0.38235294117647056,0.5714285714285714,0.36519165595504033,0.36519165595504033,0,2.3154494762420654,"def _with_columns(self, columns):
+        """"""Create a table from a sequence of columns, copying column labels.""""""
+        table = type(self)()
+        for label, column in zip(self.labels, columns):
+            self._add_column_and_format(table, label, column)
+        return table","def create_table(self): """"""Create a table from a sequence of columns, copying column labels."""""" if self._columns is None: self._columns = self._columns if self._columns is None: self._columns = self._columns",LoRA
+0.64,0.5757575757575757,0.63,0.291211504184671,0.291211504184671,0,3.435317039489746,"def Validate(self, value):
+    """"""Validate the value.
+
+    Args:
+      value: Value is expected to be a dict-like object that a given RDFStruct
+        can be initialized from.
+
+    Raises:
+      TypeValueError: If the value is not a valid dict-like object that a given
+        RDFStruct can be initialized from.
+
+    Returns:
+      A valid instance of self.rdfclass or None.
+    """"""
+    if value is None:
+      return None
+
+    if not isinstance(value, self.rdfclass):
+      # Try to coerce the type to the correct rdf_class.
+      try:
+        r = self.rdfclass()
+        r.FromDict(value)
+        return r
+      except (AttributeError, TypeError, rdfvalue.InitializeError):
+        # AttributeError is raised if value contains items that don't
+        # belong to the given rdfstruct.
+        # TypeError will be raised if value is not a dict-like object.
+        raise TypeValueError(""Value for arg %s should be an %s"" %
+                             (self.name, self.rdfclass.__name__))
+
+    return value","def validate(self, value): """"""Validate the value. Args: value: Value is expected to be a dict-like object that a given RDFStruct can be initialized from. Raises: TypeValueError: If the value is not a valid dict-like object that a given RDFStruct can be initialized from. Returns: A valid instance of self.rdfclass or None. """""" if value: value: value: Value is expected to be a",LoRA
+0.5925925925925926,0.5316455696202531,0.5925925925925926,0.4744077446079071,0.4744077446079071,0,2.5355350971221924,"def assert_valid_schema(schema: GraphQLSchema) -> None:
+    """"""Utility function which asserts a schema is valid.
+
+    Throws a TypeError if the schema is invalid.
+    """"""
+    errors = validate_schema(schema)
+    if errors:
+        raise TypeError(""\n\n"".join(error.message for error in errors))","def assert_valid_schema(self, schema): """""" Utility function which asserts a schema is valid. Throws a TypeError if the schema is invalid. """""" schema = self.valid_schema(schema) schema = self.valid_schema(schema) schema = self.valid_schema(schema) schema = self.valid_schema",LoRA
+0.4590163934426229,0.3389830508474576,0.4590163934426229,0.32308128178018414,0.32308128178018414,0,3.2961018085479736,"def max_word_width(myDict):
+    '''
+        currd = {0:'AutoPauseSpeed', 125:'HRLimitLow', 6:'Activity'}
+        max_wordwidth(currd)
+    '''
+    maxValueWidth = 0
+    for each in myDict:
+        eachValueWidth = myDict[each].__len__()
+        if(eachValueWidth > maxValueWidth):
+            maxValueWidth = eachValueWidth
+    return(maxValueWidth)","def max_wordwidth(currd): """"""currd = 0:'AutoPauseSpeed', 125:'HRLimitLow', 6:'Activity' max_wordwidth(currd) """""" if 0: 0:'AutoPauseSpeed', 125:'HRLimitLow', 6:'Activity' max_wordwidth(currd) if 0: 0: 'AutoPauseSpeed',",LoRA
+0.3050847457627119,0.279863481228669,0.29830508474576267,0.01665041796971102,0.01665041796971102,0,3.552494525909424,"def _cdf(self, xloc, left, right, cache):
+        """"""
+        Cumulative distribution function.
+
+        Example:
+            >>> print(chaospy.Uniform().fwd([-0.5, 0.5, 1.5, 2.5]))
+            [0.  0.5 1.  1. ]
+            >>> print(chaospy.Pow(chaospy.Uniform(), 2).fwd([-0.5, 0.5, 1.5, 2.5]))
+            [0.         0.70710678 1.         1.        ]
+            >>> print(chaospy.Pow(chaospy.Uniform(1, 2), -1).fwd([0.4, 0.6, 0.8, 1.2]))
+            [0.         0.33333333 0.75       1.        ]
+            >>> print(chaospy.Pow(2, chaospy.Uniform()).fwd([-0.5, 0.5, 1.5, 2.5]))
+            [0.        0.        0.5849625 1.       ]
+            >>> print(chaospy.Pow(2, chaospy.Uniform(-1, 0)).fwd([0.4, 0.6, 0.8, 1.2]))
+            [0.         0.26303441 0.67807191 1.        ]
+            >>> print(chaospy.Pow(2, 3).fwd([7, 8, 9]))
+            [0. 1. 1.]
+        """"""
+        left = evaluation.get_forward_cache(left, cache)
+        right = evaluation.get_forward_cache(right, cache)
+
+        if isinstance(left, Dist):
+            if isinstance(right, Dist):
+                raise StochasticallyDependentError(
+                    ""under-defined distribution {} or {}"".format(left, right))
+
+        elif not isinstance(right, Dist):
+            return numpy.inf
+
+        else:
+            assert numpy.all(left > 0), ""imaginary result""
+
+            y = (numpy.log(numpy.abs(xloc) + 1.*(xloc <= 0)) /
+                 numpy.log(numpy.abs(left)+1.*(left == 1)))
+
+            out = evaluation.evaluate_forward(right, y)
+            out = numpy.where(xloc <= 0, 0., out)
+            return out
+
+        y = numpy.sign(xloc)*numpy.abs(xloc)**(1./right)
+        pairs = numpy.sign(xloc**right) != -1
+
+        out1, out2 = (
+            evaluation.evaluate_forward(left, y, cache=cache),
+            evaluation.evaluate_forward(left, -y, cache=cache),
+        )
+        out = numpy.where(right < 0, 1-out1, out1-pairs*out2)
+        return out","def cumulative_distribution(self): """""" Cumulative distribution function. Example: >>> print(chaospy.Uniform().fwd([-0.5, 0.5, 1.5, 2.5])) [0. 0.5 1. 1. ] >>> print(chaospy.Pow(chaospy.Uniform(), 2).fwd([-0.5, 0.5, 1.5, 2.5])) [0. 0.70710678 1. 1. ] >>> print(chao",LoRA
+0.4778761061946903,0.34234234234234234,0.46017699115044247,0.23627030356170414,0.23627030356170414,0,2.1497695446014404,"def get_map_offset(self):
+        """"""Compute offset of prior/posterior
+
+
+        Returns
+        -------
+
+        map_offest : 1D array
+            The offset to different fields in prior/posterior
+
+        """"""
+
+        nfield = 4
+        self.map_offset = np.zeros(nfield).astype(int)
+        field_size = self.K * np.array([self.n_dim, 1, self.cov_vec_size, 1])
+        for i in np.arange(nfield - 1) + 1:
+            self.map_offset[i] = self.map_offset[i - 1] + field_size[i - 1]
+        return self.map_offset","def compute_offset(self, map_offest): """""" Compute offset of prior/posterior Returns ------- map_offest : 1D array The offset to different fields in prior/posterior """""" if map_offest is None: return map_offest if map_offest is None: return map_offest",LoRA
+0.5583756345177665,0.44102564102564107,0.5380710659898477,0.2868935410020555,0.2868935410020555,0,3.396510362625122,"def get_converted_image_name(image):
+    """"""Return the name of the image after it has been converted to png format.
+
+    Strips off the old extension.
+
+    :param: image (string): The fullpath of the image before conversion
+
+    :return: converted_image (string): the fullpath of the image after convert
+    """"""
+    png_extension = '.png'
+
+    if image[(0 - len(png_extension)):] == png_extension:
+        # it already ends in png!  we're golden
+        return image
+
+    img_dir = os.path.split(image)[0]
+    image = os.path.split(image)[-1]
+
+    # cut off the old extension
+    if len(image.split('.')) > 1:
+        old_extension = '.' + image.split('.')[-1]
+        converted_image = image[:(0 - len(old_extension))] + png_extension
+    else:
+        # no extension... damn
+        converted_image = image + png_extension
+
+    return os.path.join(img_dir, converted_image)","def convert_image(self, image, converted_image): """""" Return the name of the image after it has been converted to png format. Strips off the old extension. :param: image (string): The fullpath of the image before conversion :return: converted_image (string): the fullpath of the image after convert """""" if image is None: if image is None: if image is None: if image is None: if image is None: if image is None: if image is None: if",LoRA
+0.672566371681416,0.6126126126126126,0.672566371681416,0.3180262246927651,0.3180262246927651,1,3.484127998352051,"def updateSpec(self, *args, **kwargs):
+        """"""Updates the spectrogram given by kwarg *'plot'*, which is
+        either 'response' or (well actually anything). If no arguments 
+        are given, clears both spectrograms.
+
+        For other arguments, see: :meth:`SpecWidget.updateData<sparkle.gui.plotting.pyqtgraph_widgets.SpecWidget.updateData>`
+        """"""
+        if args[0] is None:
+            self.stimSpecPlot.clearImg()
+            self.responseSpecPlot.clearImg()
+        else:
+            p = kwargs.pop('plot')
+            if p == 'response':
+                self.responseSpecPlot.updateData(*args, **kwargs)
+            else:
+                self.stimSpecPlot.updateData(*args, **kwargs)","def update_spectrogram(self, kwarg): """"""Updates the spectrogram given by kwarg *'plot'*, which is either 'response' or (well actually anything). If no arguments are given, clears both spectrograms. For other arguments, see: :meth:SpecWidget.updateDatasparkle.gui.plotting.pyqtgraph_widgets.SpecWidget.updateData> """"""",LoRA
+0.8714285714285714,0.8405797101449276,0.8571428571428571,0.7451641649367309,0.7451641649367309,0,3.5261332988739014,"def _get_name(self, name):
+        """"""
+        Find a team's name and abbreviation.
+
+        Given the team's HTML name tag, determine their name, and abbreviation.
+
+        Parameters
+        ----------
+        name : PyQuery object
+            A PyQuery object of a team's HTML name tag in the boxscore.
+
+        Returns
+        -------
+        tuple
+            Returns a tuple containing the name and abbreviation for a team.
+            Tuple is in the following order: Team Name, Team Abbreviation.
+        """"""
+        team_name = name.text()
+        abbr = self._parse_abbreviation(name)
+        return team_name, abbr","def find_team_name(self, name, tuple): """""" Find a team's name and abbreviation. Given the team's HTML name tag, determine their name, and abbreviation. Parameters ---------- name : PyQuery object A PyQuery object of a team's HTML name tag in the boxscore. Returns ------- tuple Returns a tuple containing the name and abbreviation for a team. Tuple is in the following order: Team",LoRA
+0.4793388429752066,0.40336134453781514,0.4793388429752066,0.3753598078870992,0.3753598078870992,0,3.125857353210449,"def select_radio_button(self, key):
+        """"""Helper to select a radio button with key.
+
+        :param key: The key of the radio button.
+        :type key: str
+        """"""
+        key_index = list(self._parameter.options.keys()).index(key)
+        radio_button = self.input_button_group.button(key_index)
+        radio_button.click()","def select_radio_button(self, key): """"""Helper to select a radio button with key. :param key: The key of the radio button. :type key: str """""" if key is None: if key is None: if key is None: if key is None: if key is None: if key is None: if key is None: if key is None: if key is None: if key is None: if key is None: if key is None: if key:",LoRA
+0.7586206896551724,0.42857142857142855,0.6551724137931034,0.3783904241824998,0.3783904241824998,0,1.4782521724700928,"def _pop_entities(self, limit=50):
+        """"""
+        returns up to limit entities and pops them off the list
+        """"""
+        pop = self.data['entities'][:limit]
+        del self.data['entities'][:limit]
+        return pop","def get_limit_entities(self): """""" returns up to limit entities and pops them off the list """""" if self.limit_entities is None: return self.limit_entities(self.limit_entities)",LoRA
+0.45,0.2631578947368421,0.39999999999999997,0.14638584230083104,0.14638584230083104,0,1.037815809249878,"def kvp_dict(d):
+    """"""Format dict to key=value pairs.
+    """"""
+    return ', '.join(
+        [""{}={}"".format(k, quotable(v)) for k, v in d.items()])","def format_dict(self): """""" Format dict to key=value pairs."""""" if self.key == 0: self.key = self.key",LoRA
+0.5321888412017167,0.5021645021645021,0.5150214592274678,0.10552271169681006,0.10552271169681006,0,3.5550320148468018,"def determine_inst(i_info, param_str, command):
+    """"""Determine the instance-id of the target instance.
+
+    Inspect the number of instance-ids collected and take the
+    appropriate action: exit if no ids, return if single id,
+    and call user_picklist function if multiple ids exist.
+
+    Args:
+        i_info (dict): information and details for instances.
+        param_str (str): the title to display in the listing.
+        command (str): command specified on the command line.
+    Returns:
+        tar_inst (str): the AWS instance-id of the target.
+    Raises:
+        SystemExit: if no instances are match parameters specified.
+
+    """"""
+    qty_instances = len(i_info)
+    if not qty_instances:
+        print(""No instances found with parameters: {}"".format(param_str))
+        sys.exit(1)
+
+    if qty_instances > 1:
+        print(""{} instances match these parameters:"".format(qty_instances))
+        tar_idx = user_picklist(i_info, command)
+
+    else:
+        tar_idx = 0
+    tar_inst = i_info[tar_idx]['id']
+    print(""{0}{3}ing{1} instance id {2}{4}{1}"".
+          format(C_STAT[command], C_NORM, C_TI, command, tar_inst))
+    return (tar_inst, tar_idx)","def get_instance_id(self, i_info, param_str): """"""Determine the instance-id of the target instance. Inspect the number of instance-ids collected and take the appropriate action: exit if no ids, return if single id, and call user_picklist function if multiple ids exist. Args: i_info (dict): information and details for instances. param_str (str): the title to display in the",LoRA
+0.32142857142857145,0.23636363636363636,0.30357142857142855,0.24962424536019576,0.24962424536019576,0,3.1158363819122314,"def _create_main_config(cls, overrides=None):
+        """"""See comment block at top of 'rezconfig' describing how the main
+        config is assembled.""""""
+        filepaths = []
+        filepaths.append(get_module_root_config())
+        filepath = os.getenv(""REZ_CONFIG_FILE"")
+        if filepath:
+            filepaths.extend(filepath.split(os.pathsep))
+
+        filepath = os.path.expanduser(""~/.rezconfig"")
+        filepaths.append(filepath)
+
+        return Config(filepaths, overrides)","def rezconfig(self, rezconfig): """"""See comment block at top of 'rezconfig' describing how the main config is assembled. """""" if rezconfig is None: if rezconfig is None: if rezconfig is None: if rezconfig is None: if rezconfig is None: if rezconfig is None: if rezconfig is None: if rezconfig is None: if rezconfig is None: rezconfig = rezconfig = rezconfig = rezconfig",LoRA
+0.36018957345971564,0.27751196172248804,0.36018957345971564,0.014895051116219771,0.014895051116219771,0,2.8061671257019043,"def chain_present(name, table='filter', table_type=None, hook=None, priority=None, family='ipv4'):
+    '''
+    .. versionadded:: 2014.7.0
+
+    Verify the chain is exist.
+
+    name
+        A user-defined chain name.
+
+    table
+        The table to own the chain.
+
+    family
+        Networking family, either ipv4 or ipv6
+    '''
+
+    ret = {'name': name,
+           'changes': {},
+           'result': None,
+           'comment': ''}
+
+    chain_check = __salt__['nftables.check_chain'](table, name, family=family)
+    if chain_check['result'] is True:
+        ret['result'] = True
+        ret['comment'] = ('nftables {0} chain is already exist in {1} table for {2}'
+                          .format(name, table, family))
+        return ret
+
+    res = __salt__['nftables.new_chain'](
+            table,
+            name,
+            table_type=table_type,
+            hook=hook,
+            priority=priority,
+            family=family
+    )
+
+    if res['result'] is True:
+        ret['changes'] = {'locale': name}
+        ret['result'] = True
+        ret['comment'] = ('nftables {0} chain in {1} table create success for {2}'
+                          .format(name, table, family))
+        return ret
+    else:
+        ret['result'] = False
+        ret['comment'] = 'Failed to create {0} chain in {1} table: {2} for {3}'.format(
+            name,
+            table,
+            res['comment'].strip(),
+            family
+        )
+        return ret","def _verify_chain(self, name, table): """""" .. versionadded:: 2014.7.0 Verify the chain is exist. name A user-defined chain name. table The table to own the chain. family Networking family, either ipv4 or ipv6 """""" if not self._verify_chain: self._verify_chain = self._verify_chain(self._verify_chain)",LoRA
+0.7173913043478262,0.6923076923076923,0.7173913043478262,0.6762239422886193,0.6762239422886193,0,3.4706456661224365,"def update(self):
+        """"""
+        In the case where you have accessed an existing health check on a
+        load balancer, this method applies this instance's health check
+        values to the load balancer it is attached to.
+
+        .. note:: This method will not do anything if the :py:attr:`access_point`
+            attribute isn't set, as is the case with a newly instantiated
+            HealthCheck instance.
+        """"""
+        if not self.access_point:
+            return
+
+        new_hc = self.connection.configure_health_check(self.access_point, self)
+        self.interval = new_hc.interval
+        self.target = new_hc.target
+        self.healthy_threshold = new_hc.healthy_threshold
+        self.unhealthy_threshold = new_hc.unhealthy_threshold
+        self.timeout = new_hc.timeout","def access_point(self, access_point): """""" In the case where you have accessed an existing health check on a load balancer, this method applies this instance's health check values to the load balancer it is attached to. .. note:: This method will not do anything if the :py:attr:access_point attribute isn't set, as is the case with a newly instantiated HealthCheck instance. """""" if access_point is None: if access_point is None: if",LoRA
+0.28828828828828834,0.1651376146788991,0.2702702702702703,0.026284278200501544,0.026284278200501544,0,1.5606837272644043,"def wait_until_done(self, timeout=None):
+        """"""Wait for the background load to complete.""""""
+        start = datetime.now()
+        if not self.__th:
+            raise IndraDBRestResponseError(""There is no thread waiting to ""
+                                           ""complete."")
+        self.__th.join(timeout)
+        now = datetime.now()
+        dt = now - start
+        if self.__th.is_alive():
+            logger.warning(""Timed out after %0.3f seconds waiting for ""
+                           ""statement load to complete."" % dt.total_seconds())
+            ret = False
+        else:
+            logger.info(""Waited %0.3f seconds for statements to finish loading.""
+                        % dt.total_seconds())
+            ret = True
+        return ret","def wait_for_background_load(self): """""" Wait for the background load to complete."""""" self._background_load = self._background_load(self._background_load) self._background_load = self._background_load",LoRA
+0.27184466019417475,0.19801980198019803,0.27184466019417475,0.13246116146557532,0.13246116146557532,0,2.099545955657959,"def _serve_forever_wrapper(self, _srv, poll_interval=0.1):
+        """"""
+        Wrapper for the server created for a SSH forward
+        """"""
+        self.logger.info('Opening tunnel: {0} <> {1}'.format(
+            address_to_str(_srv.local_address),
+            address_to_str(_srv.remote_address))
+        )
+        _srv.serve_forever(poll_interval)  # blocks until finished
+
+        self.logger.info('Tunnel: {0} <> {1} released'.format(
+            address_to_str(_srv.local_address),
+            address_to_str(_srv.remote_address))
+        )","def wrapper(self): """""" Wrapper for the server created for a SSH forward """""" if self.ssh_forward is None: self.ssh_forward = self.ssh_forward if self.ssh_forward is None: self.ssh_forward = self.ssh_forward",LoRA
+0.25974025974025977,0.05333333333333333,0.23376623376623376,0.11051383447568873,0.11051383447568873,0,2.0253207683563232,"def normalize(self, decl_string, arg_separator=None):
+        """"""implementation details""""""
+        if not self.has_pattern(decl_string):
+            return decl_string
+        name, args = self.split(decl_string)
+        for i, arg in enumerate(args):
+            args[i] = self.normalize(arg)
+        return self.join(name, args, arg_separator)","def _implement_details(self): """""" implementation details """""" if self.details is None: self.details = self.details if self.details is None: self.details = self.details if self.details is None: self.details = self.details",LoRA
+0.41818181818181815,0.20370370370370375,0.3818181818181818,0.03753640906682444,0.03753640906682444,0,1.6064293384552002,"async def follow_user(self, request):
+        """"""Adds the current user as follower of the given user.""""""
+        username = request.match_info['username']
+        session = await get_session(request)
+        user_id = session.get('user_id')
+
+        if not user_id:
+            raise web.HTTPNotAuthorized()
+
+        whom_id = await db.get_user_id(self.mongo.user, username)
+
+        if whom_id is None:
+            raise web.HTTPFound()
+
+        await self.mongo.follower.update(
+            {'who_id': ObjectId(user_id)},
+            {'$push': {'whom_id': whom_id}}, upsert=True)
+
+        return redirect(request, 'user_timeline', parts={""username"": username})","def add_user(self): """"""Adds the current user as follower of the given user. """""" if self.user is None: self.user = self.user.add_user(self.user)",LoRA
+0.6283185840707964,0.5982142857142857,0.6194690265486725,0.21375478445652288,0.21375478445652288,0,3.6481130123138428,"def parse(self, tokens):
+		'''Parses a list of tokens into a JSON-serializable object.
+
+		The parsing proceeds from left to right and is greedy.
+
+		Precedence order:
+		  1. Parameters with active context. For example, an Option with
+		     nargs=-1 will gobble all the remaining tokens.
+		  2. Subcommands.
+		  3. Parameters.
+
+		The keys of the returned object are the names of parameters or
+		subcommands. Subcommands are encoded as nested objects. Multiple
+		parameters are encoded as lists. All other values are encoded as
+		parameter-specified data types, or strings if not specified.
+		'''
+		self._ping_main()
+
+		# Pre-parsing:
+		#   1. Expand globbed options: -abc --> -a -b -c
+		def is_globbed(s):
+			return len(s) > 2 and s.startswith('-') and not s.startswith('--')
+		expanded = [[""-"" + c for c in list(token[1:])] if is_globbed(token) else [token] for token in tokens]
+
+		# Parsing: pass off to main command after flattening expanded tokens list
+		return self._main.parse(list(itertools.chain.from_iterable(expanded)))","def parse_tokens(self): """"""Parses a list of tokens into a JSON-serializable object. The parsing proceeds from left to right and is greedy. Precedence order: 1. Parameters with active context. For example, an Option with nargs=-1 will gobble all the remaining tokens. 2. Subcommands. 3. Parameters. The keys of the returned object are the names of parameters or subcommands. Subcommands are encoded as nested objects. Multiple parameters are encode",LoRA
+0.22335025380710657,0.20408163265306123,0.2182741116751269,0.0002629873270393537,0.0002629873270393537,0,3.5565989017486572,"def dfa_union(dfa_1: dict, dfa_2: dict) -> dict:
+    """""" Returns a DFA accepting the union of the input DFAs.
+
+    Let :math:`A_1 = (Σ, S_1 , s_{01} , ρ_1 , F_1 )` and
+    :math:`A_2 = (Σ, S_2 , s_{02} , ρ_2 , F_2 )` be two completed
+    DFAs.
+    Then there is a DFA :math:`A_∨` that runs simultaneously both
+    :math:`A_1` and :math:`A_2` on the input word
+    and accepts when one of them accepts.
+    It is defined as:
+
+    :math:`A_∨ = (Σ, S_1 × S_2 , (s_{01} , s_{02} ), ρ, (F_1 ×
+    S_2 ) ∪ (S_1 × F_2 ))`
+
+    where
+
+    :math:`ρ((s_1 , s_2 ), a) = (s_{X1} , s_{X2} )` iff
+    :math:`s_{X1} = ρ_1 (s_1 , a)` and :math:`s_{X2} = ρ(s_2 , a)`
+
+    Proposed implementation guarantees resulting DFA has only **reachable**
+    states.
+
+    :param dict dfa_1: first input DFA;
+    :param dict dfa_2: second input DFA.
+    :return: *(dict)* representing the united DFA.
+    """"""
+    dfa_1 = deepcopy(dfa_1)
+    dfa_2 = deepcopy(dfa_2)
+    dfa_1['alphabet'] = dfa_2['alphabet'] = dfa_1['alphabet'].union(
+        dfa_2['alphabet'])  # to complete the DFAs over all possible transition
+    dfa_1 = dfa_completion(dfa_1)
+    dfa_2 = dfa_completion(dfa_2)
+
+    union = {
+        'alphabet': dfa_1['alphabet'].copy(),
+        'states': {(dfa_1['initial_state'], dfa_2['initial_state'])},
+        'initial_state': (dfa_1['initial_state'], dfa_2['initial_state']),
+        'accepting_states': set(),
+        'transitions': dict()
+    }
+
+    boundary = set()
+    boundary.add(union['initial_state'])
+    while boundary:
+        (state_dfa_1, state_dfa_2) = boundary.pop()
+        if state_dfa_1 in dfa_1['accepting_states'] \
+                or state_dfa_2 in dfa_2['accepting_states']:
+            union['accepting_states'].add((state_dfa_1, state_dfa_2))
+        for a in union['alphabet']:
+            # as DFAs are completed they surely have the transition
+            next_state_1 = dfa_1['transitions'][state_dfa_1, a]
+            next_state_2 = dfa_2['transitions'][state_dfa_2, a]
+            if (next_state_1, next_state_2) not in union['states']:
+                union['states'].add((next_state_1, next_state_2))
+                boundary.add((next_state_1, next_state_2))
+            union['transitions'][(state_dfa_1, state_dfa_2), a] = \
+                (next_state_1, next_state_2)
+
+    return union","def _accept_dfa(self): """""" Returns a DFA accepting the union of the input DFAs. Let :math:A_1 = (, S_1 , s_01 , _1 , F_1 ) and :math:A_2 = (, S_2 , s_02 , _2 , F_2 ) be two completed DFAs. Then there is a DFA :",LoRA

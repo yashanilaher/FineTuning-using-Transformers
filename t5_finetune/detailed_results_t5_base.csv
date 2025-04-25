@@ -1,0 +1,2693 @@
+rouge1,rouge2,rougeL,bleu,codebleu,syntax_correct,generation_time,reference,generated,model
+0.36923076923076925,0.3174603174603175,0.36923076923076925,0.2024191773340309,0.2024191773340309,0,1.7340919971466064,"def inherit_type(self, type_cls: Type[TInherit]) \
+            -> Union[TInherit, 'Publisher']:
+        """""" enables the usage of method and attribute overloading for this
+        publisher.
+        """"""
+        self._inherited_type = type_cls
+        return self",-> code: enables the usage of method and attribute overloading for this publisher. -> code: enables the usage of method and attribute overloading for this publisher. -> code: enables the usage of method and attribute overloading for this publisher.,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.12500333786010742,"def auto_mounter(original):
+    """"""Decorator for automatically mounting, if needed.""""""
+    def mounter(*args):
+        """"""If not mounted, mount.""""""
+        self = args[0]
+        if not self.is_mounted():
+            self.mount()
+        return original(*args)
+    return mounter",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.12892961502075195,"def applyTransform(self):
+        """"""
+        Convenience utility to apply the specified transform to the specified pose.
+          This properly transforms all pose components, including velocity and angular velocity
+        """"""
+
+        fn = self.function_table.applyTransform
+        pOutputPose = TrackedDevicePose_t()
+        pTrackedDevicePose = TrackedDevicePose_t()
+        pTransform = HmdMatrix34_t()
+        fn(byref(pOutputPose), byref(pTrackedDevicePose), byref(pTransform))
+        return pOutputPose, pTrackedDevicePose, pTransform",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.10324716567993164,"def next_window(self, widget, data=None):
+        """"""
+        Function opens the run Window who executes the
+        assistant project creation
+        """"""
+        # check whether deps-only is selected
+        deps_only = ('deps_only' in self.args and self.args['deps_only']['checkbox'].get_active())
+
+        # preserve argument value if it is needed to be preserved
+        for arg_dict in [x for x in self.args.values() if 'preserved' in x['arg'].kwargs]:
+            preserve_key = arg_dict['arg'].kwargs['preserved']
+            # preserve entry text (string value)
+            if 'entry' in arg_dict:
+                if self.arg_is_selected(arg_dict):
+                    config_manager.set_config_value(preserve_key, arg_dict['entry'].get_text())
+            # preserve if checkbox is ticked (boolean value)
+            else:
+                config_manager.set_config_value(preserve_key, self.arg_is_selected(arg_dict))
+
+        # save configuration into file
+        config_manager.save_configuration_file()
+        # get project directory and name
+        project_dir = self.dir_name.get_text()
+        full_name = self.get_full_dir_name()
+
+        # check whether project directory and name is properly set
+        if not deps_only and self.current_main_assistant.name == 'crt':
+            if project_dir == """":
+                return self.gui_helper.execute_dialog(""Specify directory for project"")
+            else:
+                # check whether directory is existing
+                if not os.path.isdir(project_dir):
+                    response = self.gui_helper.create_question_dialog(
+                        ""Directory {0} does not exists"".format(project_dir),
+                        ""Do you want to create them?""
+                    )
+                    if response == Gtk.ResponseType.NO:
+                        # User do not want to create a directory
+                        return
+                    else:
+                        # Create directory
+                        try:
+                            os.makedirs(project_dir)
+                        except OSError as os_err:
+                            return self.gui_helper.execute_dialog(""{0}"".format(os_err))
+                elif os.path.isdir(full_name):
+                    return self.check_for_directory(full_name)
+
+        if not self._build_flags():
+            return
+
+        if not deps_only and self.current_main_assistant.name == 'crt':
+            self.kwargs['name'] = full_name
+        self.kwargs['__ui__'] = 'gui_gtk+'
+
+        self.data['kwargs'] = self.kwargs
+        self.data['top_assistant'] = self.top_assistant
+        self.data['current_main_assistant'] = self.current_main_assistant
+        self.parent.run_window.open_window(widget, self.data)
+        self.path_window.hide()",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.7740156650543213,"def remove_member_roles(self, guild_id: int, member_id: int, roles: List[int]):
+        """"""Add roles to a member
+
+        This method takes a list of **role ids** that you want to strip from the user,
+        subtracting from whatever roles they may already have. This method will fetch
+        the user's current roles, and add to that list the roles passed in. This method
+        will only remove roles from the user that they have at the time of execution,
+        so you don't need to check that the user has the roles you're trying to remove
+        from them (as long as those roles are valid roles for this guild).
+
+        This method differs from ``set_member_roles`` in that this method REMOVES roles
+        from the user's current role list. ``set_member_roles`` is used by this method.
+
+        Args:
+            guild_id: snowflake id of the guild
+            member_id: snowflake id of the member
+            roles: list of snowflake ids of roles to remove
+        """"""
+        current_roles = [role for role in self.get_guild_member_by_id(guild_id, member_id)['roles']]
+        new_list = [role for role in current_roles if role not in roles]
+        self.set_member_roles(guild_id, member_id, new_list)",False,T5-Base
+0.12048192771084337,0.06295399515738498,0.11566265060240964,0.0004237561993315001,0.0004237561993315001,0,2.7869317531585693,"def _ingest_dict(self, input_dict, schema_dict, path_to_root):
+
+        '''
+            a helper method for ingesting keys, value pairs in a dictionary
+
+        :return: valid_dict
+        '''
+
+        valid_dict = {}
+
+    # construct path to root for rules
+        rules_path_to_root = re.sub('\[\d+\]', '[0]', path_to_root)
+
+    # iterate over keys in schema dict
+        for key, value in schema_dict.items():
+            key_path = path_to_root
+            if not key_path == '.':
+                key_path += '.'
+            key_path += key
+            rules_key_path = re.sub('\[\d+\]', '[0]', key_path)
+            value_match = False
+            if key in input_dict.keys():
+                value_index = self._datatype_classes.index(value.__class__)
+                value_type = self._datatype_names[value_index]
+                try:
+                    v_index = self._datatype_classes.index(input_dict[key].__class__)
+                    v_type = self._datatype_names[v_index]
+                    if v_type == value_type:
+                        value_match = True
+                except:
+                    value_match = False
+            if value_match:
+                if value_type == 'null':
+                    valid_dict[key] = input_dict[key]
+                elif value_type == 'boolean':
+                    valid_dict[key] = self._ingest_boolean(input_dict[key], key_path)
+                elif value_type == 'number':
+                    valid_dict[key] = self._ingest_number(input_dict[key], key_path)
+                elif value_type == 'string':
+                    valid_dict[key] = self._ingest_string(input_dict[key], key_path)
+                elif value_type == 'map':
+                    valid_dict[key] = self._ingest_dict(input_dict[key], schema_dict[key], key_path)
+                elif value_type == 'list':
+                    valid_dict[key] = self._ingest_list(input_dict[key], schema_dict[key], key_path)
+            else:
+                value_type = self.keyMap[rules_key_path]['value_datatype']
+                if 'default_value' in self.keyMap[rules_key_path]:
+                    valid_dict[key] = self.keyMap[rules_key_path]['default_value']
+                elif value_type == 'null':
+                    valid_dict[key] = None
+                elif value_type == 'boolean':
+                    valid_dict[key] = False
+                elif value_type == 'number':
+                    valid_dict[key] = 0.0
+                    if 'integer_data' in self.keyMap[rules_key_path].keys():
+                        if self.keyMap[rules_key_path]['integer_data']:
+                            valid_dict[key] = 0
+                elif value_type == 'string':
+                    valid_dict[key] = ''
+                elif value_type == 'list':
+                    valid_dict[key] = []
+                elif value_type == 'map':
+                    valid_dict[key] = self._ingest_dict({}, schema_dict[key], key_path)
+
+    # add extra fields if set to True
+        if self.keyMap[rules_path_to_root]['extra_fields']:
+            for key, value in input_dict.items():
+                if key not in valid_dict.keys():
+                    valid_dict[key] = value
+
+        return valid_dict",:return: valid_dict -> code:return: valid_dict -> code:return: valid_dict -> code:return: valid_dict -> code:return: valid_dict -> code:return: valid_dict -> code:return: valid_dict -> code:return: valid_dict -> code:return: valid_dict -> code:return: valid_dict -> code:return: valid_dict -> code:re,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.12697458267211914,"def K2onSilicon_main(args=None):
+    """"""Function called when `K2onSilicon` is executed on the command line.""""""
+    import argparse
+    parser = argparse.ArgumentParser(
+        description=""Run K2onSilicon to find which targets in a ""
+                    ""list call on active silicon for a given K2 campaign."")
+    parser.add_argument('csv_file', type=str,
+                        help=""Name of input csv file with targets, column are ""
+                             ""Ra_degrees, Dec_degrees, Kepmag"")
+    parser.add_argument('campaign', type=int, help='K2 Campaign number')
+    args = parser.parse_args(args)
+    K2onSilicon(args.csv_file, args.campaign)",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.10481452941894531,"def qmark(cls, query):
+        """"""
+        Convert a ""qmark"" query into ""format"" style.
+        """"""
+
+        def sub_sequence(m):
+            s = m.group(0)
+            if s == ""??"":
+                return ""?""
+            if s == ""%"":
+                return ""%%""
+            else:
+                return ""%s""
+
+        return cls.RE_QMARK.sub(sub_sequence, query)",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.9524765014648438,"def FromEncoded(cls, encoded):
+        """"""Create a DataStreamSelector from an encoded 16-bit value.
+
+        The binary value must be equivalent to what is produced by
+        a call to self.encode() and will turn that value back into
+        a a DataStreamSelector.
+
+        Note that the following operation is a no-op:
+
+        DataStreamSelector.FromEncode(value).encode()
+
+        Args:
+            encoded (int): The encoded binary representation of a
+                DataStreamSelector.
+
+        Returns:
+            DataStreamSelector: The decoded selector.
+        """"""
+
+        match_spec = encoded & ((1 << 11) | (1 << 15))
+        match_type = (encoded & (0b111 << 12)) >> 12
+        match_id = encoded & ((1 << 11) - 1)
+
+        if match_spec not in cls.SpecifierEncodingMap:
+            raise ArgumentError(""Unknown encoded match specifier"", match_spec=match_spec, known_specifiers=cls.SpecifierEncodingMap.keys())
+
+        spec_name = cls.SpecifierEncodingMap[match_spec]
+
+        # Handle wildcard matches
+        if match_id == cls.MatchAllCode:
+            match_id = None
+
+        return DataStreamSelector(match_type, match_id, spec_name)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.12275910377502441,"def powerstring_by_border(u):
+    """"""Power string by Knuth-Morris-Pratt
+
+    :param x: string
+    :returns: largest k such that there is a string y with x = y^k
+    :complexity: O(len(x))
+    """"""
+    f = maximum_border_length(u)
+    n = len(u)
+    if n % (n - f[-1]) == 0:       # does the alignment shift divide n ?
+        return n // (n - f[-1])    # we found a power decomposition
+    return 1",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.10292434692382812,"def get_fun(fun):
+    '''
+    Return a dict of the last function called for all minions
+    '''
+    log.debug('sdstack_etcd returner <get_fun> called fun: %s', fun)
+    ret = {}
+    client, path = _get_conn(__opts__)
+    items = client.get('/'.join((path, 'minions')))
+    for item in items.children:
+        comps = str(item.key).split('/')
+        efun = salt.utils.json.loads(client.get('/'.join((path, 'jobs', str(item.value), comps[-1], 'fun'))).value)
+        if efun == fun:
+            ret[comps[-1]] = str(efun)
+    return ret",False,T5-Base
+0.29655172413793107,0.27777777777777773,0.29655172413793107,0.003767173288939046,0.003767173288939046,0,2.341973066329956,"def write_csv(
+        self, filename, variables=None, alpha=0.05, start=0, batches=100,
+            chain=None, quantiles=(2.5, 25, 50, 75, 97.5)):
+        """"""
+        Save summary statistics to a csv table.
+
+        :Parameters:
+
+        filename : string
+          Filename to save output.
+
+        variables : iterable
+          List or array of variables for which statistics are to be
+          generated. If it is not specified, all the tallied variables
+          are summarized.
+
+        alpha : float
+          The alpha level for generating posterior intervals. Defaults to
+          0.05.
+
+        start : int
+          The starting index from which to summarize (each) chain. Defaults
+          to zero.
+
+        batches : int
+          Batch size for calculating standard deviation for non-independent
+          samples. Defaults to 100.
+
+        chain : int
+          The index for which chain to summarize. Defaults to None (all
+          chains).
+        """"""
+
+        # Append 'csv' suffix if there is no suffix on the filename
+        if filename.find('.') == -1:
+            filename += '.csv'
+
+        outfile = open(filename, 'w')
+
+        # Write header to file
+        header = 'Parameter, Mean, SD, MC Error, Lower 95% HPD, Upper 95% HPD, '
+        header += ', '.join(['q%s' % i for i in quantiles])
+        outfile.write(header + '\n')
+
+        stats = self.stats(
+            variables=variables,
+            alpha=alpha,
+            start=start,
+            batches=batches,
+            chain=chain,
+            quantiles=quantiles)
+
+        if variables is None:
+            variables = sorted(stats.keys())
+
+        buffer = str()
+        for param in variables:
+
+            values = stats[param]
+
+            try:
+                # Multivariate node
+                shape = values['mean'].shape
+                indices = list(itertools.product(*[range(i) for i in shape]))
+
+                for i in indices:
+                    buffer += self._csv_str(param, values, quantiles, i)
+
+            except AttributeError:
+                # Scalar node
+                buffer += self._csv_str(param, values, quantiles)
+
+        outfile.write(buffer)
+
+        outfile.close()",:parameters: filename : string Filename to save output . variables : iterable List or array of variables for which statistics are to be generated . alpha : float The alpha level for generating posterior intervals. Defaults to zero . batches : int Batch size for calculating standard deviations. Defaults to zero .,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.2958228588104248,"def mark_path(path):
+    """"""
+    Wrap given path as relative path relative to top directory.
+
+    Wrapper object will be handled specially in \
+    :paramref:`create_cmd_task.parts`.
+
+    :param path: Relative path relative to top directory.
+
+    :return: Wrapper object.
+    """"""
+    # If given path is not string,
+    # or given path is absolute path.
+    if not isinstance(path, str) or os.path.isabs(path):
+        # Get error message
+        msg = 'Error (2D9ZA): Given path is not relative path: {0}.'.format(
+            path
+        )
+
+        # Raise error
+        raise ValueError(msg)
+
+    # If given path is string,
+    # and given path is not absolute path.
+
+    # Wrap given path
+    return _ItemWrapper(type='path', item=path)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.11471033096313477,"def rows_to_png(out, rows, size):
+    """"""Write to the binary file `out` a single channel 8-bit PNG.
+    `rows` should yield each row in turn;
+    `size` should be the tuple of (width, height) in pixels.
+    """"""
+
+    # Write out PNG signature.
+    out.write(bytearray([137, 80, 78, 71, 13, 10, 26, 10]))
+    # Write out PNG header chunk.
+    header = struct.pack("">2LBBBBB"", size[0], size[1], 8, 0, 0, 0, 0)
+    write_chunk(out, b""IHDR"", header)
+
+    bs = bytearray()
+    for row in rows:
+        bs.append(0)
+        bs.extend(row)
+    write_chunk(out, b""IDAT"", zlib.compress(bs))
+
+    write_chunk(out, b""IEND"", bytearray())",False,T5-Base
+0.18604651162790695,0.14634146341463414,0.18604651162790695,0.00024248290579533576,0.00024248290579533576,0,0.1761929988861084,"def _validate(self):
+        """"""
+        Validate the input data.
+        """"""
+        if self.data_format is FormatType.PYTHON:
+            self.data = self.raw_data
+        elif self.data_format is FormatType.JSON:
+            self._validate_json()
+        elif self.data_format is FormatType.YAML:
+            self._validate_yaml()",Validate the input data.,T5-Base
+0.07142857142857142,0.05454545454545455,0.07142857142857142,3.628344178047045e-15,3.628344178047045e-15,0,0.16323375701904297,"def get_resource_manager(self, resource_type, data=None):
+        """"""get a resource manager or a given resource type.
+
+        assumes the query is for the same underlying cloud provider.
+        """"""
+        if '.' in resource_type:
+            provider_name, resource_type = resource_type.split('.', 1)
+        else:
+            provider_name = self.ctx.policy.provider_name
+
+        provider_resources = clouds[provider_name].resources
+        klass = provider_resources.get(resource_type)
+        if klass is None:
+            raise ValueError(resource_type)
+
+        # if we're already querying via config carry it forward
+        if not data and self.source_type == 'config' and getattr(
+                klass.get_model(), 'config_type', None):
+            return klass(self.ctx, {'source': self.source_type})
+        return klass(self.ctx, data or {})",get a resource manager,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09714198112487793,"def update(self, rows):
+        """"""
+        Updates records in the db
+        """"""
+        if len(rows) == 0:
+            return
+
+        sql, sql_args = self.get_update_sql(rows)
+
+        # get the cursor to execute the query
+        cursor = self.get_cursor()
+
+        # execute the query
+        cursor.execute(sql, sql_args)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.0823214054107666,"def _int_growth(z, **cosmo):
+    """""" Returns integral of the linear growth factor from z=200 to z=z """"""
+
+    zmax = 200
+
+    if hasattr(z, ""__len__""):
+        for zval in z:
+            assert(zval < zmax)
+    else:
+        assert(z < zmax)
+
+    y, yerr = scipy.integrate.quad(
+        lambda z: (1 + z)/(cosmo['omega_M_0']*(1 + z)**3 +
+                           cosmo['omega_lambda_0'])**(1.5),
+        z, zmax)
+
+    return(y)",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09842777252197266,"def statsd_middleware_factory(app, handler):
+    """"""Send the application stats to statsd.""""""
+    @coroutine
+    def middleware(request):
+        """"""Send stats to statsd.""""""
+        timer = Timer()
+        timer.start()
+
+        statsd = yield from app.ps.metrics.client()
+        pipe = statsd.pipe()
+        pipe.incr('request.method.%s' % request.method)
+
+        try:
+            response = yield from handler(request)
+            pipe.incr('response.status.%s' % response.status)
+            return response
+
+        except HTTPException as exc:
+            pipe.incr('response.status.%s' % exc.status_code)
+            raise
+
+        except Exception:
+            pipe.incr('response.exception')
+            raise
+
+        finally:
+            timer.stop()
+            pipe.timing('response.time', timer.ms)
+            pipe.disconnect()
+
+    return middleware",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.12432217597961426,"def inpaint(self, win_size=3, rescale_factor=1.0):
+        """""" Fills in the zero pixels in the image.
+
+        Parameters
+        ----------
+        win_size : int
+            size of window to use for inpainting
+        rescale_factor : float
+            amount to rescale the image for inpainting, smaller numbers increase speed
+
+        Returns
+        -------
+        :obj:`ColorImage`
+            color image with zero pixels filled in
+        """"""
+        # get original shape
+        orig_shape = (self.height, self.width)
+        
+        # resize the image
+        resized_data = self.resize(rescale_factor, interp='nearest').data
+
+        # inpaint smaller image
+        mask = 1 * (np.sum(resized_data, axis=2) == 0)
+        inpainted_data = cv2.inpaint(resized_data, mask.astype(np.uint8),
+                                     win_size, cv2.INPAINT_TELEA)
+        inpainted_im = ColorImage(inpainted_data, frame=self.frame)
+
+        # fill in zero pixels with inpainted and resized image
+        filled_data = inpainted_im.resize(
+            orig_shape, interp='bilinear').data
+        new_data = self.data
+        new_data[self.data == 0] = filled_data[self.data == 0]
+        return ColorImage(new_data, frame=self.frame)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.11300325393676758,"def MCLA(hdf5_file_name, cluster_runs, verbose = False, N_clusters_max = None):
+    """"""Meta-CLustering Algorithm for a consensus function.
+    
+    Parameters
+    ----------
+    hdf5_file_name : file handle or string
+    
+    cluster_runs : array of shape (n_partitions, n_samples)
+    
+    verbose : bool, optional (default = False)
+    
+    N_clusters_max : int, optional (default = None)
+    
+    Returns
+    -------
+    A vector specifying the cluster label to which each sample has been assigned
+    by the MCLA approximation algorithm for consensus clustering.
+
+    Reference
+    ---------
+    A. Strehl and J. Ghosh, ""Cluster Ensembles - A Knowledge Reuse Framework
+    for Combining Multiple Partitions"".
+    In: Journal of Machine Learning Research, 3, pp. 583-617. 2002
+    """"""
+
+    print('\n*****')
+    print('INFO: Cluster_Ensembles: MCLA: consensus clustering using MCLA.')
+
+    if N_clusters_max == None:
+        N_clusters_max = int(np.nanmax(cluster_runs)) + 1
+
+    N_runs = cluster_runs.shape[0]
+    N_samples = cluster_runs.shape[1]
+
+    print(""INFO: Cluster_Ensembles: MCLA: preparing graph for meta-clustering."")
+
+    hypergraph_adjacency = load_hypergraph_adjacency(hdf5_file_name)
+    w = hypergraph_adjacency.sum(axis = 1)
+
+    N_rows = hypergraph_adjacency.shape[0]
+
+    print(""INFO: Cluster_Ensembles: MCLA: done filling hypergraph adjacency matrix. ""
+          ""Starting computation of Jaccard similarity matrix."")
+
+    # Next, obtain a matrix of pairwise Jaccard similarity scores between the rows of the hypergraph adjacency matrix.
+    with tables.open_file(hdf5_file_name, 'r+') as fileh:
+        FILTERS = get_compression_filter(4 * (N_rows ** 2))
+    
+        similarities_MCLA = fileh.create_carray(fileh.root.consensus_group, 
+                                   'similarities_MCLA', tables.Float32Atom(), 
+                                   (N_rows, N_rows), ""Matrix of pairwise Jaccard ""
+                                   ""similarity scores"", filters = FILTERS)
+
+        scale_factor = 100.0
+
+        print(""INFO: Cluster_Ensembles: MCLA: ""
+              ""starting computation of Jaccard similarity matrix."")
+
+        squared_MCLA = hypergraph_adjacency.dot(hypergraph_adjacency.transpose())
+
+        squared_sums = hypergraph_adjacency.sum(axis = 1)
+        squared_sums = np.squeeze(np.asarray(squared_sums))
+
+        chunks_size = get_chunk_size(N_rows, 7)
+        for i in range(0, N_rows, chunks_size):
+            n_dim = min(chunks_size, N_rows - i)
+
+            temp = squared_MCLA[i:min(i+chunks_size, N_rows), :].todense()
+            temp = np.squeeze(np.asarray(temp))
+
+            x = squared_sums[i:min(i+chunks_size, N_rows)]
+            x = x.reshape(-1, 1)
+            x = np.dot(x, np.ones((1, squared_sums.size)))
+
+            y = np.dot(np.ones((n_dim, 1)), squared_sums.reshape(1, -1))
+        
+            temp = np.divide(temp, x + y - temp)
+            temp *= scale_factor
+
+            Jaccard_matrix = np.rint(temp)
+            similarities_MCLA[i:min(i+chunks_size, N_rows)] = Jaccard_matrix
+
+            del Jaccard_matrix, temp, x, y
+            gc.collect()
+ 
+    # Done computing the matrix of pairwise Jaccard similarity scores.
+    print(""INFO: Cluster_Ensembles: MCLA: done computing the matrix of ""
+          ""pairwise Jaccard similarity scores."")
+
+    cluster_labels = cmetis(hdf5_file_name, N_clusters_max, w)
+    cluster_labels = one_to_max(cluster_labels)
+    # After 'cmetis' returns, we are done with clustering hyper-edges
+
+    # We are now ready to start the procedure meant to collapse meta-clusters.
+    N_consensus = np.amax(cluster_labels) + 1
+
+    fileh = tables.open_file(hdf5_file_name, 'r+')
+
+    FILTERS = get_compression_filter(4 * N_consensus * N_samples)
+    
+    clb_cum = fileh.create_carray(fileh.root.consensus_group, 'clb_cum', 
+                                  tables.Float32Atom(), (N_consensus, N_samples), 
+                                  'Matrix of mean memberships, forming meta-clusters', 
+                                  filters = FILTERS)  
+ 
+    chunks_size = get_chunk_size(N_samples, 7)
+    for i in range(0, N_consensus, chunks_size):
+        x = min(chunks_size, N_consensus - i)
+        matched_clusters = np.where(cluster_labels == np.reshape(np.arange(i, min(i + chunks_size, N_consensus)), newshape = (x, 1)))
+        M = np.zeros((x, N_samples))
+        for j in range(x):
+            coord = np.where(matched_clusters[0] == j)[0]
+            M[j] = np.asarray(hypergraph_adjacency[matched_clusters[1][coord], :].mean(axis = 0))
+        clb_cum[i:min(i+chunks_size, N_consensus)] = M
+    
+    # Done with collapsing the hyper-edges into a single meta-hyper-edge, 
+    # for each of the (N_consensus - 1) meta-clusters.
+
+    del hypergraph_adjacency
+    gc.collect()
+
+    # Each object will now be assigned to its most associated meta-cluster.
+    chunks_size = get_chunk_size(N_consensus, 4)
+    N_chunks, remainder = divmod(N_samples, chunks_size)
+    if N_chunks == 0:
+        null_columns = np.where(clb_cum[:].sum(axis = 0) == 0)[0]
+    else:
+        szumsz = np.zeros(0)
+        for i in range(N_chunks):
+            M = clb_cum[:, i*chunks_size:(i+1)*chunks_size]
+            szumsz = np.append(szumsz, M.sum(axis = 0))
+        if remainder != 0:
+            M = clb_cum[:, N_chunks*chunks_size:N_samples]
+            szumsz = np.append(szumsz, M.sum(axis = 0))
+        null_columns = np.where(szumsz == 0)[0]
+
+    if null_columns.size != 0:
+        print(""INFO: Cluster_Ensembles: MCLA: {} objects with all zero associations ""
+              ""in 'clb_cum' matrix of meta-clusters."".format(null_columns.size))
+        clb_cum[:, null_columns] = np.random.rand(N_consensus, null_columns.size)
+
+    random_state = np.random.RandomState()
+
+    tmp = fileh.create_carray(fileh.root.consensus_group, 'tmp', tables.Float32Atom(),
+                              (N_consensus, N_samples), ""Temporary matrix to help with ""
+                              ""collapsing to meta-hyper-edges"", filters = FILTERS)
+
+    chunks_size = get_chunk_size(N_samples, 2)
+    N_chunks, remainder = divmod(N_consensus, chunks_size)
+    if N_chunks == 0:
+        tmp[:] = random_state.rand(N_consensus, N_samples)
+    else:
+        for i in range(N_chunks):
+            tmp[i*chunks_size:(i+1)*chunks_size] = random_state.rand(chunks_size, N_samples)
+        if remainder !=0:
+            tmp[N_chunks*chunks_size:N_consensus] = random_state.rand(remainder, N_samples)
+
+    expr = tables.Expr(""clb_cum + (tmp / 10000)"")
+    expr.set_output(clb_cum)
+    expr.eval()
+
+    expr = tables.Expr(""abs(tmp)"")
+    expr.set_output(tmp)
+    expr.eval()
+
+    chunks_size = get_chunk_size(N_consensus, 2)
+    N_chunks, remainder = divmod(N_samples, chunks_size)
+    if N_chunks == 0:
+        sum_diag = tmp[:].sum(axis = 0)
+    else:
+        sum_diag = np.empty(0)
+        for i in range(N_chunks):
+            M = tmp[:, i*chunks_size:(i+1)*chunks_size]
+            sum_diag = np.append(sum_diag, M.sum(axis = 0))
+        if remainder != 0:
+            M = tmp[:, N_chunks*chunks_size:N_samples]
+            sum_diag = np.append(sum_diag, M.sum(axis = 0))
+
+    fileh.remove_node(fileh.root.consensus_group, ""tmp"") 
+    # The corresponding disk space will be freed after a call to 'fileh.close()'.
+
+    inv_sum_diag = np.reciprocal(sum_diag.astype(float))
+
+    if N_chunks == 0:
+        clb_cum *= inv_sum_diag
+        max_entries = np.amax(clb_cum, axis = 0)
+    else:
+        max_entries = np.zeros(N_samples)
+        for i in range(N_chunks):
+            clb_cum[:, i*chunks_size:(i+1)*chunks_size] *= inv_sum_diag[i*chunks_size:(i+1)*chunks_size]
+            max_entries[i*chunks_size:(i+1)*chunks_size] = np.amax(clb_cum[:, i*chunks_size:(i+1)*chunks_size], axis = 0)
+        if remainder != 0:
+            clb_cum[:, N_chunks*chunks_size:N_samples] *= inv_sum_diag[N_chunks*chunks_size:N_samples]
+            max_entries[N_chunks*chunks_size:N_samples] = np.amax(clb_cum[:, N_chunks*chunks_size:N_samples], axis = 0)
+
+    cluster_labels = np.zeros(N_samples, dtype = int)
+    winner_probabilities = np.zeros(N_samples)
+    
+    chunks_size = get_chunk_size(N_samples, 2)
+    for i in reversed(range(0, N_consensus, chunks_size)):
+        ind = np.where(np.tile(max_entries, (min(chunks_size, N_consensus - i), 1)) == clb_cum[i:min(i+chunks_size, N_consensus)])
+        cluster_labels[ind[1]] = i + ind[0]
+        winner_probabilities[ind[1]] = clb_cum[(ind[0] + i, ind[1])]       
+
+    # Done with competing for objects.
+
+    cluster_labels = one_to_max(cluster_labels)
+
+    print(""INFO: Cluster_Ensembles: MCLA: delivering ""
+          ""{} clusters."".format(np.unique(cluster_labels).size))
+    print(""INFO: Cluster_Ensembles: MCLA: average posterior ""
+          ""probability is {}"".format(np.mean(winner_probabilities)))
+    if cluster_labels.size <= 7:
+        print(""INFO: Cluster_Ensembles: MCLA: the winning posterior probabilities are:"")
+        print(winner_probabilities)
+        print(""'INFO: Cluster_Ensembles: MCLA: the full posterior probabilities are:"")
+        print(clb_cum)
+
+    fileh.remove_node(fileh.root.consensus_group, ""clb_cum"")
+    fileh.close()
+
+    return cluster_labels",True,T5-Base
+0.5526315789473685,0.5333333333333333,0.5526315789473685,0.13212448108493594,0.13212448108493594,0,2.3593623638153076,"def nice_join(seq, sep="", "", conjuction=""or""):
+    ''' Join together sequences of strings into English-friendly phrases using
+    the conjunction ``or`` when appropriate.
+
+    Args:
+        seq (seq[str]) : a sequence of strings to nicely join
+        sep (str, optional) : a sequence delimiter to use (default: "", "")
+        conjunction (str or None, optional) : a conjuction to use for the last
+            two items, or None to reproduce basic join behaviour (default: ""or"")
+
+    Returns:
+        a joined string
+
+    Examples:
+        >>> nice_join([""a"", ""b"", ""c""])
+        'a, b or c'
+
+    '''
+    seq = [str(x) for x in seq]
+
+    if len(seq) <= 1 or conjuction is None:
+        return sep.join(seq)
+    else:
+        return ""%s %s %s"" % (sep.join(seq[:-1]), conjuction, seq[-1])","Args: seq (seq[str]) : a sequence of strings to nicely join sep (str) : a sequence delimiter to use (default: "", "") conjunction (str or None, optional) : a conjuction to use for the last two items, or None to reproduce basic join behaviour (default: ""or""",T5-Base
+0.2582781456953642,0.12666666666666668,0.22516556291390727,0.013884176531670196,0.013884176531670196,0,3.1284098625183105,"def get_option(
+            self,
+            section_name,
+            key_name,
+            args_option=None,
+            args_default=None,
+    ):
+        """"""evaluates the requested option and returns the correct value
+
+        Notes:
+            Priority order
+            1. args given at runtile
+            2. <config_file>_local.cfg -- untracked config with #SECRETS
+            3. <config_file>.cfg -- tracked 'master' config without #SECRETS
+            4. environment varabile
+            5. args_default -- function default w/o global config
+
+        Args:
+            section_name (str): section level name in config
+            key_name (str): key name for option in config
+            args_option (any): arg option given by a function
+            args_default (any): arg default given by a function
+
+        Returns:
+            str: appropriate response as per priority order
+
+        """"""
+        if args_option != args_default and\
+           args_option is not None:
+            self.logger.debug('-- using function args')
+            return args_option
+
+        section_info = section_name + '.' + key_name
+
+        option = None
+        try:
+            option = check_value(self.local_config, section_name, key_name)
+            self.logger.debug('-- using local config')
+            if option:
+                return option
+        except (KeyError, configparser.NoOptionError, configparser.NoSectionError):
+            self.logger.debug('`%s` not found in local config', section_info)
+
+        try:
+            option = check_value(self.global_config, section_name, key_name)
+            self.logger.debug('-- using global config')
+            if option:
+                return option
+        except (KeyError, configparser.NoOptionError, configparser.NoSectionError):
+            self.logger.warning('`%s` not found in global config', section_info)
+
+        env_option = get_value_from_environment(section_name, key_name, logger=self.logger)
+        if env_option:
+            self.logger.debug('-- using environment value')
+            return env_option
+
+        self.logger.debug('-- using default argument')
+        return args_default",args: section_name (str): section level name in config key_name (str): key level name in config key_name (str): key level name in config key_name (str): key level name in config key_name (str): key level name in config key_name (str): key level name in config key_name (str): key level name in config key_name (,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.19789576530456543,"def write_observation_zone(self, **kw):
+        """"""
+        Write an observation zone declaration to the file::
+
+            writer.write_observation_zone(
+                type=ObservationZoneType.CYLINDER,
+                radius=30000,
+            )
+
+            # <ObservationZone type=""Cylinder"" radius=""30000""/>
+
+        The required parameters depend on the type parameter. Different
+        observation zone types require different parameters.
+
+        :param type: observation zone type (one of the constants in
+            :class:`~aerofiles.xcsoar.constants.ObservationZoneType`)
+
+        :param length: length of the line
+            (only used with type
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.LINE`)
+        :param radius: (outer) radius of the observation zone
+            (used with types
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.CYLINDER`,
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.SECTOR`,
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.SYMMETRIC_QUADRANT` and
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.CUSTOM_KEYHOLE`)
+        :param inner_radius: inner radius of the observation zone
+            (only used with type
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.CUSTOM_KEYHOLE`)
+        :param angle: angle of the observation zone
+            (only used with type
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.CUSTOM_KEYHOLE`)
+        :param start_radial: start radial of the observation zone
+            (only used with type
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.SECTOR`)
+        :param end_radial: end radial of the observation zone
+            (only used with type
+            :const:`~aerofiles.xcsoar.constants.ObservationZoneType.SECTOR`)
+        """"""
+
+        assert 'type' in kw
+
+        if kw['type'] == ObservationZoneType.LINE:
+            assert 'length' in kw
+
+        elif kw['type'] == ObservationZoneType.CYLINDER:
+            assert 'radius' in kw
+
+        elif kw['type'] == ObservationZoneType.SECTOR:
+            assert 'radius' in kw
+            assert 'start_radial' in kw
+            assert 'end_radial' in kw
+
+        elif kw['type'] == ObservationZoneType.SYMMETRIC_QUADRANT:
+            assert 'radius' in kw
+
+        elif kw['type'] == ObservationZoneType.CUSTOM_KEYHOLE:
+            assert 'radius' in kw
+            assert 'inner_radius' in kw
+            assert 'angle' in kw
+
+        self.write_tag('ObservationZone', **kw)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.11737227439880371,"def char(self, c: str) -> None:
+        """"""Parse the specified character.
+
+        Args:
+            c: One-character string.
+
+        Raises:
+            EndOfInput: If past the end of `self.input`.
+            UnexpectedInput: If the next character is different from `c`.
+        """"""
+        if self.peek() == c:
+            self.offset += 1
+        else:
+            raise UnexpectedInput(self, f""char '{c}'"")",False,T5-Base
+0.26959247648902823,0.2082018927444795,0.2507836990595611,0.0026403943293570498,0.0026403943293570498,0,2.931029796600342,"def deprecated(*args, **kwargs):
+    """"""
+    This is a decorator which can be used to mark functions
+    as deprecated. It will result in a warning being emitted
+    when the function is used.
+
+    **Classic usage:**
+
+    To use this, decorate your deprecated function with **@deprecated** decorator:
+
+    .. code-block:: python
+
+       from deprecated import deprecated
+
+
+       @deprecated
+       def some_old_function(x, y):
+           return x + y
+
+    You can also decorate a class or a method:
+
+    .. code-block:: python
+
+       from deprecated import deprecated
+
+
+       class SomeClass(object):
+           @deprecated
+           def some_old_method(self, x, y):
+               return x + y
+
+
+       @deprecated
+       class SomeOldClass(object):
+           pass
+
+    You can give a ""reason"" message to help the developer to choose another function/class,
+    and a ""version"" number to specify the starting version number of the deprecation.
+
+    .. code-block:: python
+
+       from deprecated import deprecated
+
+
+       @deprecated(reason=""use another function"", version='1.2.0')
+       def some_old_function(x, y):
+           return x + y
+
+    """"""
+    if args and isinstance(args[0], string_types):
+        kwargs['reason'] = args[0]
+        args = args[1:]
+
+    if args and not callable(args[0]):
+        raise TypeError(repr(type(args[0])))
+
+    if args:
+        action = kwargs.get('action', 'always')
+        category = kwargs.get('category', DeprecationWarning)
+        adapter_cls = kwargs.pop('adapter_cls', ClassicAdapter)
+        adapter = adapter_cls(**kwargs)
+
+        wrapped = args[0]
+        if inspect.isclass(wrapped):
+            wrapped = adapter(wrapped)
+            return wrapped
+
+        elif inspect.isroutine(wrapped):
+
+            @wrapt.decorator(adapter=adapter)
+            def wrapper_function(wrapped_, instance_, args_, kwargs_):
+                msg = adapter.get_deprecated_msg(wrapped_, instance_)
+                with warnings.catch_warnings():
+                    warnings.simplefilter(action, category)
+                    warnings.warn(msg, category=category, stacklevel=2)
+                return wrapped_(*args_, **kwargs_)
+
+            return wrapper_function(wrapped)
+
+        else:
+            raise TypeError(repr(type(wrapped)))
+
+    return functools.partial(deprecated, **kwargs)","This will result in a warning being emitted when the function is used. **Classic usage:** To use this, decorate a class or a method: .. code-block:: python from deprecated import deprecated import deprecated import deprecated import deprecated import deprecated import deprecated import deprecated import deprecated import deprecated import deprecated import deprecated import depre",T5-Base
+0.014084507042253521,0.0,0.014084507042253521,0.0,0.0,1,1.2847938537597656,"def configure_from_environment(self, whitelist_keys=False, whitelist=None):
+        """"""Configure from the entire set of available environment variables.
+
+        This is really a shorthand for grabbing ``os.environ`` and passing to
+        :meth:`_configure_from_mapping`.
+
+        As always, only uppercase keys are loaded.
+
+        Keyword Args:
+            whitelist_keys (bool):
+                Should we whitelist the keys by only pulling those that are
+                already present in the config? Useful for avoiding adding
+                things like ``LESSPIPE`` to your app config. If no whitelist is
+                provided, we use the current config keys as our whitelist.
+            whitelist (list[str]):
+                An explicit list of keys that should be allowed. If provided
+                and ``whitelist_keys`` is true, we will use that as our
+                whitelist instead of pre-existing app config keys.
+
+        Returns:
+            fleaker.base.BaseApplication:
+                Returns itself.
+        """"""
+        self._configure_from_mapping(os.environ, whitelist_keys=whitelist_keys,
+                                     whitelist=whitelist)
+
+        return self",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.13988900184631348,"def parseDate(self, dateString):
+        """"""
+        Parse short-form date strings::
+
+            '05/28/2006' or '04.21'
+
+        @type  dateString: string
+        @param dateString: text to convert to a C{datetime}
+
+        @rtype:  struct_time
+        @return: calculated C{struct_time} value of dateString
+        """"""
+        yr, mth, dy, hr, mn, sec, wd, yd, isdst = time.localtime()
+
+        # values pulled from regex's will be stored here and later
+        # assigned to mth, dy, yr based on information from the locale
+        # -1 is used as the marker value because we want zero values
+        # to be passed thru so they can be flagged as errors later
+        v1 = -1
+        v2 = -1
+        v3 = -1
+
+        s = dateString
+        m = self.ptc.CRE_DATE2.search(s)
+        if m is not None:
+            index = m.start()
+            v1    = int(s[:index])
+            s     = s[index + 1:]
+
+        m = self.ptc.CRE_DATE2.search(s)
+        if m is not None:
+            index = m.start()
+            v2    = int(s[:index])
+            v3    = int(s[index + 1:])
+        else:
+            v2 = int(s.strip())
+
+        v = [ v1, v2, v3 ]
+        d = { 'm': mth, 'd': dy, 'y': yr }
+
+        for i in range(0, 3):
+            n = v[i]
+            c = self.ptc.dp_order[i]
+            if n >= 0:
+                d[c] = n
+
+        # if the year is not specified and the date has already
+        # passed, increment the year
+        if v3 == -1 and ((mth > d['m']) or (mth == d['m'] and dy > d['d'])):
+            yr = d['y'] + 1
+        else:
+            yr  = d['y']
+
+        mth = d['m']
+        dy  = d['d']
+
+        # birthday epoch constraint
+        if yr < self.ptc.BirthdayEpoch:
+            yr += 2000
+        elif yr < 100:
+            yr += 1900
+
+        if _debug:
+            print 'parseDate: ', yr, mth, dy, self.ptc.daysInMonth(mth, yr)
+
+        if (mth > 0 and mth <= 12) and \
+           (dy > 0 and dy <= self.ptc.daysInMonth(mth, yr)):
+            sourceTime = (yr, mth, dy, hr, mn, sec, wd, yd, isdst)
+        else:
+            self.dateFlag = 0
+            self.timeFlag = 0
+            sourceTime    = time.localtime() # return current time if date
+                                             # string is invalid
+
+        return sourceTime",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.12886261940002441,"def _get_base_command(self):
+        """"""Returns the base command plus command-line options.
+
+        Handles everything up to and including the classpath.  The
+        positional training parameters are added by the
+        _input_handler_decorator method.
+        """"""
+        cd_command = ''.join(['cd ', str(self.WorkingDir), ';'])
+        jvm_command = ""java""
+        jvm_args = self._commandline_join(
+            [self.Parameters[k] for k in self._jvm_parameters])
+        cp_args = '-cp ""%s"" %s' % (self._get_jar_fp(), self.TrainingClass)
+
+        command_parts = [cd_command, jvm_command, jvm_args, cp_args]
+        return self._commandline_join(command_parts).strip()",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09534740447998047,"def heappush(heap, item):
+    """"""Push item onto heap, maintaining the heap invariant.""""""
+    heap.append(item)
+    _siftdown(heap, 0, len(heap)-1)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.12899255752563477,"def remove_callback(self, name, before=None, after=None):
+        """"""Remove a beforeback, and afterback pair from this Spectator
+
+        If ``before`` and ``after`` are None then all callbacks for
+        the given method will be removed. Otherwise, only the exact
+        callback pair will be removed.
+
+        Parameters
+        ----------
+        name: str
+            The name of the method the callback pair is associated with.
+        before: None or callable
+            The beforeback that was originally registered to the given method.
+        after: None or callable
+            The afterback that was originally registered to the given method.
+        """"""
+        if isinstance(name, (list, tuple)):
+            for name in name:
+                self.remove_callback(name, before, after)
+        elif before is None and after is None:
+            del self._callback_registry[name]
+        else:
+            if name in self._callback_registry:
+                callback_list = self._callback_registry[name]
+            else:
+                callback_list = []
+                self._callback_registry[name] = callback_list
+            callback_list.remove((before, after))
+            if len(callback_list) == 0:
+                # cleanup if all callbacks are gone
+                del self._callback_registry[name]",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09636569023132324,"def rpn_losses(anchor_labels, anchor_boxes, label_logits, box_logits):
+    """"""
+    Args:
+        anchor_labels: fHxfWxNA
+        anchor_boxes: fHxfWxNAx4, encoded
+        label_logits:  fHxfWxNA
+        box_logits: fHxfWxNAx4
+
+    Returns:
+        label_loss, box_loss
+    """"""
+    with tf.device('/cpu:0'):
+        valid_mask = tf.stop_gradient(tf.not_equal(anchor_labels, -1))
+        pos_mask = tf.stop_gradient(tf.equal(anchor_labels, 1))
+        nr_valid = tf.stop_gradient(tf.count_nonzero(valid_mask, dtype=tf.int32), name='num_valid_anchor')
+        nr_pos = tf.identity(tf.count_nonzero(pos_mask, dtype=tf.int32), name='num_pos_anchor')
+        # nr_pos is guaranteed >0 in C4. But in FPN. even nr_valid could be 0.
+
+        valid_anchor_labels = tf.boolean_mask(anchor_labels, valid_mask)
+    valid_label_logits = tf.boolean_mask(label_logits, valid_mask)
+
+    with tf.name_scope('label_metrics'):
+        valid_label_prob = tf.nn.sigmoid(valid_label_logits)
+        summaries = []
+        with tf.device('/cpu:0'):
+            for th in [0.5, 0.2, 0.1]:
+                valid_prediction = tf.cast(valid_label_prob > th, tf.int32)
+                nr_pos_prediction = tf.reduce_sum(valid_prediction, name='num_pos_prediction')
+                pos_prediction_corr = tf.count_nonzero(
+                    tf.logical_and(
+                        valid_label_prob > th,
+                        tf.equal(valid_prediction, valid_anchor_labels)),
+                    dtype=tf.int32)
+                placeholder = 0.5   # A small value will make summaries appear lower.
+                recall = tf.cast(tf.truediv(pos_prediction_corr, nr_pos), tf.float32)
+                recall = tf.where(tf.equal(nr_pos, 0), placeholder, recall, name='recall_th{}'.format(th))
+                precision = tf.cast(tf.truediv(pos_prediction_corr, nr_pos_prediction), tf.float32)
+                precision = tf.where(tf.equal(nr_pos_prediction, 0),
+                                     placeholder, precision, name='precision_th{}'.format(th))
+                summaries.extend([precision, recall])
+        add_moving_summary(*summaries)
+
+    # Per-level loss summaries in FPN may appear lower due to the use of a small placeholder.
+    # But the total RPN loss will be fine.  TODO make the summary op smarter
+    placeholder = 0.
+    label_loss = tf.nn.sigmoid_cross_entropy_with_logits(
+        labels=tf.cast(valid_anchor_labels, tf.float32), logits=valid_label_logits)
+    label_loss = tf.reduce_sum(label_loss) * (1. / cfg.RPN.BATCH_PER_IM)
+    label_loss = tf.where(tf.equal(nr_valid, 0), placeholder, label_loss, name='label_loss')
+
+    pos_anchor_boxes = tf.boolean_mask(anchor_boxes, pos_mask)
+    pos_box_logits = tf.boolean_mask(box_logits, pos_mask)
+    delta = 1.0 / 9
+    box_loss = tf.losses.huber_loss(
+        pos_anchor_boxes, pos_box_logits, delta=delta,
+        reduction=tf.losses.Reduction.SUM) / delta
+    box_loss = box_loss * (1. / cfg.RPN.BATCH_PER_IM)
+    box_loss = tf.where(tf.equal(nr_pos, 0), placeholder, box_loss, name='box_loss')
+
+    add_moving_summary(label_loss, box_loss, nr_valid, nr_pos)
+    return [label_loss, box_loss]",True,T5-Base
+0.028985507246376812,0.0,0.028985507246376812,1.1048733764577934e-49,1.1048733764577934e-49,1,0.09608888626098633,"def _should_defer(input_layer, args, kwargs):
+  """"""Checks to see if any of the args are templates.""""""
+  for arg in itertools.chain([input_layer], args, six.itervalues(kwargs)):
+    if isinstance(arg, (_DeferredLayer, UnboundVariable)):
+      return True
+    elif (isinstance(arg, collections.Sequence) and
+          not isinstance(arg, six.string_types)):
+      if _should_defer(None, arg, {}):
+        return True
+    elif isinstance(arg, collections.Mapping):
+      if _should_defer(None, (), arg):
+        return True
+  return False",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.35211944580078125,"def corelinkformat(resource):
+        """"""
+        Return a formatted string representation of the corelinkformat in the tree.
+
+        :return: the string
+        """"""
+        msg = ""<"" + resource.path + "">;""
+        assert(isinstance(resource, Resource))
+        keys = sorted(list(resource.attributes.keys()))
+        for k in keys:
+            method = getattr(resource, defines.corelinkformat[k], None)
+            if method is not None and method != """":
+                v = method
+                msg = msg[:-1] + "";"" + str(v) + "",""
+            else:
+                v = resource.attributes[k]
+                if v is not None:
+                    msg = msg[:-1] + "";"" + k + ""="" + v + "",""
+        return msg",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.08606624603271484,"def contourf(x, y, z, ax, **kwargs):
+    """"""
+    Filled contour plot of 2d DataArray
+
+    Wraps :func:`matplotlib:matplotlib.pyplot.contourf`
+    """"""
+    primitive = ax.contourf(x, y, z, **kwargs)
+    return primitive",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.1932213306427002,"def blink(self, blink):
+        """"""Turn on or off cursor blinking.  Set blink to True to enable blinking.""""""
+        if blink:
+            self.displaycontrol |= LCD_BLINKON
+        else:
+            self.displaycontrol &= ~LCD_BLINKON
+        self.write8(LCD_DISPLAYCONTROL | self.displaycontrol)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09258770942687988,"def _clear_config(self):
+        # type: () -> None
+        """"""Clearout config object in memory.""""""
+        for section in self._config.sections():
+            self._config.remove_section(section)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.15010952949523926,"def unregistercls(self, schemacls=None, data_types=None):
+    """"""Unregister schema class or associated data_types.
+
+    :param type schemacls: sub class of Schema.
+    :param list data_types: data_types to unregister.
+    """"""
+    return _REGISTRY.unregistercls(schemacls=schemacls, data_types=data_types)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.1309833526611328,"def md_to_pdf(input_name, output_name):
+    """"""
+    Converts an input MarkDown file to a PDF of the given output name.
+
+    Parameters
+    ==========
+    input_name : String
+    Relative file location of the input file to where this function is being called.
+
+    output_name : String
+    Relative file location of the output file to where this function is being called. Note that .pdf can be omitted.
+
+    Examples
+    ========
+    Suppose we have a directory as follows:
+    data/
+        doc.md
+    
+    To convert the document:
+    >>> from aide_document import convert
+    >>> convert.md_to_pdf('data/doc.md', 'data/doc.pdf')
+
+    .pdf can also be omitted from the second argument.
+    """"""
+
+    if output_name[-4:] == '.pdf':
+        os.system(""pandoc "" + input_name + "" -o "" + output_name)
+    else:
+        os.system(""pandoc "" + input_name + "" -o "" + output_name + "".pdf"" )",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.13107991218566895,"def create_socketpair(size=None):
+    """"""
+    Create a :func:`socket.socketpair` to use for use as a child process's UNIX
+    stdio channels. As socket pairs are bidirectional, they are economical on
+    file descriptor usage as the same descriptor can be used for ``stdin`` and
+    ``stdout``. As they are sockets their buffers are tunable, allowing large
+    buffers to be configured in order to improve throughput for file transfers
+    and reduce :class:`mitogen.core.Broker` IO loop iterations.
+    """"""
+    parentfp, childfp = socket.socketpair()
+    parentfp.setsockopt(socket.SOL_SOCKET,
+                        socket.SO_SNDBUF,
+                        size or mitogen.core.CHUNK_SIZE)
+    childfp.setsockopt(socket.SOL_SOCKET,
+                       socket.SO_RCVBUF,
+                       size or mitogen.core.CHUNK_SIZE)
+    return parentfp, childfp",False,T5-Base
+0.10526315789473684,0.07272727272727272,0.10526315789473684,0.056336166586104276,0.056336166586104276,0,2.5241281986236572,"def Message(self, text):
+        """"""Inform about what we are doing right now, e.g.
+        'Checking for SOMETHING ... '
+        """"""
+        self.Display(text)
+        self.sconf.cached = 1
+        self.did_show_result = 0",'Checking for SOMETHING ...' -> code: 'Checking for SOMETHING ...' -> code: 'Checking for SOMETHING ...' -> code: 'Checking for SOMETHING ...' -> code: 'Checking for SOMETHING ...' -> code: 'Checking for SOMETHING ...' -> code: 'Checking for SOMETHING ...' -> code:,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.10671758651733398,"def _speak_as_no_punctuation_inherit(self, element):
+        """"""
+        No speak the punctuation for element and descendants.
+
+        :param element: The element.
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """"""
+
+        self._reverse_speak_as(element, 'literal-punctuation')
+        self._reverse_speak_as(element, 'no-punctuation')
+
+        self._isolate_text_node(element)
+
+        self._visit(element, self._speak_as_no_punctuation)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09268331527709961,"def encrypt(receiver_pubhex: str, msg: bytes) -> bytes:
+    """"""
+    Encrypt with eth public key
+
+    Parameters
+    ----------
+    receiver_pubhex: str
+        Receiver's ethereum public key hex string
+    msg: bytes
+        Data to encrypt
+
+    Returns
+    -------
+    bytes
+        Encrypted data
+    """"""
+    disposable_key = generate_key()
+    receiver_pubkey = hex2pub(receiver_pubhex)
+    aes_key = derive(disposable_key, receiver_pubkey)
+    cipher_text = aes_encrypt(aes_key, msg)
+    return disposable_key.public_key.format(False) + cipher_text",True,T5-Base
+0.3486238532110092,0.205607476635514,0.3486238532110092,0.109663291805737,0.109663291805737,0,1.9429099559783936,"def get_version():
+    """"""Get the version of `package` (by extracting it from the source code).""""""
+    module_path = get_absolute_path('pip_save', '__init__.py')
+    with open(module_path) as handle:
+        for line in handle:
+            match = re.match(r'^__version__\s*=\s*[""\']([^""\']+)[""\']$', line)
+            if match:
+                return match.group(1)
+    raise Exception(""Failed to extract version from %s!"" % module_path)",Get the version of package (by extracting it from the source code). -> code: Get the version of package (by extracting it from the source code). -> code: Get the version of package (by extracting it from the source code). -> code: Get the version of package (by extracting it from the source code).,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.15459394454956055,"def OE(element, value, transform=lambda x: x):
+    """"""
+    Create an Optional Element.
+
+    Returns an Element as ElementMaker would, unless value is None. Optionally the value can be
+    transformed through a function.
+
+    >>> OE('elem', None)
+    None
+
+    >>> lxml.etree.tostring(OE('elem', 'value'))
+    <elem>value</elem>
+
+    >>> lxml.etree.tostring(OE('elem', True, int))
+    <elem>1</elem>
+    """"""
+    return E(element, transform(value)) if value is not None else None",False,T5-Base
+0.016949152542372885,0.0,0.016949152542372885,9.427937141731002e-66,9.427937141731002e-66,1,0.14023852348327637,"def _wrapped_overflow_add(a, b):
+        """"""
+        Determines if an overflow happens during the addition of `a` and `b`.
+
+        :param a: The first operand (StridedInterval)
+        :param b: The other operand (StridedInterval)
+        :return: True if overflows, False otherwise
+        """"""
+
+        if a.is_integer and a.lower_bound == 0:
+            # Special case: if `a` or `b` is a zero
+            card_self = 0
+        else:
+            card_self = StridedInterval._wrapped_cardinality(a.lower_bound, a.upper_bound, a.bits)
+
+        if b.is_integer and b.lower_bound == 0:
+            # Special case: if `a` or `b` is a zero
+            card_b = 0
+        else:
+            card_b = StridedInterval._wrapped_cardinality(b.lower_bound, b.upper_bound, b.bits)
+
+        return (card_self + card_b) > (StridedInterval.max_int(a.bits) + 1)",False,T5-Base
+0.35690235690235683,0.29830508474576267,0.24242424242424246,0.03520171319710187,0.03520171319710187,0,2.3679988384246826,"def get_port_def(port_num, proto='tcp'):
+    '''
+    Given a port number and protocol, returns the port definition expected by
+    docker-py. For TCP ports this is simply an integer, for UDP ports this is
+    (port_num, 'udp').
+
+    port_num can also be a string in the format 'port_num/udp'. If so, the
+    ""proto"" argument will be ignored. The reason we need to be able to pass in
+    the protocol separately is because this function is sometimes invoked on
+    data derived from a port range (e.g. '2222-2223/udp'). In these cases the
+    protocol has already been stripped off and the port range resolved into the
+    start and end of the range, and get_port_def() is invoked once for each
+    port number in that range. So, rather than munge udp ports back into
+    strings before passing them to this function, the function will see if it
+    has a string and use the protocol from it if present.
+
+    This function does not catch the TypeError or ValueError which would be
+    raised if the port number is non-numeric. This function either needs to be
+    run on known good input, or should be run within a try/except that catches
+    these two exceptions.
+    '''
+    try:
+        port_num, _, port_num_proto = port_num.partition('/')
+    except AttributeError:
+        pass
+    else:
+        if port_num_proto:
+            proto = port_num_proto
+    try:
+        if proto.lower() == 'udp':
+            return int(port_num), 'udp'
+    except AttributeError:
+        pass
+    return int(port_num)","port_num can also be a string in the format 'port_num/udp'. If so, the ""proto"" argument will be ignored. This function returns the port definition expected by docker-py. For TCP ports this is simply an integer, for UDP ports this is (port_num, 'udp'). If so, the ""proto"" argument will be ignored.",T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.08805513381958008,"def get_kernel_spec(self, kernel_name):
+        """"""Returns a :class:`KernelSpec` instance for the given kernel_name.
+
+        Raises :exc:`NoSuchKernel` if the given kernel name is not found.
+        """"""
+        try:
+            return super(EnvironmentKernelSpecManager,
+                         self).get_kernel_spec(kernel_name)
+        except (NoSuchKernel, FileNotFoundError):
+            venv_kernel_name = kernel_name.lower()
+            specs = self.get_all_kernel_specs_for_envs()
+            if venv_kernel_name in specs:
+                return specs[venv_kernel_name]
+            else:
+                raise NoSuchKernel(kernel_name)",True,T5-Base
+0.358974358974359,0.21052631578947367,0.3333333333333333,0.17466988913620826,0.17466988913620826,0,1.2894158363342285,"def harvest_openaire_projects(source=None, setspec=None):
+    """"""Harvest grants from OpenAIRE and store as authority records.""""""
+    loader = LocalOAIRELoader(source=source) if source \
+        else RemoteOAIRELoader(setspec=setspec)
+    for grant_json in loader.iter_grants():
+        register_grant.delay(grant_json)",Harvest grants from OpenAIRE and store as authority records. -> code: Harvest grants from OpenAIRE and store as authority records. -> task: Harvest grants from OpenAIRE and store as authority records. -> code: Harvest grants from OpenAIRE and store as authority records.,T5-Base
+0.1016949152542373,0.08,0.1016949152542373,0.046126563157778334,0.046126563157778334,0,2.488787889480591,"def formatted(self):
+    ''' print a nicely formatted output of this report '''
+
+    return """"""
+Weather Station: %s (%s, %s)
+Elevation: %s m
+Time: %s UTC
+Air Temperature: %s C (%s F)
+Wind Speed: %s m/s (%s mph)
+Wind Direction: %s
+Present Weather Obs: %s
+Precipitation: %s
+Cloud Coverage: %s oktas
+Cloud Summation: %s
+Solar Irradiance: %s 
+    """""" % (self.weather_station, self.latitude, self.longitude,
+           self.elevation, self.datetime, self.air_temperature,
+           self.air_temperature.get_fahrenheit(), self.wind_speed,
+           self.wind_speed.get_miles(), self.wind_direction,
+           str(self.present_weather), str(self.precipitation),
+           str(self.sky_cover), str(self.sky_cover_summation),
+           str(self.solar_irradiance))",: print a nicely formatted output of this report -> task: print a nicely formatted output of this report -> code: print a nicely formatted output of this report -> task: print a nicely formatted output of this report -> code: print a nicely formatted output of this report -> code: print a nicely formatted output of this report -> code: print a nicely formatted output of this report -> code: print a nicely formatted output of this report -> code,T5-Base
+0.0016638935108153079,0.0,0.0016638935108153079,0.0,0.0,1,0.4793882369995117,"def plot_multitrack(multitrack, filename=None, mode='separate',
+                    track_label='name', preset='default', cmaps=None,
+                    xtick='auto', ytick='octave', xticklabel=True,
+                    yticklabel='auto', tick_loc=None, tick_direction='in',
+                    label='both', grid='both', grid_linestyle=':',
+                    grid_linewidth=.5):
+    """"""
+    Plot the pianorolls or save a plot of them.
+
+    Parameters
+    ----------
+    filename : str
+        The filename to which the plot is saved. If None, save nothing.
+    mode : {'separate', 'stacked', 'hybrid'}
+        A string that indicate the plotting mode to use. Defaults to
+        'separate'.
+
+        - In 'separate' mode, all the tracks are plotted separately.
+        - In 'stacked' mode, a color is assigned based on `cmaps` to the
+            pianoroll of each track and the pianorolls are stacked and
+            plotted as a colored image with RGB channels.
+        - In 'hybrid' mode, the drum tracks are merged into a 'Drums' track,
+            while the other tracks are merged into an 'Others' track, and the
+            two merged tracks are then plotted separately.
+
+    track_label : {'name', 'program', 'family', 'off'}
+        A sting that indicates what to use as labels to the track. When
+        `mode` is 'hybrid', all options other than 'off' will label the two
+        track with 'Drums' and 'Others'.
+    preset : {'default', 'plain', 'frame'}
+        A string that indicates the preset theme to use.
+
+        - In 'default' preset, the ticks, grid and labels are on.
+        - In 'frame' preset, the ticks and grid are both off.
+        - In 'plain' preset, the x- and y-axis are both off.
+
+    cmaps :  tuple or list
+        The `matplotlib.colors.Colormap` instances or colormap codes to use.
+
+        - When `mode` is 'separate', each element will be passed to each
+            call of :func:`matplotlib.pyplot.imshow`. Defaults to ('Blues',
+            'Oranges', 'Greens', 'Reds', 'Purples', 'Greys').
+        - When `mode` is stacked, a color is assigned based on `cmaps` to
+            the pianoroll of each track. Defaults to ('hsv').
+        - When `mode` is 'hybrid', the first (second) element is used in the
+            'Drums' ('Others') track. Defaults to ('Blues', 'Greens').
+
+    xtick : {'auto', 'beat', 'step', 'off'}
+        A string that indicates what to use as ticks along the x-axis. If
+        'auto' is given, automatically set to 'beat' if `beat_resolution` is
+        also given and set to 'step', otherwise. Defaults to 'auto'.
+    ytick : {'octave', 'pitch', 'off'}
+        A string that indicates what to use as ticks along the y-axis.
+        Defaults to 'octave'.
+    xticklabel : bool
+        Whether to add tick labels along the x-axis. Only effective when
+        `xtick` is not 'off'.
+    yticklabel : {'auto', 'name', 'number', 'off'}
+        If 'name', use octave name and pitch name (key name when `is_drum`
+        is True) as tick labels along the y-axis. If 'number', use pitch
+        number. If 'auto', set to 'name' when `ytick` is 'octave' and
+        'number' when `ytick` is 'pitch'. Defaults to 'auto'. Only effective
+        when `ytick` is not 'off'.
+    tick_loc : tuple or list
+        The locations to put the ticks. Availables elements are 'bottom',
+        'top', 'left' and 'right'. Defaults to ('bottom', 'left').
+    tick_direction : {'in', 'out', 'inout'}
+        A string that indicates where to put the ticks. Defaults to 'in'.
+        Only effective when one of `xtick` and `ytick` is on.
+    label : {'x', 'y', 'both', 'off'}
+        A string that indicates whether to add labels to the x-axis and
+        y-axis. Defaults to 'both'.
+    grid : {'x', 'y', 'both', 'off'}
+        A string that indicates whether to add grids to the x-axis, y-axis,
+        both or neither. Defaults to 'both'.
+    grid_linestyle : str
+        Will be passed to :meth:`matplotlib.axes.Axes.grid` as 'linestyle'
+        argument.
+    grid_linewidth : float
+        Will be passed to :meth:`matplotlib.axes.Axes.grid` as 'linewidth'
+        argument.
+
+    Returns
+    -------
+    fig : `matplotlib.figure.Figure` object
+        A :class:`matplotlib.figure.Figure` object.
+    axs : list
+        List of :class:`matplotlib.axes.Axes` object.
+
+    """"""
+    if not HAS_MATPLOTLIB:
+        raise ImportError(""matplotlib package is required for plotting ""
+                          ""supports."")
+
+    def get_track_label(track_label, track=None):
+        """"""Convenient function to get track labels""""""
+        if track_label == 'name':
+            return track.name
+        elif track_label == 'program':
+            return pretty_midi.program_to_instrument_name(track.program)
+        elif track_label == 'family':
+            return pretty_midi.program_to_instrument_class(track.program)
+        elif track is None:
+            return track_label
+
+    def add_tracklabel(ax, track_label, track=None):
+        """"""Convenient function for adding track labels""""""
+        if not ax.get_ylabel():
+            return
+        ax.set_ylabel(get_track_label(track_label, track) + '\n\n'
+                      + ax.get_ylabel())
+
+    multitrack.check_validity()
+    if not multitrack.tracks:
+        raise ValueError(""There is no track to plot."")
+    if mode not in ('separate', 'stacked', 'hybrid'):
+        raise ValueError(""`mode` must be one of {'separate', 'stacked', ""
+                         ""'hybrid'}."")
+    if track_label not in ('name', 'program', 'family', 'off'):
+        raise ValueError(""`track_label` must be one of {'name', 'program', ""
+                         ""'family'}."")
+
+    if cmaps is None:
+        if mode == 'separate':
+            cmaps = ('Blues', 'Oranges', 'Greens', 'Reds', 'Purples', 'Greys')
+        elif mode == 'stacked':
+            cmaps = ('hsv')
+        else:
+            cmaps = ('Blues', 'Greens')
+
+    num_track = len(multitrack.tracks)
+    downbeats = multitrack.get_downbeat_steps()
+
+    if mode == 'separate':
+        if num_track > 1:
+            fig, axs = plt.subplots(num_track, sharex=True)
+        else:
+            fig, ax = plt.subplots()
+            axs = [ax]
+
+        for idx, track in enumerate(multitrack.tracks):
+            now_xticklabel = xticklabel if idx < num_track else False
+            plot_pianoroll(axs[idx], track.pianoroll, False,
+                           multitrack.beat_resolution, downbeats, preset=preset,
+                           cmap=cmaps[idx%len(cmaps)], xtick=xtick, ytick=ytick,
+                           xticklabel=now_xticklabel, yticklabel=yticklabel,
+                           tick_loc=tick_loc, tick_direction=tick_direction,
+                           label=label, grid=grid,
+                           grid_linestyle=grid_linestyle,
+                           grid_linewidth=grid_linewidth)
+            if track_label != 'none':
+                add_tracklabel(axs[idx], track_label, track)
+
+        if num_track > 1:
+            fig.subplots_adjust(hspace=0)
+
+        if filename is not None:
+            plt.savefig(filename)
+
+        return (fig, axs)
+
+    elif mode == 'stacked':
+        is_all_drum = True
+        for track in multitrack.tracks:
+            if not track.is_drum:
+                is_all_drum = False
+
+        fig, ax = plt.subplots()
+        stacked = multitrack.get_stacked_pianorolls()
+
+        colormap = matplotlib.cm.get_cmap(cmaps[0])
+        cmatrix = colormap(np.arange(0, 1, 1 / num_track))[:, :3]
+        recolored = np.matmul(stacked.reshape(-1, num_track), cmatrix)
+        stacked = recolored.reshape(stacked.shape[:2] + (3, ))
+
+        plot_pianoroll(ax, stacked, is_all_drum, multitrack.beat_resolution,
+                       downbeats, preset=preset, xtick=xtick, ytick=ytick,
+                       xticklabel=xticklabel, yticklabel=yticklabel,
+                       tick_loc=tick_loc, tick_direction=tick_direction,
+                       label=label, grid=grid, grid_linestyle=grid_linestyle,
+                       grid_linewidth=grid_linewidth)
+
+        if track_label != 'none':
+            patches = [Patch(color=cmatrix[idx],
+                             label=get_track_label(track_label, track))
+                       for idx, track in enumerate(multitrack.tracks)]
+            plt.legend(handles=patches)
+
+        if filename is not None:
+            plt.savefig(filename)
+
+        return (fig, [ax])
+
+    elif mode == 'hybrid':
+        drums = [i for i, track in enumerate(multitrack.tracks)
+                 if track.is_drum]
+        others = [i for i in range(len(multitrack.tracks)) if i not in drums]
+        merged_drums = multitrack.get_merged_pianoroll(drums)
+        merged_others = multitrack.get_merged_pianoroll(others)
+
+        fig, (ax1, ax2) = plt.subplots(2, sharex=True, sharey=True)
+        plot_pianoroll(ax1, merged_drums, True, multitrack.beat_resolution,
+                       downbeats, preset=preset, cmap=cmaps[0], xtick=xtick,
+                       ytick=ytick, xticklabel=xticklabel,
+                       yticklabel=yticklabel, tick_loc=tick_loc,
+                       tick_direction=tick_direction, label=label, grid=grid,
+                       grid_linestyle=grid_linestyle,
+                       grid_linewidth=grid_linewidth)
+        plot_pianoroll(ax2, merged_others, False, multitrack.beat_resolution,
+                       downbeats, preset=preset, cmap=cmaps[1], ytick=ytick,
+                       xticklabel=xticklabel, yticklabel=yticklabel,
+                       tick_loc=tick_loc, tick_direction=tick_direction,
+                       label=label, grid=grid, grid_linestyle=grid_linestyle,
+                       grid_linewidth=grid_linewidth)
+        fig.subplots_adjust(hspace=0)
+
+        if track_label != 'none':
+            add_tracklabel(ax1, 'Drums')
+            add_tracklabel(ax2, 'Others')
+
+        if filename is not None:
+            plt.savefig(filename)
+
+        return (fig, [ax1, ax2])",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09247779846191406,"def get_friends(self):
+        """"""Get user's friends.""""""
+        for k, v in iter(self.user_data.language_data.items()):
+            data = []
+            for friend in v['points_ranking_data']:
+                temp = {'username': friend['username'],
+                        'id': friend['id'],
+                        'points': friend['points_data']['total'],
+                        'languages': [i['language_string'] for i in
+                                      friend['points_data']['languages']]}
+                data.append(temp)
+
+            return data",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.1312720775604248,"def aa_db_search(self, files, base, unpack, search_method,
+                     maximum_range, threads, evalue, min_orf_length,
+                     restrict_read_length, diamond_database):
+        '''
+        Amino acid database search pipeline - pipeline where reads are searched
+        as amino acids, and hits are identified using hmmsearch or diamond
+        searches
+
+        Parameters
+        ----------
+        files : obj
+            graftm_output_paths object.
+        base : str
+            The name of the input file, stripped of all suffixes, and paths.
+            Used for creating file names with 'files' object.
+        unpack : obj
+            UnpackRawReads object, returns string command that will output
+            sequences to stdout when called on command line
+            (use: unpack.command_line())
+        search_method : str
+            The method for searching, either 'hmmsearch' or 'diamond'
+        maximum_range : int
+            Maximum range that a gene can extend within a contig. Any hits
+            that extend beyond this length cannot be linked. max_range is defined
+            as 1.5 X the average length of all full length genes used in the
+            search database. This is defined in the CONTENTS.json file within a
+            gpkg.
+        threads : int
+            Number of threads for hmmer to use
+        evalue : str
+            evalue cutoff for hmmer to use
+        min_orf_length : int
+            minimum orf length for orfm to use
+        restrict_read_length : int
+            orf length to retrict orfm to.
+        diamond_database : str
+            Path to diamond database to use when searching. Set to 'None' if not
+            using diamond pipeline
+        Returns
+        -------
+        String path to amino acid fasta file of reads that hit
+        '''
+        # Define outputs
+        if search_method == 'hmmsearch':
+            output_search_file = files.hmmsearch_output_path(base)
+        elif search_method == 'diamond':
+            output_search_file = files.diamond_search_output_basename(base)
+        hit_reads_fasta = files.fa_output_path(base)
+        hit_reads_orfs_fasta = files.orf_fasta_output_path(base)
+
+        return self.search_and_extract_orfs_matching_protein_database(\
+                                                    unpack,
+                                                    search_method,
+                                                    maximum_range,
+                                                    threads,
+                                                    evalue,
+                                                    min_orf_length,
+                                                    restrict_read_length,
+                                                    diamond_database,
+                                                    output_search_file,
+                                                    hit_reads_fasta,
+                                                    hit_reads_orfs_fasta)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.12545394897460938,"def load_dict_from_yaml(path):
+    """"""
+    Loads a dictionary from a yaml file
+    :param path: the absolute path of the target yaml file
+    :return:
+    """"""
+    f = file(path, 'r')
+    dictionary = yaml.load(f)
+    f.close()
+    return dictionary",False,T5-Base
+0.5960264900662252,0.5771812080536912,0.4503311258278146,0.03147030641680376,0.03147030641680376,0,2.9387354850769043,"def commit_cancelled(name):
+    '''
+    .. versionadded:: 2019.2.0
+
+    Cancel a commit scheduled to be executed via the ``commit_in`` and
+    ``commit_at`` arguments from the
+    :py:func:`net.load_template <salt.modules.napalm_network.load_template>` or
+    :py:func:`net.load_config <salt.modules.napalm_network.load_config>`
+    execution functions. The commit ID is displayed when the commit is scheduled
+    via the functions named above.
+
+    State SLS Example:
+
+    .. code-block:: yaml
+
+        '20180726083540640360':
+          netconfig.commit_cancelled
+    '''
+    cancelled = {
+        'name': name,
+        'result': None,
+        'changes': {},
+        'comment': ''
+    }
+    if __opts__['test']:
+        cancelled['comment'] = 'It would cancel commit #{}'.format(name)
+        return cancelled
+    ret = __salt__['net.cancel_commit'](name)
+    cancelled.update(ret)
+    return cancelled",:py:func:net.load_template salt.modules.napalm_network.load_template> .. versionadded:: 2019.2.0 Cancel a commit scheduled to be executed via the commit_in and commit_at arguments from the :py:func:net.load_config salt.modules.napalm_network.load_config> execution functions,T5-Base
+0.02777777777777778,0.0,0.02777777777777778,0.0,0.0,1,0.43364667892456055,"def get_objective_objective_bank_session(self):
+        """"""Gets the session for retrieving objective to objective bank mappings.
+
+        return: (osid.learning.ObjectiveObjectiveBankSession) - an
+                ``ObjectiveObjectiveBankSession``
+        raise:  OperationFailed - unable to complete request
+        raise:  Unimplemented - ``supports_objective_objective_bank()``
+                is ``false``
+        *compliance: optional -- This method must be implemented if
+        ``supports_objective_objective_bank()`` is ``true``.*
+
+        """"""
+        if not self.supports_objective_objective_bank():
+            raise errors.Unimplemented()
+        # pylint: disable=no-member
+        return sessions.ObjectiveObjectiveBankSession(runtime=self._runtime)",False,T5-Base
+0.0625,0.0,0.0625,0.0,0.0,1,0.09293437004089355,"def split_timesteps(data, consistent_abmn=False):
+    """"""Split data into multiple timesteps.""""""
+    if has_multiple_timesteps(data):
+        grouped = data.groupby(""timestep"")
+        return [group[1] for group in grouped]
+    else:
+        return data",False,T5-Base
+0.009345794392523364,0.0,0.009345794392523364,2.873856751099015e-148,2.873856751099015e-148,1,0.1285703182220459,"def find_your_legislator(request):
+    '''
+    Context:
+        - request
+        - lat
+        - long
+        - located
+        - legislators
+
+    Templates:
+        - billy/web/public/find_your_legislator_table.html
+    '''
+
+    # check if lat/lon are set
+    # if leg_search is set, they most likely don't have ECMAScript enabled.
+    # XXX: fallback behavior here for alpha.
+
+    get = request.GET
+    context = {}
+    template = 'find_your_legislator'
+
+    context['request'] = """"
+    if ""q"" in get:
+        context['request'] = get['q']
+
+    if ""lat"" in get and ""lon"" in get:
+        # We've got a passed lat/lon. Let's build off it.
+        lat = get['lat']
+        lon = get['lon']
+
+        context['lat'] = lat
+        context['lon'] = lon
+        context['located'] = True
+
+        qurl = ""%slegislators/geo/?long=%s&lat=%s&apikey=%s"" % (
+            billy_settings.API_BASE_URL,
+            lon,
+            lat,
+            getattr(billy_settings, 'API_KEY', '')
+        )
+        leg_resp = json.load(urllib2.urlopen(qurl, timeout=0.5))
+        # allow limiting lookup to region for region map views
+        if 'abbr' in get:
+            leg_resp = [leg for leg in leg_resp
+                        if leg[billy_settings.LEVEL_FIELD] == get['abbr']]
+            context['abbr'] = get['abbr']
+
+        # Also, allow filtering by chamber
+        if 'chamber' in get:
+            leg_resp = [leg for leg in leg_resp
+                        if leg['chamber'] == get['chamber']]
+            context['chamber'] = get['chamber']
+
+        if ""boundary"" in get:
+            return HttpResponse(json.dumps([]))
+
+        context['legislators'] = map(Legislator, leg_resp)
+        template = 'find_your_legislator_table'
+
+    return render(request, templatename(template), context)",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09731125831604004,"def get_flagged_names():
+    """"""Return a list of all filenames marked as flagged.""""""
+
+    l = []
+    for w in _widget_cache.values():
+        if w.flagged:
+            l.append(w.get_node().get_value())
+    return l",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.15465855598449707,"def rightsibling(node):
+    """"""
+    Return Right Sibling of `node`.
+
+    >>> from anytree import Node
+    >>> dan = Node(""Dan"")
+    >>> jet = Node(""Jet"", parent=dan)
+    >>> jan = Node(""Jan"", parent=dan)
+    >>> joe = Node(""Joe"", parent=dan)
+    >>> rightsibling(dan)
+    >>> rightsibling(jet)
+    Node('/Dan/Jan')
+    >>> rightsibling(jan)
+    Node('/Dan/Joe')
+    >>> rightsibling(joe)
+    """"""
+    if node.parent:
+        pchildren = node.parent.children
+        idx = pchildren.index(node)
+        try:
+            return pchildren[idx + 1]
+        except IndexError:
+            return None
+    else:
+        return None",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09735321998596191,"def _unassigned_ports():
+    """""" Returns a set of all unassigned ports (according to IANA and Wikipedia) """"""
+    free_ports = ranges_to_set(_parse_ranges(_iana_unassigned_port_ranges()))
+    known_ports = ranges_to_set(_wikipedia_known_port_ranges())
+    return free_ports.difference(known_ports)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.24608111381530762,"def plot_groups_unplaced(self, fout_dir=""."", **kws_usr):
+        """"""Plot each GO group.""""""
+        # kws: go2color max_gos upper_trigger max_upper
+        plotobj = PltGroupedGos(self)
+        return plotobj.plot_groups_unplaced(fout_dir, **kws_usr)",False,T5-Base
+0.02857142857142857,0.0,0.02857142857142857,1.639777482084315e-47,1.639777482084315e-47,1,0.1159965991973877,"def checkPassword(self, password):
+        """"""
+        Check the given plaintext password against the response in this
+        credentials object.
+
+        @type password: C{str}
+        @param password: The known correct password associated with
+            C{self.username}.
+
+        @return: A C{bool}, C{True} if this credentials object agrees with the
+            given password, C{False} otherwise.
+        """"""
+        if isinstance(password, unicode):
+            password = password.encode('utf-8')
+        correctResponse = _calcResponse(self.challenge, self.nonce, password)
+        return correctResponse == self.response",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.10822510719299316,"def fetch(self):
+        """"""
+        Fetch a NumberInstance
+
+        :returns: Fetched NumberInstance
+        :rtype: twilio.rest.pricing.v1.voice.number.NumberInstance
+        """"""
+        params = values.of({})
+
+        payload = self._version.fetch(
+            'GET',
+            self._uri,
+            params=params,
+        )
+
+        return NumberInstance(self._version, payload, number=self._solution['number'], )",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.17747807502746582,"def iterable(self, iterable_name, *, collection, attribute, word, func=None,
+                 operation=None):
+        """""" Performs a filter with the OData 'iterable_name' keyword
+        on the collection
+
+        For example:
+        q.iterable('any', collection='email_addresses', attribute='address',
+        operation='eq', word='george@best.com')
+
+        will transform to a filter such as:
+        emailAddresses/any(a:a/address eq 'george@best.com')
+
+        :param str iterable_name: the OData name of the iterable
+        :param str collection: the collection to apply the any keyword on
+        :param str attribute: the attribute of the collection to check
+        :param str word: the word to check
+        :param str func: the logical function to apply to the attribute inside
+         the collection
+        :param str operation: the logical operation to apply to the attribute
+         inside the collection
+        :rtype: Query
+        """"""
+
+        if func is None and operation is None:
+            raise ValueError('Provide a function or an operation to apply')
+        elif func is not None and operation is not None:
+            raise ValueError(
+                'Provide either a function or an operation but not both')
+
+        current_att = self._attribute
+        self._attribute = iterable_name
+
+        word = self._parse_filter_word(word)
+        collection = self._get_mapping(collection)
+        attribute = self._get_mapping(attribute)
+
+        if func is not None:
+            sentence = self._prepare_function(func, attribute, word)
+        else:
+            sentence = self._prepare_sentence(attribute, operation, word)
+
+        filter_str, attrs = sentence
+
+        filter_data = '{}/{}(a:a/{})'.format(collection, iterable_name, filter_str), attrs
+        self._add_filter(*filter_data)
+
+        self._attribute = current_att
+
+        return self",True,T5-Base
+0.15894039735099338,0.14765100671140938,0.15894039735099338,0.028214923547495597,0.028214923547495597,0,1.1513712406158447,"def copy_any(src, dst, only_missing=False):  # pragma: no cover
+    """"""Copy a file or a directory tree, deleting the destination before processing""""""
+    if not only_missing:
+        remove_if_exist(dst)
+    if os.path.exists(src):
+        if os.path.isdir(src):
+            if not only_missing:
+                shutil.copytree(src, dst, symlinks=False, ignore=None)
+            else:
+                for dirpath, filepath in recwalk(src):
+                    srcfile = os.path.join(dirpath, filepath)
+                    relpath = os.path.relpath(srcfile, src)
+                    dstfile = os.path.join(dst, relpath)
+                    if not os.path.exists(dstfile):
+                        create_dir_if_not_exist(os.path.dirname(dstfile))
+                        shutil.copyfile(srcfile, dstfile)
+                        shutil.copystat(srcfile, dstfile)
+            return True
+        elif os.path.isfile(src) and (not only_missing or not os.path.exists(dst)):
+            shutil.copyfile(src, dst)
+            shutil.copystat(src, dst)
+            return True
+    return False","Copy a file or a directory tree, deleting the destination before processing -> code: -> code: -> code: -> code: -> code: -> code: -> code: -> code: -> code: ->",T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.1359865665435791,"def build_matlab(static=False):
+    """"""build the messenger mex for MATLAB
+
+    static : bool
+        Determines if the zmq library has been statically linked.
+        If so, it will append the command line option -DZMQ_STATIC
+        when compiling the mex so it matches libzmq.
+    """"""
+    cfg = get_config()
+    # To deal with spaces, remove quotes now, and add
+    # to the full commands themselves.
+    if 'matlab_bin' in cfg and cfg['matlab_bin'] != '.':
+        matlab_bin = cfg['matlab_bin'].strip('""')
+    else:  # attempt to autodetect MATLAB filepath
+        matlab_bin = which_matlab()
+        if matlab_bin is None:
+            raise ValueError(""specify 'matlab_bin' in cfg file"")
+    # Get the extension
+    extcmd = esc(os.path.join(matlab_bin, ""mexext""))
+    extension = subprocess.check_output(extcmd, shell=use_shell)
+    extension = extension.decode('utf-8').rstrip('\r\n')
+
+    # Build the mex file
+    mex = esc(os.path.join(matlab_bin, ""mex""))
+    paths = ""-L%(zmq_lib)s -I%(zmq_inc)s"" % cfg
+    make_cmd = '%s -O %s -lzmq ./src/messenger.c' % (mex, paths)
+    if static:
+        make_cmd += ' -DZMQ_STATIC'
+    do_build(make_cmd, 'messenger.%s' % extension)",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.44926977157592773,"def timetopythonvalue(time_val):
+    ""Convert a time or time range from ArcGIS REST server format to Python""
+    if isinstance(time_val, sequence):
+        return map(timetopythonvalue, time_val)
+    elif isinstance(time_val, numeric):
+        return datetime.datetime(*(time.gmtime(time_val))[:6])
+    elif isinstance(time_val, numeric):
+        values = []
+        try:
+            values = map(long, time_val.split("",""))
+        except:
+            pass
+        if values:
+            return map(timetopythonvalue, values)
+    raise ValueError(repr(time_val))",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.5360395908355713,"def emit(self, name=None, data=None):
+        """"""
+        Emit an event annotated with the UTC time when this function was called.
+
+        `name` is a unique identification string for an event that has
+            already been registered.
+        `data` is a dictionary mapping field names to the value to include in the event.
+            Note that all values provided must be serializable.
+
+        """"""
+        event = {
+            'name': name or UNKNOWN_EVENT_TYPE,
+            'timestamp': datetime.now(UTC),
+            'data': data or {},
+            'context': self.resolve_context()
+        }
+
+        self.routing_backend.send(event)",True,T5-Base
+0.3789473684210526,0.3655913978494624,0.3789473684210526,0.008270990281159692,0.008270990281159692,0,0.6858422756195068,"def resolution_order(lang, override=None):
+    """"""
+    Return order of languages which should be checked for parameter language.
+    First is always the parameter language, later are fallback languages.
+    Override parameter has priority over FALLBACK_LANGUAGES.
+    """"""
+    if not settings.ENABLE_FALLBACKS:
+        return (lang,)
+    if override is None:
+        override = {}
+    fallback_for_lang = override.get(lang, settings.FALLBACK_LANGUAGES.get(lang, ()))
+    fallback_def = override.get('default', settings.FALLBACK_LANGUAGES['default'])
+    order = (lang,) + fallback_for_lang + fallback_def
+    return tuple(unique(order))",Return order of languages which should be checked for parameter language. Override parameter has priority over FALLBACK_LANGUAGES.,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.11587715148925781,"def count(self, model_class, conditions=None):
+        '''
+        Counts the number of records in the model's table.
+
+        - `model_class`: the model to count.
+        - `conditions`: optional SQL conditions (contents of the WHERE clause).
+        '''
+        query = 'SELECT count() FROM $table'
+        if conditions:
+            query += ' WHERE ' + conditions
+        query = self._substitute(query, model_class)
+        r = self._send(query)
+        return int(r.text) if r.text else 0",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09736466407775879,"def update(self, **kwargs):
+        """"""Update fields
+
+        :param KeywordArguments kwargs: Fields and values to update.
+        """"""
+        for kw in kwargs:
+            setattr(self, kw, kwargs[kw])",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.20548391342163086,"def map_legacy_frequencies(form, field):
+    ''' Map legacy frequencies to new ones'''
+    if field.data in LEGACY_FREQUENCIES:
+        field.data = LEGACY_FREQUENCIES[field.data]",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.12588191032409668,"def dependents_of(self, address):
+    """"""Returns the addresses of the targets that depend on the target at `address`.
+
+    This method asserts that the address given is actually in the BuildGraph.
+
+    :API: public
+    """"""
+    assert address in self._target_by_address, (
+      'Cannot retrieve dependents of {address} because it is not in the BuildGraph.'
+      .format(address=address)
+    )
+    return self._target_dependees_by_address[address]",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.808485746383667,"def assign_edge_colors_and_widths(self):
+        """"""
+        Resolve conflict of 'node_color' and 'node_style['fill'] args which are
+        redundant. Default is node_style.fill unless user entered node_color.
+        To enter multiple colors user must use node_color not style fill. 
+        Either way, we build a list of colors to pass to Drawing.node_colors 
+        which is then written to the marker as a fill CSS attribute.
+        """"""
+        # node_color overrides fill. Tricky to catch cuz it can be many types.
+
+        # SET edge_widths and POP edge_style.stroke-width
+        if self.style.edge_widths is None:
+            if not self.style.edge_style[""stroke-width""]:
+                self.style.edge_style.pop(""stroke-width"")
+                self.style.edge_style.pop(""stroke"")
+                self.edge_widths = [None] * self.nedges
+            else:
+                if isinstance(self.style.edge_style[""stroke-width""], (list, tuple)):
+                    raise ToytreeError(
+                        ""Use edge_widths not edge_style for multiple edge widths"")
+                # check the color
+                width = self.style.edge_style[""stroke-width""]
+                self.style.edge_style.pop(""stroke-width"")
+                self.edge_widths = [width] * self.nedges
+        else:
+            self.style.edge_style.pop(""stroke-width"")            
+            if isinstance(self.style.edge_widths, (str, int)):
+                self.edge_widths = [int(self.style.edge_widths)] * self.nedges
+
+            elif isinstance(self.style.edge_widths, (list, tuple)):
+                if len(self.style.edge_widths) != self.nedges:
+                    raise ToytreeError(""edge_widths arg is the wrong length"")
+                for cidx in range(self.nedges):
+                    self.edge_widths[cidx] = self.style.edge_widths[cidx]
+
+        # SET edge_colors and POP edge_style.stroke
+        if self.style.edge_colors is None:
+            if self.style.edge_style[""stroke""] is None:
+                self.style.edge_style.pop(""stroke"")
+                self.edge_colors = [None] * self.nedges
+            else:
+                if isinstance(self.style.edge_style[""stroke""], (list, tuple)):
+                    raise ToytreeError(
+                        ""Use edge_colors not edge_style for multiple edge colors"")
+                # check the color
+                color = self.style.edge_style[""stroke""]
+                if isinstance(color, (np.ndarray, np.void, list, tuple)):
+                    color = toyplot.color.to_css(color)
+                self.style.edge_style.pop(""stroke"")                    
+                self.edge_colors = [color] * self.nedges
+
+        # otherwise parse node_color
+        else:
+            self.style.edge_style.pop(""stroke"")                                
+            if isinstance(self.style.edge_colors, (str, int)):
+                # check the color
+                color = self.style.edge_colors
+                if isinstance(color, (np.ndarray, np.void, list, tuple)):
+                    color = toyplot.color.to_css(color)
+                self.edge_colors = [color] * self.nedges
+
+            elif isinstance(self.style.edge_colors, (list, tuple)):
+                if len(self.style.edge_colors) != self.nedges:
+                    raise ToytreeError(""edge_colors arg is the wrong length"")
+                for cidx in range(self.nedges):
+                    self.edge_colors[cidx] = self.style.edge_colors[cidx]
+
+        # do not allow empty edge_colors or widths
+        self.edge_colors = [i if i else ""#262626"" for i in self.edge_colors]
+        self.edge_widths = [i if i else 2 for i in self.edge_widths]",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09324407577514648,"def add_filter(self, filter_):
+        """""" Add an image filter for post-processing """"""
+        assert has_pil, _(""Cannot add filters without python PIL"")
+        self.cache.basename += filter_.basename
+        self._filters.append(filter_)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.1316368579864502,"def _to_dict(self):
+        """"""Return a json dictionary representing this model.""""""
+        _dict = {}
+        if hasattr(self, 'environments') and self.environments is not None:
+            _dict['environments'] = [x._to_dict() for x in self.environments]
+        return _dict",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.22407150268554688,"def delete_issue_link_type(self, issue_link_type_id):
+        """"""Delete the specified issue link type.""""""
+        url = 'rest/api/2/issueLinkType/{issueLinkTypeId}'.format(issueLinkTypeId=issue_link_type_id)
+        return self.delete(url)",False,T5-Base
+0.456140350877193,0.36363636363636365,0.456140350877193,0.14950224640493243,0.14950224640493243,0,0.6815581321716309,"def _with_columns(self, columns):
+        """"""Create a table from a sequence of columns, copying column labels.""""""
+        table = type(self)()
+        for label, column in zip(self.labels, columns):
+            self._add_column_and_format(table, label, column)
+        return table","Create a table from a sequence of columns, copying column labels. -> code: Create a table from a sequence of columns.",T5-Base
+0.3209876543209877,0.3125,0.3209876543209877,0.004804629954125427,0.004804629954125427,0,1.1246750354766846,"def Validate(self, value):
+    """"""Validate the value.
+
+    Args:
+      value: Value is expected to be a dict-like object that a given RDFStruct
+        can be initialized from.
+
+    Raises:
+      TypeValueError: If the value is not a valid dict-like object that a given
+        RDFStruct can be initialized from.
+
+    Returns:
+      A valid instance of self.rdfclass or None.
+    """"""
+    if value is None:
+      return None
+
+    if not isinstance(value, self.rdfclass):
+      # Try to coerce the type to the correct rdf_class.
+      try:
+        r = self.rdfclass()
+        r.FromDict(value)
+        return r
+      except (AttributeError, TypeError, rdfvalue.InitializeError):
+        # AttributeError is raised if value contains items that don't
+        # belong to the given rdfstruct.
+        # TypeError will be raised if value is not a dict-like object.
+        raise TypeValueError(""Value for arg %s should be an %s"" %
+                             (self.name, self.rdfclass.__name__))
+
+    return value",False value is expected to be a dict-like object that a given RDFStruct can be initialized from. Returns: A valid instance of self.rdfclass or None.,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09801483154296875,"def assert_valid_schema(schema: GraphQLSchema) -> None:
+    """"""Utility function which asserts a schema is valid.
+
+    Throws a TypeError if the schema is invalid.
+    """"""
+    errors = validate_schema(schema)
+    if errors:
+        raise TypeError(""\n\n"".join(error.message for error in errors))",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.14832854270935059,"def max_word_width(myDict):
+    '''
+        currd = {0:'AutoPauseSpeed', 125:'HRLimitLow', 6:'Activity'}
+        max_wordwidth(currd)
+    '''
+    maxValueWidth = 0
+    for each in myDict:
+        eachValueWidth = myDict[each].__len__()
+        if(eachValueWidth > maxValueWidth):
+            maxValueWidth = eachValueWidth
+    return(maxValueWidth)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.15272092819213867,"def _cdf(self, xloc, left, right, cache):
+        """"""
+        Cumulative distribution function.
+
+        Example:
+            >>> print(chaospy.Uniform().fwd([-0.5, 0.5, 1.5, 2.5]))
+            [0.  0.5 1.  1. ]
+            >>> print(chaospy.Pow(chaospy.Uniform(), 2).fwd([-0.5, 0.5, 1.5, 2.5]))
+            [0.         0.70710678 1.         1.        ]
+            >>> print(chaospy.Pow(chaospy.Uniform(1, 2), -1).fwd([0.4, 0.6, 0.8, 1.2]))
+            [0.         0.33333333 0.75       1.        ]
+            >>> print(chaospy.Pow(2, chaospy.Uniform()).fwd([-0.5, 0.5, 1.5, 2.5]))
+            [0.        0.        0.5849625 1.       ]
+            >>> print(chaospy.Pow(2, chaospy.Uniform(-1, 0)).fwd([0.4, 0.6, 0.8, 1.2]))
+            [0.         0.26303441 0.67807191 1.        ]
+            >>> print(chaospy.Pow(2, 3).fwd([7, 8, 9]))
+            [0. 1. 1.]
+        """"""
+        left = evaluation.get_forward_cache(left, cache)
+        right = evaluation.get_forward_cache(right, cache)
+
+        if isinstance(left, Dist):
+            if isinstance(right, Dist):
+                raise StochasticallyDependentError(
+                    ""under-defined distribution {} or {}"".format(left, right))
+
+        elif not isinstance(right, Dist):
+            return numpy.inf
+
+        else:
+            assert numpy.all(left > 0), ""imaginary result""
+
+            y = (numpy.log(numpy.abs(xloc) + 1.*(xloc <= 0)) /
+                 numpy.log(numpy.abs(left)+1.*(left == 1)))
+
+            out = evaluation.evaluate_forward(right, y)
+            out = numpy.where(xloc <= 0, 0., out)
+            return out
+
+        y = numpy.sign(xloc)*numpy.abs(xloc)**(1./right)
+        pairs = numpy.sign(xloc**right) != -1
+
+        out1, out2 = (
+            evaluation.evaluate_forward(left, y, cache=cache),
+            evaluation.evaluate_forward(left, -y, cache=cache),
+        )
+        out = numpy.where(right < 0, 1-out1, out1-pairs*out2)
+        return out",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.08180594444274902,"def get_map_offset(self):
+        """"""Compute offset of prior/posterior
+
+
+        Returns
+        -------
+
+        map_offest : 1D array
+            The offset to different fields in prior/posterior
+
+        """"""
+
+        nfield = 4
+        self.map_offset = np.zeros(nfield).astype(int)
+        field_size = self.K * np.array([self.n_dim, 1, self.cov_vec_size, 1])
+        for i in np.arange(nfield - 1) + 1:
+            self.map_offset[i] = self.map_offset[i - 1] + field_size[i - 1]
+        return self.map_offset",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.13503742218017578,"def get_converted_image_name(image):
+    """"""Return the name of the image after it has been converted to png format.
+
+    Strips off the old extension.
+
+    :param: image (string): The fullpath of the image before conversion
+
+    :return: converted_image (string): the fullpath of the image after convert
+    """"""
+    png_extension = '.png'
+
+    if image[(0 - len(png_extension)):] == png_extension:
+        # it already ends in png!  we're golden
+        return image
+
+    img_dir = os.path.split(image)[0]
+    image = os.path.split(image)[-1]
+
+    # cut off the old extension
+    if len(image.split('.')) > 1:
+        old_extension = '.' + image.split('.')[-1]
+        converted_image = image[:(0 - len(old_extension))] + png_extension
+    else:
+        # no extension... damn
+        converted_image = image + png_extension
+
+    return os.path.join(img_dir, converted_image)",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,1.5944359302520752,"def updateSpec(self, *args, **kwargs):
+        """"""Updates the spectrogram given by kwarg *'plot'*, which is
+        either 'response' or (well actually anything). If no arguments 
+        are given, clears both spectrograms.
+
+        For other arguments, see: :meth:`SpecWidget.updateData<sparkle.gui.plotting.pyqtgraph_widgets.SpecWidget.updateData>`
+        """"""
+        if args[0] is None:
+            self.stimSpecPlot.clearImg()
+            self.responseSpecPlot.clearImg()
+        else:
+            p = kwargs.pop('plot')
+            if p == 'response':
+                self.responseSpecPlot.updateData(*args, **kwargs)
+            else:
+                self.stimSpecPlot.updateData(*args, **kwargs)",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.12822461128234863,"def _get_name(self, name):
+        """"""
+        Find a team's name and abbreviation.
+
+        Given the team's HTML name tag, determine their name, and abbreviation.
+
+        Parameters
+        ----------
+        name : PyQuery object
+            A PyQuery object of a team's HTML name tag in the boxscore.
+
+        Returns
+        -------
+        tuple
+            Returns a tuple containing the name and abbreviation for a team.
+            Tuple is in the following order: Team Name, Team Abbreviation.
+        """"""
+        team_name = name.text()
+        abbr = self._parse_abbreviation(name)
+        return team_name, abbr",True,T5-Base
+0.5242718446601942,0.396039603960396,0.46601941747572817,0.23332696863660957,0.23332696863660957,0,2.5198400020599365,"def select_radio_button(self, key):
+        """"""Helper to select a radio button with key.
+
+        :param key: The key of the radio button.
+        :type key: str
+        """"""
+        key_index = list(self._parameter.options.keys()).index(key)
+        radio_button = self.input_button_group.button(key_index)
+        radio_button.click()",: Helper to select a radio button with key. :param key: The key of the radio button. :type key: The key of the radio button. :type key: The key of the radio button. :type key: str -> code: str -> code: str -> code: str -> code: str -> code: str -> code: str -> code: str -> code: str -> code: str -> code: str -> code: str ->,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09582066535949707,"def _pop_entities(self, limit=50):
+        """"""
+        returns up to limit entities and pops them off the list
+        """"""
+        pop = self.data['entities'][:limit]
+        del self.data['entities'][:limit]
+        return pop",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09296274185180664,"def kvp_dict(d):
+    """"""Format dict to key=value pairs.
+    """"""
+    return ', '.join(
+        [""{}={}"".format(k, quotable(v)) for k, v in d.items()])",False,T5-Base
+0.19047619047619047,0.13903743315508021,0.14814814814814817,0.00033198533308660477,0.00033198533308660477,0,1.119417667388916,"def determine_inst(i_info, param_str, command):
+    """"""Determine the instance-id of the target instance.
+
+    Inspect the number of instance-ids collected and take the
+    appropriate action: exit if no ids, return if single id,
+    and call user_picklist function if multiple ids exist.
+
+    Args:
+        i_info (dict): information and details for instances.
+        param_str (str): the title to display in the listing.
+        command (str): command specified on the command line.
+    Returns:
+        tar_inst (str): the AWS instance-id of the target.
+    Raises:
+        SystemExit: if no instances are match parameters specified.
+
+    """"""
+    qty_instances = len(i_info)
+    if not qty_instances:
+        print(""No instances found with parameters: {}"".format(param_str))
+        sys.exit(1)
+
+    if qty_instances > 1:
+        print(""{} instances match these parameters:"".format(qty_instances))
+        tar_idx = user_picklist(i_info, command)
+
+    else:
+        tar_idx = 0
+    tar_inst = i_info[tar_idx]['id']
+    print(""{0}{3}ing{1} instance id {2}{4}{1}"".
+          format(C_STAT[command], C_NORM, C_TI, command, tar_inst))
+    return (tar_inst, tar_idx)",Returns: tar_inst (str): command specified on the command line. Returns: tar_inst (str): command specified on the command line.,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.11556720733642578,"def _create_main_config(cls, overrides=None):
+        """"""See comment block at top of 'rezconfig' describing how the main
+        config is assembled.""""""
+        filepaths = []
+        filepaths.append(get_module_root_config())
+        filepath = os.getenv(""REZ_CONFIG_FILE"")
+        if filepath:
+            filepaths.extend(filepath.split(os.pathsep))
+
+        filepath = os.path.expanduser(""~/.rezconfig"")
+        filepaths.append(filepath)
+
+        return Config(filepaths, overrides)",False,T5-Base
+0.012269938650306747,0.0,0.012269938650306747,1.6339944804950257e-123,1.6339944804950257e-123,1,1.2148680686950684,"def chain_present(name, table='filter', table_type=None, hook=None, priority=None, family='ipv4'):
+    '''
+    .. versionadded:: 2014.7.0
+
+    Verify the chain is exist.
+
+    name
+        A user-defined chain name.
+
+    table
+        The table to own the chain.
+
+    family
+        Networking family, either ipv4 or ipv6
+    '''
+
+    ret = {'name': name,
+           'changes': {},
+           'result': None,
+           'comment': ''}
+
+    chain_check = __salt__['nftables.check_chain'](table, name, family=family)
+    if chain_check['result'] is True:
+        ret['result'] = True
+        ret['comment'] = ('nftables {0} chain is already exist in {1} table for {2}'
+                          .format(name, table, family))
+        return ret
+
+    res = __salt__['nftables.new_chain'](
+            table,
+            name,
+            table_type=table_type,
+            hook=hook,
+            priority=priority,
+            family=family
+    )
+
+    if res['result'] is True:
+        ret['changes'] = {'locale': name}
+        ret['result'] = True
+        ret['comment'] = ('nftables {0} chain in {1} table create success for {2}'
+                          .format(name, table, family))
+        return ret
+    else:
+        ret['result'] = False
+        ret['comment'] = 'Failed to create {0} chain in {1} table: {2} for {3}'.format(
+            name,
+            table,
+            res['comment'].strip(),
+            family
+        )
+        return ret",True,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.12119245529174805,"def update(self):
+        """"""
+        In the case where you have accessed an existing health check on a
+        load balancer, this method applies this instance's health check
+        values to the load balancer it is attached to.
+
+        .. note:: This method will not do anything if the :py:attr:`access_point`
+            attribute isn't set, as is the case with a newly instantiated
+            HealthCheck instance.
+        """"""
+        if not self.access_point:
+            return
+
+        new_hc = self.connection.configure_health_check(self.access_point, self)
+        self.interval = new_hc.interval
+        self.target = new_hc.target
+        self.healthy_threshold = new_hc.healthy_threshold
+        self.unhealthy_threshold = new_hc.unhealthy_threshold
+        self.timeout = new_hc.timeout",False,T5-Base
+0.15555555555555556,0.13636363636363635,0.15555555555555556,9.422454817328475e-07,9.422454817328475e-07,0,0.37946414947509766,"def wait_until_done(self, timeout=None):
+        """"""Wait for the background load to complete.""""""
+        start = datetime.now()
+        if not self.__th:
+            raise IndraDBRestResponseError(""There is no thread waiting to ""
+                                           ""complete."")
+        self.__th.join(timeout)
+        now = datetime.now()
+        dt = now - start
+        if self.__th.is_alive():
+            logger.warning(""Timed out after %0.3f seconds waiting for ""
+                           ""statement load to complete."" % dt.total_seconds())
+            ret = False
+        else:
+            logger.info(""Waited %0.3f seconds for statements to finish loading.""
+                        % dt.total_seconds())
+            ret = True
+        return ret",Wait for the background load to complete.,T5-Base
+0.14492753623188404,0.11764705882352942,0.14492753623188404,0.09151691974838783,0.09151691974838783,0,2.5001778602600098,"def _serve_forever_wrapper(self, _srv, poll_interval=0.1):
+        """"""
+        Wrapper for the server created for a SSH forward
+        """"""
+        self.logger.info('Opening tunnel: {0} <> {1}'.format(
+            address_to_str(_srv.local_address),
+            address_to_str(_srv.remote_address))
+        )
+        _srv.serve_forever(poll_interval)  # blocks until finished
+
+        self.logger.info('Tunnel: {0} <> {1} released'.format(
+            address_to_str(_srv.local_address),
+            address_to_str(_srv.remote_address))
+        )",task: Wrapper for the server created for a SSH forward -> code: wrapper for the server created for a SSH forward -> code: wrapper for the server created for a SSH forward -> code: wrapper for the server created for a SSH forward -> code: wrapper for the server created for a SSH forward -> code: wrapper for the server created for a SSH forward -> code: wrapper for the server created for a SSH forward -> code,T5-Base
+0.041237113402061855,0.021052631578947368,0.041237113402061855,0.004525338485064764,0.004525338485064764,0,2.2865748405456543,"def normalize(self, decl_string, arg_separator=None):
+        """"""implementation details""""""
+        if not self.has_pattern(decl_string):
+            return decl_string
+        name, args = self.split(decl_string)
+        for i, arg in enumerate(args):
+            args[i] = self.normalize(arg)
+        return self.join(name, args, arg_separator)",implementation details -> code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code: code:,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.09514546394348145,"async def follow_user(self, request):
+        """"""Adds the current user as follower of the given user.""""""
+        username = request.match_info['username']
+        session = await get_session(request)
+        user_id = session.get('user_id')
+
+        if not user_id:
+            raise web.HTTPNotAuthorized()
+
+        whom_id = await db.get_user_id(self.mongo.user, username)
+
+        if whom_id is None:
+            raise web.HTTPFound()
+
+        await self.mongo.follower.update(
+            {'who_id': ObjectId(user_id)},
+            {'$push': {'whom_id': whom_id}}, upsert=True)
+
+        return redirect(request, 'user_timeline', parts={""username"": username})",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.13049674034118652,"def parse(self, tokens):
+		'''Parses a list of tokens into a JSON-serializable object.
+
+		The parsing proceeds from left to right and is greedy.
+
+		Precedence order:
+		  1. Parameters with active context. For example, an Option with
+		     nargs=-1 will gobble all the remaining tokens.
+		  2. Subcommands.
+		  3. Parameters.
+
+		The keys of the returned object are the names of parameters or
+		subcommands. Subcommands are encoded as nested objects. Multiple
+		parameters are encoded as lists. All other values are encoded as
+		parameter-specified data types, or strings if not specified.
+		'''
+		self._ping_main()
+
+		# Pre-parsing:
+		#   1. Expand globbed options: -abc --> -a -b -c
+		def is_globbed(s):
+			return len(s) > 2 and s.startswith('-') and not s.startswith('--')
+		expanded = [[""-"" + c for c in list(token[1:])] if is_globbed(token) else [token] for token in tokens]
+
+		# Parsing: pass off to main command after flattening expanded tokens list
+		return self._main.parse(list(itertools.chain.from_iterable(expanded)))",False,T5-Base
+0.0,0.0,0.0,0.0,0.0,1,0.15315961837768555,"def dfa_union(dfa_1: dict, dfa_2: dict) -> dict:
+    """""" Returns a DFA accepting the union of the input DFAs.
+
+    Let :math:`A_1 = (Σ, S_1 , s_{01} , ρ_1 , F_1 )` and
+    :math:`A_2 = (Σ, S_2 , s_{02} , ρ_2 , F_2 )` be two completed
+    DFAs.
+    Then there is a DFA :math:`A_∨` that runs simultaneously both
+    :math:`A_1` and :math:`A_2` on the input word
+    and accepts when one of them accepts.
+    It is defined as:
+
+    :math:`A_∨ = (Σ, S_1 × S_2 , (s_{01} , s_{02} ), ρ, (F_1 ×
+    S_2 ) ∪ (S_1 × F_2 ))`
+
+    where
+
+    :math:`ρ((s_1 , s_2 ), a) = (s_{X1} , s_{X2} )` iff
+    :math:`s_{X1} = ρ_1 (s_1 , a)` and :math:`s_{X2} = ρ(s_2 , a)`
+
+    Proposed implementation guarantees resulting DFA has only **reachable**
+    states.
+
+    :param dict dfa_1: first input DFA;
+    :param dict dfa_2: second input DFA.
+    :return: *(dict)* representing the united DFA.
+    """"""
+    dfa_1 = deepcopy(dfa_1)
+    dfa_2 = deepcopy(dfa_2)
+    dfa_1['alphabet'] = dfa_2['alphabet'] = dfa_1['alphabet'].union(
+        dfa_2['alphabet'])  # to complete the DFAs over all possible transition
+    dfa_1 = dfa_completion(dfa_1)
+    dfa_2 = dfa_completion(dfa_2)
+
+    union = {
+        'alphabet': dfa_1['alphabet'].copy(),
+        'states': {(dfa_1['initial_state'], dfa_2['initial_state'])},
+        'initial_state': (dfa_1['initial_state'], dfa_2['initial_state']),
+        'accepting_states': set(),
+        'transitions': dict()
+    }
+
+    boundary = set()
+    boundary.add(union['initial_state'])
+    while boundary:
+        (state_dfa_1, state_dfa_2) = boundary.pop()
+        if state_dfa_1 in dfa_1['accepting_states'] \
+                or state_dfa_2 in dfa_2['accepting_states']:
+            union['accepting_states'].add((state_dfa_1, state_dfa_2))
+        for a in union['alphabet']:
+            # as DFAs are completed they surely have the transition
+            next_state_1 = dfa_1['transitions'][state_dfa_1, a]
+            next_state_2 = dfa_2['transitions'][state_dfa_2, a]
+            if (next_state_1, next_state_2) not in union['states']:
+                union['states'].add((next_state_1, next_state_2))
+                boundary.add((next_state_1, next_state_2))
+            union['transitions'][(state_dfa_1, state_dfa_2), a] = \
+                (next_state_1, next_state_2)
+
+    return union",True,T5-Base

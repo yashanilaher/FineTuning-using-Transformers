@@ -1,0 +1,128 @@
+input,reference,T5-Base_output,SFT_output,LoRA_output,Adapter_output
+"task: enables the usage of method and attribute overloading for this
+        publisher. -> code:","def inherit_type(self, type_cls: Type[TInherit]) \
+            -> Union[TInherit, 'Publisher']:
+        """""" enables the usage of method and attribute overloading for this
+        publisher.
+        """"""
+        self._inherited_type = type_cls
+        return self",-> code: enables the usage of method and attribute overloading for this publisher. -> code: enables the usage of method and attribute overloading for this publisher. -> code: enables the usage of method and attribute overloading for this publisher.,"def _enable_method_and_attribute_overloading(self): """""" enables the usage of method and attribute overloading for this publisher. """""" if self._method_and_attribute_overloading: self._method_and_attribute_overloading = self._method_and_attribute_overloading if self._method_and_attribute_overloading: self._method_and_attribute_overloading = self","def _enable_method_and_attribute_overloading(self): """"""enables the usage of method and attribute overloading for this publisher. """""" if self._method_and_attribute_overloading is None: self._method_and_attribute_overloading = self._method_and_attribute_overloading = self._method_and_attribute_overloading = self._method_and_attribute_overloading = self","def use_method(self): """""" enables the usage of method and attribute overloading for this publisher. """""" if self.get(self.get(self.get): self.get(self.get) self.get(self.get) self.get(self.get) self.get(self.get) self.get(self.get) self.get(self.get) self.get(self.get) self.get(self.get) self.get(self.get) self.get(self.get) self.get"
+"task: Decorator for automatically mounting, if needed. -> code:","def auto_mounter(original):
+    """"""Decorator for automatically mounting, if needed.""""""
+    def mounter(*args):
+        """"""If not mounted, mount.""""""
+        self = args[0]
+        if not self.is_mounted():
+            self.mount()
+        return original(*args)
+    return mounter",False,"def decorator(self): """"""Decorator for automatically mounting, if needed."""""" if self._decorator is None: self._decorator = self._decorator if self._decorator is None: self._decorator = self._decorator if self._decorator is None: self._decorator = self._decorator","def _decorator(self): """"""Decorator for automatically mounting, if needed."""""" if self._decorator is None: self._decorator = self._decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator.decorator","def _decorator(self): """"""Decorator for automatically mounting, if needed. """""" decorator = self.decorator(self.decorator, self.decorator, self.decorator, self.decorator, self.decorator, self.decorator, self.decorator, self.decorator, self.decorator, self.decorator, self.decorator, self.decorator, self.decorator, self.decorator, self.decorator"
+"task: Convenience utility to apply the specified transform to the specified pose.
+          This properly transforms all pose components, including velocity and angular velocity -> code:","def applyTransform(self):
+        """"""
+        Convenience utility to apply the specified transform to the specified pose.
+          This properly transforms all pose components, including velocity and angular velocity
+        """"""
+
+        fn = self.function_table.applyTransform
+        pOutputPose = TrackedDevicePose_t()
+        pTrackedDevicePose = TrackedDevicePose_t()
+        pTransform = HmdMatrix34_t()
+        fn(byref(pOutputPose), byref(pTrackedDevicePose), byref(pTransform))
+        return pOutputPose, pTrackedDevicePose, pTransform",True,"def apply_transform(self, pose): """""" Convenience utility to apply the specified transform to the specified pose. This properly transforms all pose components, including velocity and angular velocity """""" if pose is None: raise ValueError(""Transform is not a pose"") if pose is None: raise ValueError(""Transform is not a pose"") if pose is None: raise ValueError(""Transform is not a pose"") if pose is None: raise ValueError(""Transform is not","def apply_transform(self, pose): """""" Convenience utility to apply the specified transform to the specified pose. This properly transforms all pose components, including velocity and angular velocity """""" if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if pose is None: if","def _transform_to_pose(self): """""" Convenience utility to apply the specified transform to the specified pose. This properly transforms all pose components, including velocity and angular velocity """""" if self._transform_to_pose = self._transform_to_pose(self._transform_to_pose): self._transform_to_pose = self._transform_to_pose(self._transform_to_pose_to_pose_to_pos"
+"task: Function opens the run Window who executes the
+        assistant project creation -> code:","def next_window(self, widget, data=None):
+        """"""
+        Function opens the run Window who executes the
+        assistant project creation
+        """"""
+        # check whether deps-only is selected
+        deps_only = ('deps_only' in self.args and self.args['deps_only']['checkbox'].get_active())
+
+        # preserve argument value if it is needed to be preserved
+        for arg_dict in [x for x in self.args.values() if 'preserved' in x['arg'].kwargs]:
+            preserve_key = arg_dict['arg'].kwargs['preserved']
+            # preserve entry text (string value)
+            if 'entry' in arg_dict:
+                if self.arg_is_selected(arg_dict):
+                    config_manager.set_config_value(preserve_key, arg_dict['entry'].get_text())
+            # preserve if checkbox is ticked (boolean value)
+            else:
+                config_manager.set_config_value(preserve_key, self.arg_is_selected(arg_dict))
+
+        # save configuration into file
+        config_manager.save_configuration_file()
+        # get project directory and name
+        project_dir = self.dir_name.get_text()
+        full_name = self.get_full_dir_name()
+
+        # check whether project directory and name is properly set
+        if not deps_only and self.current_main_assistant.name == 'crt':
+            if project_dir == """":
+                return self.gui_helper.execute_dialog(""Specify directory for project"")
+            else:
+                # check whether directory is existing
+                if not os.path.isdir(project_dir):
+                    response = self.gui_helper.create_question_dialog(
+                        ""Directory {0} does not exists"".format(project_dir),
+                        ""Do you want to create them?""
+                    )
+                    if response == Gtk.ResponseType.NO:
+                        # User do not want to create a directory
+                        return
+                    else:
+                        # Create directory
+                        try:
+                            os.makedirs(project_dir)
+                        except OSError as os_err:
+                            return self.gui_helper.execute_dialog(""{0}"".format(os_err))
+                elif os.path.isdir(full_name):
+                    return self.check_for_directory(full_name)
+
+        if not self._build_flags():
+            return
+
+        if not deps_only and self.current_main_assistant.name == 'crt':
+            self.kwargs['name'] = full_name
+        self.kwargs['__ui__'] = 'gui_gtk+'
+
+        self.data['kwargs'] = self.kwargs
+        self.data['top_assistant'] = self.top_assistant
+        self.data['current_main_assistant'] = self.current_main_assistant
+        self.parent.run_window.open_window(widget, self.data)
+        self.path_window.hide()",False,"def _open_run_window(self): """""" Function opens the run Window who executes the assistant project creation """""" if self._run_window is None: self._run_window = self._run_window if self._run_window is None: self._run_window = self._run_window else: self._run_window = self._run_window if self._run_window is None: self._run_window = self._run","def _open_project(self): """"""Function opens the run Window who executes the assistant project creation """""" if self._run_windows: self._run_windows = self._run_windows(self._run_windows) self._run_windows = self._run_windows","def _open_run_window(self): """"""Function opens the run Window who executes the assistant project creation """""" if self._create(self._create_window): self._create_window(self._create_window): self._create_window(self._create_window) self._create_window(self._create_window) self._create_window(self._create_window) self._create_window(self._create"
+"task: Add roles to a member
+
+        This method takes a list of **role ids** that you want to strip from the user,
+        subtracting from whatever roles they may already have. This method will fetch
+        the user's current roles, and add to that list the roles passed in. This method
+        will only remove roles from the user that they have at the time of execution,
+        so you don't need to check that the user has the roles you're trying to remove
+        from them (as long as those roles are valid roles for this guild).
+
+        This method differs from ``set_member_roles`` in that this method REMOVES roles
+        from the user's current role list. ``set_member_roles`` is used by this method.
+
+        Args:
+            guild_id: snowflake id of the guild
+            member_id: snowflake id of the member
+            roles: list of snowflake ids of roles to remove -> code:","def remove_member_roles(self, guild_id: int, member_id: int, roles: List[int]):
+        """"""Add roles to a member
+
+        This method takes a list of **role ids** that you want to strip from the user,
+        subtracting from whatever roles they may already have. This method will fetch
+        the user's current roles, and add to that list the roles passed in. This method
+        will only remove roles from the user that they have at the time of execution,
+        so you don't need to check that the user has the roles you're trying to remove
+        from them (as long as those roles are valid roles for this guild).
+
+        This method differs from ``set_member_roles`` in that this method REMOVES roles
+        from the user's current role list. ``set_member_roles`` is used by this method.
+
+        Args:
+            guild_id: snowflake id of the guild
+            member_id: snowflake id of the member
+            roles: list of snowflake ids of roles to remove
+        """"""
+        current_roles = [role for role in self.get_guild_member_by_id(guild_id, member_id)['roles']]
+        new_list = [role for role in current_roles if role not in roles]
+        self.set_member_roles(guild_id, member_id, new_list)",False,"def add_roles(self): """"""Add roles to a member This method takes a list of **role ids** that you want to strip from the user, subtracting from whatever roles they may already have. This method will fetch the user's current roles, and add to that list the roles passed in. This method will only remove roles from the user that they have at the time of execution, so you don't need to check that the user has the roles you're trying to remove from them (as long as those roles are valid roles for this","def add_roles(self, ids): """"""Add roles to a member This method takes a list of **role ids** that you want to strip from the user, subtracting from whatever roles they may already have. This method will fetch the user's current roles, and add to that list the roles passed in. This method will only remove roles from the user that they have at the time of execution, so you don't need to check that the user has the roles you're trying to remove from them (as long as those roles","def remove_roles(roles): """"""Add roles to a member This method takes a list of **role ids** that you want to strip from the user, subtracting from whatever roles they may already have. This method will fetch the user's current roles, and add to that list the roles passed in. This method will only remove roles from the user that they have at the time of execution, so you don't need to check that the user has the roles you're trying to remove from them (as long as those roles are valid roles"
