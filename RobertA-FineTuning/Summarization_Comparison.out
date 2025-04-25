@@ -1,0 +1,130 @@
+2025-04-13 17:01:59.571307: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-04-13 17:02:00.888771: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1744543921.048732 1352921 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1744543921.115275 1352921 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1744543921.961470 1352921 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1744543921.961496 1352921 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1744543921.961498 1352921 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1744543921.961500 1352921 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2025-04-13 17:02:01.974184: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Using device: cuda
+Loading models and tokenizer...
+Loading test dataset...
+
+===== COMPARING SUMMARIES BEFORE AND AFTER FINE-TUNING =====
+
+
+===== EXAMPLE 1 =====
+
+ORIGINAL ARTICLE (excerpt):
+(CNN)The Palestinian Authority officially became the 123rd member of the International Criminal Court on Wednesday, a step that gives the court jurisdiction over alleged crimes in Palestinian territories. The formal accession was marked with a ceremony at The Hague, in the Netherlands, where the cou...
+
+REFERENCE SUMMARY:
+Membership gives the ICC jurisdiction over alleged crimes committed in Palestinian territories since last June .
+Israel and the United States opposed the move, which could open the door to war crimes investigations against Israelis .
+
+BEFORE FINE-TUNING:
+ advise advise advise advise advise Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam
+
+AFTER FINE-TUNING:
+The Palestinian Authority officially becomes the 123rd member of the International Criminal Court .
+The move gives the court jurisdiction over alleged crimes committed in Palestinian territories .
+Palestinian Foreign Minister Riad al-Malki: "Today brings us closer to our shared goals of justice"
+
+--------------------------------------------------------------------------------
+
+===== EXAMPLE 2 =====
+
+ORIGINAL ARTICLE (excerpt):
+(CNN)Never mind cats having nine lives. A stray pooch in Washington State has used up at least three of her own after being hit by a car, apparently whacked on the head with a hammer in a misguided mercy killing and then buried in a field -- only to survive. That's according to Washington State Univ...
+
+REFERENCE SUMMARY:
+Theia, a bully breed mix, was apparently hit by a car, whacked with a hammer and buried in a field .
+"She's a true miracle dog and she deserves a good life," says Sara Mellado, who is looking for a home for Theia .
+
+BEFORE FINE-TUNING:
+ advise advise advise advise advise advise advise advise advise advise advise advise advisearparparparpather Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mamarp Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mamarparparparparparparparparparparparparp Mam Mam Mam Mamarparparparparp Mam Mam Mam Mam Mam
+
+AFTER FINE-TUNING:
+A stray pooch in Washington State was hit by a car and buried in a field .
+The dog was taken in by a worker who took her to a vet for treatment .
+"She's a true miracle dog and she deserves a good life," she says .
+
+--------------------------------------------------------------------------------
+
+===== EXAMPLE 3 =====
+
+ORIGINAL ARTICLE (excerpt):
+(CNN)If you've been following the news lately, there are certain things you doubtless know about Mohammad Javad Zarif. He is, of course, the Iranian foreign minister. He has been U.S. Secretary of State John Kerry's opposite number in securing a breakthrough in nuclear discussions that could lead to...
+
+REFERENCE SUMMARY:
+Mohammad Javad Zarif has spent more time with John Kerry than any other foreign minister .
+He once participated in a takeover of the Iranian Consulate in San Francisco .
+The Iranian foreign minister tweets in English .
+
+BEFORE FINE-TUNING:
+ pad advise advise advise advise advise advise advise advise advise advise advise Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mamions Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam
+
+AFTER FINE-TUNING:
+Mohammad Javad Zarif is a U.S. Secretary of State John Kerry's opposite number .
+He was nominated to be Iran's foreign minister by Ahmadinejad's successor, Hassan Rouhami .
+He has been a U.S. Secretary of State's opposite number in the U.S. since 1977 .
+
+--------------------------------------------------------------------------------
+
+===== EXAMPLE 4 =====
+
+ORIGINAL ARTICLE (excerpt):
+(CNN)Five Americans who were monitored for three weeks at an Omaha, Nebraska, hospital after being exposed to Ebola in West Africa have been released, a Nebraska Medicine spokesman said in an email Wednesday. One of the five had a heart-related issue on Saturday and has been discharged but hasn't le...
+
+REFERENCE SUMMARY:
+17 Americans were exposed to the Ebola virus while in Sierra Leone in March .
+Another person was diagnosed with the disease and taken to hospital in Maryland .
+National Institutes of Health says the patient is in fair condition after weeks of treatment .
+
+BEFORE FINE-TUNING:
+ouse advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advise advisearp Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mamarparparparparparparp Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mamarp Jinn Mam Mam Mamarpovich Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam
+
+AFTER FINE-TUNING:
+Five Americans who were exposed to Ebola have been released .
+They were exposed to Ebola in Sierra Leone in March, but none developed the deadly virus .
+
+--------------------------------------------------------------------------------
+
+===== EXAMPLE 5 =====
+
+ORIGINAL ARTICLE (excerpt):
+(CNN)A Duke student has admitted to hanging a noose made of rope from a tree near a student union, university officials said Thursday. The prestigious private school didn't identify the student, citing federal privacy laws. In a news release, it said the student was no longer on campus and will face...
+
+REFERENCE SUMMARY:
+Student is no longer on Duke University campus and will face disciplinary review .
+School officials identified student during investigation and the person admitted to hanging the noose, Duke says .
+The noose, made of rope, was discovered on campus about 2 a.m.
+
+BEFORE FINE-TUNING:
+ pad advise advise advise advise advise Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mamions Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam Mam
+
+AFTER FINE-TUNING:
+A Duke student has admitted to hanging a noose made of rope from a tree near a union .
+The noose was found at 2 a.m. Wednesday, the university says .
+The noose was hung around the neck of a statue of a famous civil rights figure .
+
+--------------------------------------------------------------------------------
+
+Calculating ROUGE scores for 20 examples...
+
+===== ROUGE SCORES COMPARISON =====
+
+BEFORE FINE-TUNING:
+ROUGE-1: 0.0000
+ROUGE-2: 0.0000
+ROUGE-L: 0.0000
+
+AFTER FINE-TUNING:
+ROUGE-1: 0.3059
+ROUGE-2: 0.1314
+ROUGE-L: 0.2953
+
+Comparison complete!
